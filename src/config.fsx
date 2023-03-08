@@ -26,13 +26,15 @@ let staticPredicate (projectRoot: string, page: string) =
         page.Contains "_config.yml" ||
         page.Contains ".sass-cache" ||
         page.Contains ".git" ||
-        page.Contains ".ionide"
+        page.Contains ".ionide" ||
+        page.Contains ".ipynb" // we'll handle ipynb serve manually to fix paths
     fileShouldBeExcluded |> not
 
 
 let config = {
     Generators = [
-        {Script = "notebook.fsx"; Trigger = OnFileExt ".ipynb"; OutputFile = ChangeExtension ".html"}
+        {Script = "posts.fsx"; Trigger = Once; OutputFile = MultipleFiles id}
+        {Script = "notebooks.fsx"; Trigger = Once; OutputFile = MultipleFiles id}
         {Script = "index.fsx"; Trigger = Once; OutputFile = NewFileName "index.html"}
         {Script = "staticfile.fsx"; Trigger = OnFilePredicate staticPredicate; OutputFile = SameFileName }
     ]

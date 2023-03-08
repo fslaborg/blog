@@ -58,12 +58,14 @@ let getConfig (fileContent : string) =
     |> Map.ofSeq
 
 type NotebookPost = {
+    file_name: string
     post_config: PostConfig
     html_path: string
     original_path: string
 } with
-    static member create(post_config, html_path, original_path) =
+    static member create(file_name, post_config, html_path, original_path) =
         {
+            file_name = file_name
             post_config = post_config
             html_path = html_path
             original_path = original_path
@@ -88,12 +90,23 @@ let loader (projectRoot: string) (siteContent: SiteContents) =
             |> getConfig
             |> PostConfig.ofMap
 
+        let postName =
+            post_path
+                .Replace(notebookRootPath, "")
+                .Replace("\\","/")
+                .Replace("/post.ipynb",".html")
+                .Replace("/","")
+
         let post =
             NotebookPost.create(
+                file_name = postName,
                 post_config = post_config, 
-                html_path = $"", 
+                html_path = Path.Combine([|projectRoot; "_public"; "posts"; postName|]), 
                 original_path = post_path
             )
+
+        // printfn "%A" post
+
         siteContent.Add(post)
         printfn $"[post loader] loaded post from {post.original_path}"
     )
