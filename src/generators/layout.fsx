@@ -39,6 +39,7 @@ let layout (ctx : SiteContents) active bodyCnt =
             yield! Components.DefaultHeadTags ttl
             script [Src (Globals.prefixUrl "js/navbar.js")] []
             script [Src (Globals.prefixUrl "js/prism.js")] []
+            link [Rel "stylesheet"; Href (Globals.prefixUrl "style/notebook.css")]
         ]
         body [] [
             Components.Navbar(
