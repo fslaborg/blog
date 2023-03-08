@@ -10,7 +10,7 @@ let urlPrefix =
   ""
 #else
 let urlPrefix = 
-  "https://fslab.org"
+  "https://fslab.org/blog"
 #endif
 
 /// returns a fixed urlby prefixing `urlPrefix`
