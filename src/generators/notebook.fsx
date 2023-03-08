@@ -36,7 +36,7 @@ let generate (ctx : SiteContents) (projectRoot: string) (page: string) =
 
     full_path |> fixNotebookJson
 
-    printfn $"starting jupyter --output-dir='{tmp_path}' nbconvert --to html {full_path} --template basic"
+    printfn $"starting jupyter --output-dir='{tmp_path}' nbconvert --to html {full_path}"
     let psi = ProcessStartInfo()
     psi.FileName <- "jupyter"
     psi.Arguments <- $"nbconvert --output-dir='{tmp_path}' --to html {full_path}"
