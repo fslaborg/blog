@@ -1,9 +1,21 @@
 #r "../_lib/Fornax.Core.dll"
 #load "layout.fsx"
+#if !FORNAX
+#load "../loaders/postloader.fsx"
+#endif
 
+open Postloader
 open Html
 
 let generate' (ctx : SiteContents) (_: string) =
+
+    let posts = 
+        ctx.TryGetValues<NotebookPost>() 
+        |> Option.defaultValue Seq.empty
+        |> List.ofSeq
+
+    let latest_post = posts |> List.minBy (fun p -> System.DateTime.Now.Ticks - p.post_config.date.Ticks)
+    let latest_post_url = Globals.prefixUrl $"posts/{latest_post.file_name}"
     Layout.layout ctx "FsLab Blog" [
         section [Class "hero is-medium has-bg-magenta"] [
             div [Class "hero-body"] [
@@ -34,7 +46,16 @@ let generate' (ctx : SiteContents) (_: string) =
         section [] [
             div [Class "container has-text-justified"] [
                 div [Class "main-TextField"] [
-                    h1 [Class "title"] [!!"here is some code, isn't that nice?"]
+                    div [Class "columns"] [
+                        div [Class "column is-6"] [
+                            h1 [] [!!"Latest post"]
+                            a [Href latest_post_url] [!! latest_post.file_name.Replace(".html", "")] 
+                            !! $" by {latest_post.post_config.author}"
+                        ]
+                        div [Class "column is-6"] [
+                            h1 [] [!!"Highlighted post"]
+                        ]
+                    ]
                 ]
             ]
             div [Class "container"] [
