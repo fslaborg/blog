@@ -4,38 +4,19 @@
 open System.IO
 open Markdig
 
-type PostLanguage =
-    | FSharp
-    | CSharp
-    | Other
-
-    static member ofString (s:string) = 
-        match s.ToLower() with
-        | "fsharp" | "f#" -> FSharp
-        | "csharp" | "c#" -> CSharp
-        | _ -> Other
-
-    static member toHighlightClass (pl: PostLanguage) =
-        match pl with
-        | FSharp -> " highlight hl-F#"
-        | CSharp -> " highlight hl-C#"
-        | Other  -> " highlight hl-ipython3"
-
 type PostConfig = {
     title: string
     author: string
     author_link: string
     category: string
-    language: PostLanguage
     date: System.DateTime
 } with
-    static member create(title, author, author_link, category, language, date) =
+    static member create(title, author, author_link, category, date) =
         {
             title = title
             author = author
             author_link = author_link
             category = category
-            language = language
             date = date
         }
     static member ofMap(m:Map<string,string>) =
@@ -44,7 +25,6 @@ type PostConfig = {
             author = m["author"],
             author_link = m["author_link"],
             category = m["category"],
-            language = (PostLanguage.ofString m["language"]),
             date = (System.DateTime.ParseExact(m["date"],"yyyy-MM-dd",System.Globalization.CultureInfo.InvariantCulture))
         )
 

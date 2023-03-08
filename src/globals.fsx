@@ -3,6 +3,8 @@
 
 #r "nuget: Fornax.Core, 0.15.1"
 #r "nuget: FsLab.Fornax, 2.1.0"
+#r "nuget: Newtonsoft.Json, 13.0.1"
+#r "nuget: DynamicObj, 2.0.0"
 
 // fix urls when deployed to base url (e.g. on gh pages via subdomain)
 #if WATCH

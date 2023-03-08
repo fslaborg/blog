@@ -351,3 +351,5 @@ MigrationBackup/
 
 tmp/
 .fsdocs
+
+src/_public

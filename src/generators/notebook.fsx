@@ -11,15 +11,22 @@ open Html
 
 open System.IO
 open System.Diagnostics
+open DynamicObj
+open Newtonsoft.Json
 
-let processConvertedNotebook (lang:PostLanguage) (content:string) =
+let processConvertedNotebook (content:string) =
     let nb_start_tag = """<body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">"""
     let body_start_index = content.IndexOf(nb_start_tag) + nb_start_tag.Length
     let body_end_index = content.IndexOf "</body>" + 1
-    let hl_class = PostLanguage.toHighlightClass lang
-    content[body_start_index .. body_end_index].Replace(" highlight hl-ipython3",hl_class)
+    content[body_start_index .. body_end_index]
 
-
+let fixNotebookJson (nb_path:string) =
+    let content = File.ReadAllText(nb_path)
+    if not (content.Contains("\"language_info\": {\"name\": \"F#\"}")) then
+        printfn $"fixing notebook json for {nb_path}"
+        let metadataSection = "\"metadata\": {"
+        let metadata_start_index = content.LastIndexOf(metadataSection)
+        File.WriteAllText(nb_path, (content[0..metadata_start_index + metadataSection.Length] + "\"language_info\": {\"name\": \"F#\"}," + content[metadata_start_index + metadataSection.Length..]))
 
 let generate (ctx : SiteContents) (projectRoot: string) (page: string) =
     let full_path = Path.Combine(projectRoot,page)
@@ -27,17 +34,9 @@ let generate (ctx : SiteContents) (projectRoot: string) (page: string) =
     let tmp_output = Path.GetFileName(full_path).Replace("ipynb","html")
     let output_path = Path.Combine(tmp_path, tmp_output)
 
-    let lang = 
-        ctx.TryGetValues<NotebookPost>()
-        |> Option.map (fun x -> 
-            x 
-            |> Seq.tryFind (fun n -> 
-                n.original_path.Replace("\\","/") = full_path.Replace("\\","/")) 
-            |> Option.map (fun x -> x.post_config.language)
-            |> Option.defaultValue PostLanguage.Other
-        ) |> Option.defaultValue PostLanguage.Other
+    full_path |> fixNotebookJson
 
-    printfn $"starting jupyter --output-dir='{tmp_path}' nbconvert --to html {full_path}"
+    printfn $"starting jupyter --output-dir='{tmp_path}' nbconvert --to html {full_path} --template basic"
     let psi = ProcessStartInfo()
     psi.FileName <- "jupyter"
     psi.Arguments <- $"nbconvert --output-dir='{tmp_path}' --to html {full_path}"
@@ -55,7 +54,7 @@ let generate (ctx : SiteContents) (projectRoot: string) (page: string) =
                 Class "content jp-Notebook"
                 HtmlProperties.Custom ("data-jp-theme-light","true")
                 HtmlProperties.Custom ("data-jp-theme-name","JupyterLab Light")
-            ] [!!(processConvertedNotebook lang notebook_content)]
+            ] [!!(processConvertedNotebook notebook_content)]
         ]
         |> Layout.render ctx
     with
