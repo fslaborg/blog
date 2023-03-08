@@ -48,7 +48,7 @@ let generate' (ctx : SiteContents) (_: string) =
                 div [Class "main-TextField"] [
                     div [Class "columns"] [
                         div [Class "column is-6"] [
-                            h1 [] [!!"Latest post"]
+                            h1 [Class "title"] [!!"Latest post"]
                             a [Href latest_post_url] [!! latest_post.file_name.Replace(".html", "")] 
                             !! $" by {latest_post.post_config.author}"
                         ]
