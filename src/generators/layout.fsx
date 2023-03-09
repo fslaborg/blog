@@ -128,6 +128,34 @@ let postLayout (ctx : SiteContents) (post_config:PostConfig) (toc:HtmlElement) a
         Components.Footer()
     ]
 
+let postPreview (post:NotebookPost) =
+    let has_image = post.post_config.preview_image.IsSome
+    let has_summary = post.post_config.summary.IsSome
+
+    let post_url = Globals.prefixUrl $"posts/{post.file_name}"
+    let post_category_url = Globals.prefixUrl $"posts/categories/{post.post_config.category}.html"
+
+    div [Class "card pt-2"] [ 
+        if has_image then 
+            div [Class "card-image"] [
+                a [Href post_url] [
+                    figure [Class "image"] [
+                        img [Src (Globals.prefixUrl post.post_config.preview_image.Value); Alt "post preview image"] 
+                    ]
+                ]
+            ]
+        div [Class "card-header"] [
+            h1 [Class "card-header-title"] [a [Href post_url] [!!post.post_config.title]]
+        ]
+        div [Class "card-content is-size-6"] [
+            if has_summary then div [Class "content"] [!!post.post_config.summary.Value]
+            !! $"Posted on {post.post_config.date.Year}-{post.post_config.date.Month}-{post.post_config.date.Day} by "
+            a [Href post.post_config.author_link; Class "is-aquamarine"] [!! post.post_config.author]
+            !! "in "
+            a [Href post_category_url; Class "is-aquamarine"] [!! post.post_config.category]
+        ]
+    ]
+
 let render (ctx : SiteContents) cnt =
   cnt
   |> HtmlElement.ToString

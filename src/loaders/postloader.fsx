@@ -10,14 +10,18 @@ type PostConfig = {
     author_link: string
     category: string
     date: System.DateTime
+    preview_image: string option
+    summary: string option
 } with
-    static member create(title, author, author_link, category, date) =
+    static member create(title, author, author_link, category, date, ?preview_image, ?summary) =
         {
             title = title
             author = author
             author_link = author_link
             category = category
             date = date
+            preview_image = preview_image
+            summary = summary
         }
     static member ofMap (source:string) (m:Map<string,string>) =
 
@@ -34,13 +38,17 @@ type PostConfig = {
             with _ ->
                 failwith $"wrong date format in config from {source}, make sure to use YYY-MM-DD"
 
+        let preview_image = m |> Map.tryFind "preview_image" 
+        let summary = m |> Map.tryFind "summary" 
 
         PostConfig.create(
             title = title,
             author = author,
             author_link = author_link,
             category = category,
-            date = date
+            date = date,
+            ?preview_image = preview_image,
+            ?summary = summary
         )
 
 

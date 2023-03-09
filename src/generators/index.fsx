@@ -7,25 +7,16 @@
 open Postloader
 open Html
 
-let latest_post_display (latest_post: NotebookPost)=
-
-    let latest_post_url = Globals.prefixUrl $"posts/{latest_post.file_name}"
-    let latest_post_category_url = Globals.prefixUrl $"posts/categories/{latest_post.post_config.category}.html"
+let latest_post_display (latest_post: NotebookPost) =
 
     div [Class "content"] [
-        h1 [Class "title is-capitalized is-inline-block is-emphasized-darkmagenta"] [!!"Latest post"]
-        div [Class "container"] [
-            h3 [Class "subtitle mt-0"] [a [Href latest_post_url; Class "is-magenta"] [!! latest_post.post_config.title] ]
-            !! " by "
-            a [Href latest_post.post_config.author_link; Class "is-aquamarine"] [!! latest_post.post_config.author]
-            !! "in "
-            a [Href latest_post_category_url; Class "is-aquamarine"] [!! latest_post.post_config.category]
-        ]
+        h1 [Class "title is-capitalized is-inline-block is-emphasized-darkmagenta is-size-3"] [!!"Latest post"]
+        Layout.postPreview latest_post
     ]
 
 let browse_categories_display (posts: NotebookPost list) =
     div [Class "content"] [
-        h1 [Class "title is-capitalized is-inline-block is-emphasized-darkmagenta"] [!!"Browse categories"]
+        h1 [Class "title is-capitalized is-inline-block is-emphasized-darkmagenta is-size-3"] [!!"Browse categories"]
         div [Class "container"] [
             ul [Class "mt-0"] (
                 posts
@@ -50,29 +41,22 @@ let generate' (ctx : SiteContents) (_: string) =
     let latest_post = posts |> List.minBy (fun p -> System.DateTime.Now.Ticks - p.post_config.date.Ticks)
     
     Layout.layout ctx "FsLab Blog" [
-        section [Class "hero is-medium has-bg-magenta"] [
+        section [Class "hero is-small has-bg-darkmagenta"] [
             div [Class "hero-body"] [
                 div [Class "container has-text-justified"] [
                     div [Class "main-TextField"] [
                         div [Class "media mb-4"] [
                             div [Class "media-left"] [
                                 figure [Class "image is-128x128"] [
-                                    img [Id "logo-square"; Class "is-rounded" ; Src (Globals.prefixUrl "images/logo-rounded.svg")]
+                                    img [Id "package-header-img"; Class "is-rounded" ; Src (Globals.prefixUrl "images/skills.svg")]
                                 ]
                             ]
                             div [Class "media-content"] [
-                                h1 [Class "main-title is-capitalized is-white is-inline-block is-strongly-emphasized-darkmagenta mb-4"] [!! "The FsLab Blog"]
+                                h1 [Class "title is-size-1 is-capitalized is-white is-inline-block is-strongly-emphasized-aquamarine mb-4"] [!! "The FsLab Blog"]
                             ]
                         ]
                         div [Class "block"] [
-                            h1 [Class "title is-size-3 is-capitalized is-white is-block"] [!! "Welcome to the FsLab blog!"]
-                        ]
-                        div [Class "content is-white is-size-4"] [
-                            div [Class "block is-white"] [
-                                p [] [!! "In this blog, the FsLab community posts content on all things FsLab."]
-                                p [] [!! "You can find post in a wide range of topics - from getting a F# programming environment up and running over classic data science samples such as clustering the Iris data set or linear regression on the Boston housing dataset to advanced topics such as replicate quality control or q values."]
-                                p [] [!! "Read the latest post below or browse all posts by categories."]
-                            ]
+                            h1 [Class "subtitle is-size-4 is-white is-block"] [!! "Welcome to the FsLab blog, where community members post all kinds of F# data science content."]
                         ]
                     ]
                 ]
@@ -81,6 +65,12 @@ let generate' (ctx : SiteContents) (_: string) =
         section [] [
             div [Class "container has-text-justified"] [
                 div [Class "main-TextField"] [
+                    div [Class "content is-size-6"] [
+                        div [Class "block"] [
+                            p [] [!! "You can find post in a wide range of topics - from getting a F# programming environment up and running over classic data science samples such as clustering the Iris data set or linear regression on the Boston housing dataset to advanced topics such as replicate quality control or q values."]
+                            p [] [!! "Read the latest post below or browse all posts by categories."]
+                        ]
+                    ]
                     div [Class "columns"] [
                         div [Class "column is-6"] [
                             latest_post_display latest_post
