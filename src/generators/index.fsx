@@ -65,11 +65,11 @@ let generate' (ctx : SiteContents) (_: string) =
                             ]
                         ]
                         div [Class "block"] [
-                            h1 [Class "title is-size-3 is-capitalized is-white is-block"] [!! "Welcome to the FsLab glog!"]
+                            h1 [Class "title is-size-3 is-capitalized is-white is-block"] [!! "Welcome to the FsLab blog!"]
                         ]
                         div [Class "content is-white is-size-4"] [
                             div [Class "block is-white"] [
-                                p [] [!! "In this blog, FsLab contributors post content on all things FsLab."]
+                                p [] [!! "In this blog, the FsLab community posts content on all things FsLab."]
                                 p [] [!! "You can find post in a wide range of topics - from getting a F# programming environment up and running over classic data science samples such as clustering the Iris data set or linear regression on the Boston housing dataset to advanced topics such as replicate quality control or q values."]
                                 p [] [!! "Read the latest post below or browse all posts by categories."]
                             ]
