@@ -61,15 +61,17 @@ let generate' (ctx : SiteContents) (_: string) =
                                 ]
                             ]
                             div [Class "media-content"] [
-                                h1 [Class "main-title is-capitalized is-white is-inline-block is-strongly-emphasized-darkmagenta mb-4"] [!! "FsLab Blog"]
+                                h1 [Class "main-title is-capitalized is-white is-inline-block is-strongly-emphasized-darkmagenta mb-4"] [!! "The FsLab Blog"]
                             ]
                         ]
                         div [Class "block"] [
-                            h1 [Class "title is-size-3 is-capitalized is-white is-block"] [!! "Welcome to the FsLab template for fornax!"]
+                            h1 [Class "title is-size-3 is-capitalized is-white is-block"] [!! "Welcome to the FsLab glog!"]
                         ]
                         div [Class "content is-white is-size-4"] [
                             div [Class "block is-white"] [
-                                !! "This is how the blank template looks like. Flashy but boring! Get started by adding some sections below for your project FsLab Blog!"
+                                p [] [!! "In this blog, FsLab contributors post content on all things FsLab."]
+                                p [] [!! "You can find post in a wide range of topics - from getting a F# programming environment up and running over classic data science samples such as clustering the Iris data set or linear regression on the Boston housing dataset to advanced topics such as replicate quality control or q values."]
+                                p [] [!! "Read the latest post below or browse all posts by categories."]
                             ]
                         ]
                     ]
