@@ -353,3 +353,4 @@ tmp/
 .fsdocs
 
 src/_public
+src/Nuget.config

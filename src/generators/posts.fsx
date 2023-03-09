@@ -56,7 +56,7 @@ let generate (ctx : SiteContents) (projectRoot: string) (page: string) =
             File.Delete output_path
 
             let content = 
-                Layout.layout ctx "Posts" [
+                Layout.postLayout ctx post.post_config "Posts" [
                     div [
                         Class "content jp-Notebook"
                         HtmlProperties.Custom ("data-jp-theme-light","true")
