@@ -40,6 +40,7 @@ let isSeparator (input : string) =
 ///`fileContent` - content of page to parse. Usually whole content of `.md` file
 ///returns content of config that should be used for the page
 let getConfig (fileContent : string) =
+    let fileContent = fileContent.ReplaceLineEndings(System.Environment.NewLine) // normalize line endings
     let fileContent = fileContent.Split System.Environment.NewLine
     let fileContent = fileContent |> Array.skip 1 //First line must be ---
     let indexOfSeperator = fileContent |> Array.findIndex isSeparator
