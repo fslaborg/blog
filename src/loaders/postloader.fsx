@@ -19,14 +19,31 @@ type PostConfig = {
             category = category
             date = date
         }
-    static member ofMap(m:Map<string,string>) =
+    static member ofMap (source:string) (m:Map<string,string>) =
+
+        let mandatoryFieldMissing (fieldName: string) (source:string) (o:string Option) = if o.IsNone then failwith $"missing field {fieldName} in config from {source}" else o.Value
+
+        let title = m |> Map.tryFind "title" |> mandatoryFieldMissing "title" source
+        let author = m.TryFind "author" |> mandatoryFieldMissing "author" source
+        let author_link = m.TryFind "author_link" |> mandatoryFieldMissing "author_link" source
+        let category = m.TryFind "category" |> mandatoryFieldMissing "category" source
+        let date = 
+            let tmp = m.TryFind "date" |> mandatoryFieldMissing "date" source
+            try 
+                System.DateTime.ParseExact(tmp,"yyyy-MM-dd",System.Globalization.CultureInfo.InvariantCulture)
+            with _ ->
+                failwith $"wrong date format in config from {source}, make sure to use YYY-MM-DD"
+
+
         PostConfig.create(
-            title = m["title"],
-            author = m["author"],
-            author_link = m["author_link"],
-            category = m["category"],
-            date = (System.DateTime.ParseExact(m["date"],"yyyy-MM-dd",System.Globalization.CultureInfo.InvariantCulture))
+            title = title,
+            author = author,
+            author_link = author_link,
+            category = category,
+            date = date
         )
+
+
 
 let markdownPipeline =
     MarkdownPipelineBuilder()
@@ -89,7 +106,7 @@ let loader (projectRoot: string) (siteContent: SiteContents) =
             config_path
             |> File.ReadAllText
             |> getConfig
-            |> PostConfig.ofMap
+            |> PostConfig.ofMap config_path
 
         let postName =
             post_path
