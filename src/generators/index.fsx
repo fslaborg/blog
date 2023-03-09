@@ -7,6 +7,39 @@
 open Postloader
 open Html
 
+let latest_post_display (latest_post: NotebookPost)=
+
+    let latest_post_url = Globals.prefixUrl $"posts/{latest_post.file_name}"
+    let latest_post_category_url = Globals.prefixUrl $"posts/categories/{latest_post.post_config.category}.html"
+
+    div [Class "content"] [
+        h1 [Class "title is-capitalized is-inline-block is-emphasized-darkmagenta"] [!!"Latest post"]
+        div [Class "container"] [
+            h3 [Class "subtitle mt-0"] [a [Href latest_post_url; Class "is-magenta"] [!! latest_post.post_config.title] ]
+            !! " by "
+            a [Href latest_post.post_config.author_link; Class "is-aquamarine"] [!! latest_post.post_config.author]
+            !! "in "
+            a [Href latest_post_category_url; Class "is-aquamarine"] [!! latest_post.post_config.category]
+        ]
+    ]
+
+let browse_categories_display (posts: NotebookPost list) =
+    div [Class "content"] [
+        h1 [Class "title is-capitalized is-inline-block is-emphasized-darkmagenta"] [!!"Browse categories"]
+        div [Class "container"] [
+            ul [Class "mt-0"] (
+                posts
+                |> List.map (fun p -> p.post_config.category)
+                |> List.distinct
+                |> List.map (fun c -> 
+                    let link = Globals.prefixUrl $"posts/categories/{c}.html"
+                    li [] [h3 [Class "subtitle"] [a [Href link; Class "is-magenta"] [!! c] ]]
+                )
+            )
+        ]
+    ]
+
+
 let generate' (ctx : SiteContents) (_: string) =
 
     let posts = 
@@ -15,7 +48,7 @@ let generate' (ctx : SiteContents) (_: string) =
         |> List.ofSeq
 
     let latest_post = posts |> List.minBy (fun p -> System.DateTime.Now.Ticks - p.post_config.date.Ticks)
-    let latest_post_url = Globals.prefixUrl $"posts/{latest_post.file_name}"
+    
     Layout.layout ctx "FsLab Blog" [
         section [Class "hero is-medium has-bg-magenta"] [
             div [Class "hero-body"] [
@@ -42,26 +75,17 @@ let generate' (ctx : SiteContents) (_: string) =
                     ]
                 ]
             ]
-        ]
+        ] 
         section [] [
             div [Class "container has-text-justified"] [
                 div [Class "main-TextField"] [
                     div [Class "columns"] [
                         div [Class "column is-6"] [
-                            h1 [Class "title"] [!!"Latest post"]
-                            a [Href latest_post_url] [!! latest_post.file_name.Replace(".html", "")] 
-                            !! $" by {latest_post.post_config.author}"
+                            latest_post_display latest_post
                         ]
                         div [Class "column is-6"] [
-                            h1 [] [!!"Highlighted post"]
+                            browse_categories_display posts
                         ]
-                    ]
-                ]
-            ]
-            div [Class "container"] [
-                div [Class "main-TextField"] [
-                    code [Class "language-fsharp"] [
-                        !! "printfn \"hello world\""
                     ]
                 ]
             ]
