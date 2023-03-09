@@ -1,4 +1,4 @@
-<html class="has-navbar-fixed-top">
+<html>
   <head>
     <meta charSet="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -15,39 +15,68 @@
     <link rel="stylesheet" href="https://fslab.org/blog/style/notebook.css"/>
   </head>
   <body>
-    <nav class="navbar is-fixed-top">
-      <div class="navbar-brand">
-        <a class="navbar-item" href="https://fslab.org">
-          <img src="https://fslab.org/blog/images/favicon.png" alt="Logo"/>
-        </a>
-        <a class="navbar-burger" data-target="navMenu" aria-label="menu" role="button" aria-expanded="false">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>
+    <div class="columns is-fullheight m-0">
+      <div class="column is-2 is-paddingless box m-0">
+        <aside class="menu p-4" id="graph-menu">
+          <h1 class="title is-capitalized is-inline-block is-emphasized-darkmagenta mb-4">
+            Table of contents
+          </h1>
+        </aside>
       </div>
-      <div id="navMenu" class="navbar-menu">
-        <div class="navbar-start">
-          <a class="navbar-item" href="/FsLab Blog">
-            FsLab Blog
-          </a>
-        </div>
-        <div class="navbar-end">
-          <a class="navbar-item is-magenta" href="https://twitter.com/fslaborg">
-            <span class="icon">
-              <i class="fab fa-twitter"></i>
-            </span>
-          </a>
-          <a class="navbar-item is-magenta" href="https://github.com/fslaborg">
-            <span class="icon">
-              <i class="fab fa-github"></i>
-            </span>
-          </a>
-        </div>
-      </div>
-    </nav>
-    <div class="content jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
-      
+      <div class="column is-10 is-paddingless pl-1 pr-6">
+        <nav class="navbar">
+          <div class="navbar-brand">
+            <a class="navbar-item" href="https://fslab.org">
+              <img src="https://fslab.org/blog/images/favicon.png" alt="Logo"/>
+            </a>
+            <a class="navbar-burger" data-target="navMenu" aria-label="menu" role="button" aria-expanded="false">
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+            </a>
+          </div>
+          <div id="navMenu" class="navbar-menu">
+            <div class="navbar-start">
+              <a class="navbar-item" href="/FsLab Blog">
+                FsLab Blog
+              </a>
+            </div>
+            <div class="navbar-end">
+              <a class="navbar-item is-magenta" href="https://twitter.com/fslaborg">
+                <span class="icon">
+                  <i class="fab fa-twitter"></i>
+                </span>
+              </a>
+              <a class="navbar-item is-magenta" href="https://github.com/fslaborg">
+                <span class="icon">
+                  <i class="fab fa-github"></i>
+                </span>
+              </a>
+            </div>
+          </div>
+        </nav>
+        <section class="hero is-small has-bg-magenta">
+          <div class="hero-body">
+            <div class="container has-text-justified">
+              <div class="main-TextField">
+                <h1 class="title is-capitalized is-white is-inline-block is-emphasized-darkmagenta mb-4">
+                  "Clustering with FSharp.Stats III: DBSCAN"
+                </h1>
+                <div class="block">
+                  <h3 class="subtitle is-capitalized is-white is-block">
+                    Posted on 2021-7-29 by
+                    <a href="https://github.com/bvenn">
+                      Benedikt Venn
+                    </a>
+                     in datascience
+                  </h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <div class="content jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
+          
 
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
@@ -779,6 +808,8 @@ the absolute variation is low.</li>
 </div>
 </div>
 </
+        </div>
+      </div>
     </div>
   </body>
   <footer class="footer has-bg-darkmagenta">
