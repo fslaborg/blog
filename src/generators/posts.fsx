@@ -11,6 +11,7 @@ open Html
 
 open System.IO
 open System.Diagnostics
+open System.Text.RegularExpressions
 
 let processConvertedNotebook (content:string) =
     let nb_start_tag = """<body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">"""
@@ -25,6 +26,23 @@ let fixNotebookJson (nb_path:string) =
         let metadataSection = "\"metadata\": {"
         let metadata_start_index = content.LastIndexOf(metadataSection)
         File.WriteAllText(nb_path, (content[0..metadata_start_index + metadataSection.Length] + "\"language_info\": {\"name\": \"F#\"}," + content[metadata_start_index + metadataSection.Length..]))
+
+let anchorRegex = Regex("<a class=\"anchor-link\" href=\"(?<link>#\\S*)\"", RegexOptions.Compiled)
+let getTOC (content:string) =
+    let anchors =
+        anchorRegex.Matches(content)
+        |> Seq.map (fun x -> x.Groups.Item("link").Value)
+        |> List.ofSeq
+        
+    ul [] (
+        anchors
+        |> List.map (fun link ->
+            let title = link.Replace("-"," ").Replace("#","")
+            li [] [
+                a [Href link; Class "is-aquamarine"] [!!title]
+            ]
+        ) 
+    )
 
 let generate (ctx : SiteContents) (projectRoot: string) (page: string) =
 
@@ -55,13 +73,16 @@ let generate (ctx : SiteContents) (projectRoot: string) (page: string) =
             let notebook_content = File.ReadAllText output_path
             File.Delete output_path
 
+            let processed_notebook = processConvertedNotebook notebook_content
+            let toc = getTOC processed_notebook
+
             let content = 
-                Layout.postLayout ctx post.post_config "Posts" [
+                Layout.postLayout ctx post.post_config toc "Posts" [
                     div [
                         Class "content jp-Notebook"
                         HtmlProperties.Custom ("data-jp-theme-light","true")
                         HtmlProperties.Custom ("data-jp-theme-name","JupyterLab Light")
-                    ] [!!(processConvertedNotebook notebook_content)]
+                    ] [!!processed_notebook]
                 ]
                 |> Layout.render ctx
 

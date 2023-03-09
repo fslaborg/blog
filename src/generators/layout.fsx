@@ -58,7 +58,7 @@ let layout (ctx : SiteContents) active bodyCnt =
         Components.Footer()
     ]
 
-let postLayout (ctx : SiteContents) (post_config:PostConfig) active bodyCnt =
+let postLayout (ctx : SiteContents) (post_config:PostConfig) (toc:HtmlElement) active bodyCnt =
     let pages = ctx.TryGetValues<Pageloader.Page> () |> Option.defaultValue Seq.empty
     let siteInfo = ctx.TryGetValue<Globalloader.SiteInfo> ()
     let ttl =
@@ -87,7 +87,10 @@ let postLayout (ctx : SiteContents) (post_config:PostConfig) active bodyCnt =
             div [Class "columns is-fullheight m-0"] [
                 div [Class "column is-2 is-paddingless box m-0"] [
                     aside [Class "menu p-4"; Id "graph-menu"] [
-                        h1 [Class "title is-capitalized is-inline-block is-emphasized-darkmagenta mb-4"] [!! "Table of contents"]
+                        div [Class "content"] [
+                            h3 [Class "title is-capitalized is-inline-block is-emphasized-darkmagenta mb-4"] [!! "Table of contents"]
+                            toc
+                        ]
                     ]
                 ]
                 div [Class "column is-10 is-paddingless pl-1 pr-6"] [
@@ -101,11 +104,11 @@ let postLayout (ctx : SiteContents) (post_config:PostConfig) active bodyCnt =
                             a [Class "navbar-item is-magenta"; Href "https://github.com/fslaborg"] [Components.Icon "fab fa-github"]
                         ]
                     )
-                    section [Class "hero is-small has-bg-magenta"] [
+                    section [Class "hero is-small has-bg-darkmagenta"] [
                         div [Class "hero-body"] [
                             div [Class "container has-text-justified"] [
                                 div [Class "main-TextField"] [
-                                    h1 [Class "title is-capitalized is-white is-inline-block is-emphasized-darkmagenta mb-4"] [!! post_config.title]
+                                    h1 [Class "title is-capitalized is-white is-inline-block is-emphasized-magenta mb-4"] [!! post_config.title]
                                     div [Class "block"] [
                                         h3 [Class "subtitle is-white is-block"] [
                                             !! $"Posted on {post_config.date.Year}-{post_config.date.Month}-{post_config.date.Day} by"
