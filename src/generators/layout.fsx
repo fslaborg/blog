@@ -74,6 +74,8 @@ let postLayout (ctx : SiteContents) (post_config:PostConfig) active bodyCnt =
         )
         |> Seq.toList
 
+    let category_url = Globals.prefixUrl $"posts/categories/{post_config.category}.html"
+
     html [] [
         head [] [
             yield! Components.DefaultHeadTags ttl
@@ -105,10 +107,11 @@ let postLayout (ctx : SiteContents) (post_config:PostConfig) active bodyCnt =
                                 div [Class "main-TextField"] [
                                     h1 [Class "title is-capitalized is-white is-inline-block is-emphasized-darkmagenta mb-4"] [!! post_config.title]
                                     div [Class "block"] [
-                                        h3 [Class "subtitle is-capitalized is-white is-block"] [
+                                        h3 [Class "subtitle is-white is-block"] [
                                             !! $"Posted on {post_config.date.Year}-{post_config.date.Month}-{post_config.date.Day} by"
-                                            a [Href post_config.author_link] [!! post_config.author]
-                                            !! $" in {post_config.category}"
+                                            a [Href post_config.author_link; Class "is-aquamarine"] [!! post_config.author]
+                                            !! $" in "
+                                            a [Href category_url; Class "is-aquamarine"] [!! post_config.category]
                                         ]
                                     ]
                                 ]
