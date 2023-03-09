@@ -22,20 +22,33 @@ let generate (ctx : SiteContents) (projectRoot: string) (page: string) =
     |> List.map (fun (category, posts) ->
         Path.Combine([|projectRoot; "_public"; "posts"; "categories"; $"{category}.html"|]),
         Layout.layout ctx "Posts" [
-            h1 [Class "title is-capitalized is-inline-block is-emphasized-darkmagenta"] [!! $"{category} posts"]
-            div [Class "container"] [
-                ul [Class "mt-0"] (
-                    posts
-                    |> List.sortByDescending (fun p -> p.post_config.date)
-                    |> List.map (fun post -> 
-                        let post_url = Globals.prefixUrl $"posts/{post.file_name}"
-                        li [] [
-                            a [Href post_url; Class "is-magenta"] [!! post.post_config.title]
-                            !! " by "
-                            a [Href post.post_config.author_link; Class "is-aquamarine"] [!! post.post_config.author]
+            section [Class "hero is-small has-bg-darkmagenta"] [
+                div [Class "hero-body"] [
+                    div [Class "container has-text-centered"] [
+                        div [Class "main-TextField"] [
+                            h1 [Class "title is-capitalized is-white is-inline-block is-emphasized-aquamarine mb-4"] [!! $"{category} posts"]
                         ]
+                    ]
+                ]
+            ]
+            section [] [
+                div [Class "container"] [
+                    div [Class "timeline is-centered"] (
+                        posts
+                        |> List.sortByDescending (fun p -> p.post_config.date)
+                        |> List.map (fun post -> 
+                            div [Class"timeline-item is-darkmagenta"] [
+                                div [Class "timeline-marker"] []
+                                div [Class "timeline-content"] [
+                                    p [Class "heading is-size-4"] [!! $"{post.post_config.date.Year}-{post.post_config.date.Month}-{post.post_config.date.Day}"]
+                                    Layout.postPreview post
+                                ]
+                            ]
+                        )
                     )
-                )
+                ]
+
+
             ]
         ]
         |> Layout.render ctx

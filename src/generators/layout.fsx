@@ -41,6 +41,7 @@ let layout (ctx : SiteContents) active bodyCnt =
             yield! Components.DefaultHeadTags ttl
             script [Src (Globals.prefixUrl "js/navbar.js")] []
             script [Src (Globals.prefixUrl "js/prism.js")] []
+            link [Rel "stylesheet"; Href "https://cdn.jsdelivr.net/npm/bulma-timeline@3.0.5/dist/css/bulma-timeline.min.css"]
             link [Rel "stylesheet"; Href (Globals.prefixUrl "style/notebook.css")]
         ]
         body [] [
@@ -81,6 +82,7 @@ let postLayout (ctx : SiteContents) (post_config:PostConfig) (toc:HtmlElement) a
             yield! Components.DefaultHeadTags ttl
             script [Src (Globals.prefixUrl "js/navbar.js")] []
             script [Src (Globals.prefixUrl "js/prism.js")] []
+            link [Rel "stylesheet"; Href "https://cdn.jsdelivr.net/npm/bulma-timeline@3.0.5/dist/css/bulma-timeline.min.css"]
             link [Rel "stylesheet"; Href (Globals.prefixUrl "style/notebook.css")]
         ]
         body [] [
