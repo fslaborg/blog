@@ -4,11 +4,38 @@
 open System.IO
 open Markdig
 
+type PostCategory =
+| Fsharp
+| Datascience
+| Advanced
+| Other of string
+
+    static member ofString (s:string) =
+        match s.Trim().ToLower() with
+        | "fsharp" -> Fsharp
+        | "datascience" -> Datascience
+        | "advanced" -> Advanced
+        | _ -> Other s
+
+    static member toString (pc: PostCategory) =
+        match pc with
+        | Fsharp      -> "FSharp"
+        | Datascience -> "Data Science"
+        | Advanced    -> "Advanced"
+        | Other o     -> o
+
+    static member getDescription (pc: PostCategory) =
+        match pc with
+        | Fsharp      -> "Basic content related to the F# programming language."
+        | Datascience -> "Data science using the FsLab stack"
+        | Advanced    -> "Advanced topics"
+        | Other o     -> o
+
 type PostConfig = {
     title: string
     author: string
     author_link: string
-    category: string
+    category: PostCategory
     date: System.DateTime
     preview_image: string option
     summary: string option
@@ -30,7 +57,12 @@ type PostConfig = {
         let title = m |> Map.tryFind "title" |> mandatoryFieldMissing "title" source
         let author = m.TryFind "author" |> mandatoryFieldMissing "author" source
         let author_link = m.TryFind "author_link" |> mandatoryFieldMissing "author_link" source
-        let category = m.TryFind "category" |> mandatoryFieldMissing "category" source
+        let category = 
+            let tmp = m.TryFind "category" |> mandatoryFieldMissing "category" source
+            try 
+                PostCategory.ofString tmp
+            with _ ->
+                failwith $"wrong post category format in config from {source}"
         let date = 
             let tmp = m.TryFind "date" |> mandatoryFieldMissing "date" source
             try 

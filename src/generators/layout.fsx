@@ -116,7 +116,7 @@ let postLayout (ctx : SiteContents) (post_config:PostConfig) (toc:HtmlElement) a
                                             !! $"Posted on {post_config.date.Year}-{post_config.date.Month}-{post_config.date.Day} by"
                                             a [Href post_config.author_link; Class "is-aquamarine"] [!! post_config.author]
                                             !! $" in "
-                                            a [Href category_url; Class "is-aquamarine"] [!! post_config.category]
+                                            a [Href category_url; Class "is-aquamarine"] [!! (post_config.category |> PostCategory.toString)]
                                         ]
                                     ]
                                 ]
@@ -146,15 +146,15 @@ let postPreview (post:NotebookPost) =
                     ]
                 ]
             ]
-        div [Class "card-header"] [
-            h1 [Class "card-header-title"] [a [Href post_url] [!!post.post_config.title]]
+        div [Class "card-header is-emphasized-darkmagenta"] [
+            h1 [Class "card-header-title is-size-4"] [a [Href post_url; Class "is-magenta"] [!!post.post_config.title]]
         ]
         div [Class "card-content is-size-6"] [
             if has_summary then div [Class "content"] [!!post.post_config.summary.Value]
             !! $"Posted on {post.post_config.date.Year}-{post.post_config.date.Month}-{post.post_config.date.Day} by "
             a [Href post.post_config.author_link; Class "is-aquamarine"] [!! post.post_config.author]
             !! "in "
-            a [Href post_category_url; Class "is-aquamarine"] [!! post.post_config.category]
+            a [Href post_category_url; Class "is-aquamarine"] [!! (post.post_config.category |> PostCategory.toString)]
         ]
     ]
 

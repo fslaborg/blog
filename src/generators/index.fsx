@@ -20,11 +20,13 @@ let browse_categories_display (posts: NotebookPost list) =
         div [Class "container"] [
             ul [Class "mt-0"] (
                 posts
-                |> List.map (fun p -> p.post_config.category)
-                |> List.distinct
-                |> List.map (fun c -> 
+                |> List.countBy (fun p -> p.post_config.category)
+                |> List.map (fun (c,count) -> 
                     let link = Globals.prefixUrl $"posts/categories/{c}.html"
-                    li [] [h3 [Class "subtitle"] [a [Href link; Class "is-magenta"] [!! c] ]]
+                    li [] [
+                        h3 [Class "subtitle mb-1 is-size-4"] [a [Href link; Class "is-magenta"] [!! $"{c |> PostCategory.toString} [{count}]"] ]
+                        p [Class "is-size-6"] [!! (c |> PostCategory.getDescription)]
+                    ]
                 )
             )
         ]
@@ -65,12 +67,6 @@ let generate' (ctx : SiteContents) (_: string) =
         section [] [
             div [Class "container has-text-justified"] [
                 div [Class "main-TextField"] [
-                    div [Class "content is-size-6"] [
-                        div [Class "block"] [
-                            p [] [!! "You can find post in a wide range of topics - from getting a F# programming environment up and running over classic data science samples such as clustering the Iris data set or linear regression on the Boston housing dataset to advanced topics such as replicate quality control or q values."]
-                            p [] [!! "Read the latest post below or browse all posts by categories."]
-                        ]
-                    ]
                     div [Class "columns"] [
                         div [Class "column is-6"] [
                             latest_post_display latest_post
