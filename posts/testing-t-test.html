@@ -1,0 +1,1041 @@
+<html>
+  <head>
+    <meta charSet="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>
+      FsLab Blog
+    </title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans"/>
+    <script defer="true" src="https://kit.fontawesome.com/0d3e0ea7a6.js" crossOrigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fslab/fslab-styles"/>
+    <script src="https://fslab.org/blog/js/navbar.js"></script>
+    <script src="https://fslab.org/blog/js/prism.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-timeline@3.0.5/dist/css/bulma-timeline.min.css"/>
+    <link rel="stylesheet" href="https://fslab.org/blog/style/notebook.css"/>
+  </head>
+  <body>
+    <div class="columns is-fullheight m-0">
+      <div class="column is-2 is-paddingless box m-0">
+        <aside class="menu p-4" id="graph-menu">
+          <div class="content">
+            <h3 class="title is-capitalized is-inline-block is-emphasized-darkmagenta mb-4">
+              Table of contents
+            </h3>
+            <ul>
+              <li>
+                <a href="#Testing-with-FSharp.Stats-I:-t-test" class="is-aquamarine">
+                  Testing with FSharp.Stats I: t test
+                </a>
+              </li>
+              <li>
+                <a href="#Getting-started:-The-t-test" class="is-aquamarine">
+                  Getting started: The t test
+                </a>
+              </li>
+              <li>
+                <a href="#One-sample-t-test" class="is-aquamarine">
+                  One sample t test
+                </a>
+              </li>
+              <li>
+                <a href="#Two-sample-t-test-(unpaired-data)" class="is-aquamarine">
+                  Two sample t test (unpaired data)
+                </a>
+              </li>
+              <li>
+                <a href="#Two-sample-t-test-(paired-data)" class="is-aquamarine">
+                  Two sample t test (paired data)
+                </a>
+              </li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+      <div class="column is-10 is-paddingless pl-1 pr-6">
+        <nav class="navbar">
+          <div class="navbar-brand">
+            <a class="navbar-item" href="https://fslab.org">
+              <img src="https://fslab.org/blog/images/favicon.png" alt="Logo"/>
+            </a>
+            <a class="navbar-burger" data-target="navMenu" aria-label="menu" role="button" aria-expanded="false">
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+            </a>
+          </div>
+          <div id="navMenu" class="navbar-menu">
+            <div class="navbar-start">
+              <a class="navbar-item" href="/FsLab Blog">
+                FsLab Blog
+              </a>
+            </div>
+            <div class="navbar-end">
+              <a class="navbar-item is-magenta" href="https://twitter.com/fslaborg">
+                <span class="icon">
+                  <i class="fab fa-twitter"></i>
+                </span>
+              </a>
+              <a class="navbar-item is-magenta" href="https://github.com/fslaborg">
+                <span class="icon">
+                  <i class="fab fa-github"></i>
+                </span>
+              </a>
+            </div>
+          </div>
+        </nav>
+        <section class="hero is-small has-bg-darkmagenta">
+          <div class="hero-body">
+            <div class="container has-text-justified">
+              <div class="main-TextField">
+                <h1 class="title is-capitalized is-white is-inline-block is-emphasized-magenta mb-4">
+                  Testing with FSharp.Stats I: t-test
+                </h1>
+                <div class="block">
+                  <h3 class="subtitle is-white is-block">
+                    Posted on 2021-7-29 by
+                    <a href="https://github.com/omaus" class="is-aquamarine">
+                      Oliver Maus
+                    </a>
+                     in 
+                    <a href="https://fslab.org/blog/posts/categories/Datascience.html" class="is-aquamarine">
+                      Data Science
+                    </a>
+                  </h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <div class="content jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
+          
+
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h1 id="Testing-with-FSharp.Stats-I:-t-test">Testing with FSharp.Stats I: t-test<a class="anchor-link" href="#Testing-with-FSharp.Stats-I:-t-test">&#182;</a></h1><h2 id="Getting-started:-The-t-test">Getting started: The t-test<a class="anchor-link" href="#Getting-started:-The-t-test">&#182;</a></h2><p><em>I love statistical testing</em> - A sentence math teachers don't hear often during their time at school. In this tutorial we aim to give you a short introduction of the theory and how to 
+perform the most used statistical test: the t-test</p>
+<p>Suppose you have measured the length of some leaves of two trees and you want to find out if the average length of the leaves is the same or if they differ from each other. 
+If you knew the population distributions of all leaves hanging on both trees the task would be easy, but since we only have samples from both populations, we have to apply a statistical test.
+Student's t-test can be applied to test whether two samples have the same mean (H0), or if the means are different (H1). There are two requirements to the samples that have to be fulfilled:</p>
+<ol>
+<li><p>The variances of both samples have to be equal.</p>
+</li>
+<li><p>The samples have to follow a normal distribution.</p>
+</li>
+</ol>
+<p><em>Note: Slight deviations from these requirements can be accepted but strong violations result in an inflated false positive rate. If the variances are not equal a Welch test can be performed.</em>
+<em>There are some tests out there to check if the variances are equal or if the sample follows a normal distribution, but their effectiveness is discussed.</em>
+<em>You always should consider the shape of the theoretical background distribution, instead of relying on preliminary tests rashly.</em></p>
+<p>The t-test is one of the most used statistical tests in datascience. It is used to compare two samples in terms of statistical significance. 
+Often a significance threshold (or &alpha; level) of 0.05 is chosen to define if a p value is defined as statistically significant. A p value describes how likely it is to observe an effect
+at least as extreme as you observed (in the comparison) by chance. Low p values indicate a high confidence to state that there is a real difference and the observed difference is not caused by chance.</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-F#"><pre><span></span><span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Deedle.Interactive, 3.0.0"</span><span class="w"></span>
+<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: FSharp.Stats, 0.4.3"</span><span class="w"></span>
+<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Plotly.NET.Interactive, 4.0.0"</span><span class="w"></span>
+<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: FSharp.Data, 4.2.7"</span><span class="w"></span>
+
+<span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Data</span><span class="w"></span>
+<span class="k">open</span><span class="w"> </span><span class="nn">Deedle</span><span class="w"></span>
+<span class="k">open</span><span class="w"> </span><span class="nn">Plotly.NET</span><span class="w"></span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div><div></div><div></div><div><strong>Installed Packages</strong><ul><li><span>Deedle.Interactive, 3.0.0</span></li><li><span>FSharp.Data, 4.2.7</span></li><li><span>FSharp.Stats, 0.4.3</span></li><li><span>Plotly.NET.Interactive, 4.0.0</span></li></ul></div></div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>For our purposes, we will use the housefly wing length dataset (from <em>Sokal et al., 1955, A morphometric analysis of DDT-resistant and non-resistant housefly strains</em>).
+Head over to the <a href="001_getting-started.html#Data-access">Getting started</a> tutorial where it is shown how to import datasets in a simple way.</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-F#"><pre><span></span><span class="c1">// We retrieve the dataset via FSharp.Data:</span><span class="w"></span>
+<span class="k">let</span><span class="w"> </span><span class="nv">rawDataHousefly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Http</span><span class="p">.</span><span class="n">RequestString</span><span class="w"> </span><span class="s">@"https://raw.githubusercontent.com/fslaborg/datasets/main/data/HouseflyWingLength.txt"</span><span class="w"></span>
+
+<span class="k">let</span><span class="w"> </span><span class="nv">dataHousefly</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">seq</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
+<span class="w">    </span><span class="nn">Frame</span><span class="p">.</span><span class="n">ReadCsvString</span><span class="o">(</span><span class="n">rawDataHousefly</span><span class="o">,</span><span class="w"> </span><span class="k">false</span><span class="o">,</span><span class="w"> </span><span class="n">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"wing length (mm * 10^1)"</span><span class="o">)</span><span class="w"></span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">getCol</span><span class="w"> </span><span class="s">"wing length (mm * 10^1)"</span><span class="w"></span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Series</span><span class="p">.</span><span class="n">values</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// We convert the values to mm</span><span class="w"></span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">10</span><span class="o">.)</span><span class="w"></span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Let us first have a look at the sample data with help of a boxplot. As shown below, the average wingspan is around 4.5 with variability ranges between 3.5 and 5.5.</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-F#"><pre><span></span><span class="nn">Chart</span><span class="p">.</span><span class="n">BoxPlot</span><span class="o">(</span><span class="w"></span>
+<span class="w">    </span><span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dataHousefly</span><span class="o">,</span><span class="w"> </span>
+<span class="w">    </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"housefly"</span><span class="o">,</span><span class="w"> </span>
+<span class="w">    </span><span class="n">BoxPoints</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">BoxPoints</span><span class="p">.</span><span class="n">All</span><span class="o">,</span><span class="w"> </span>
+<span class="w">    </span><span class="n">Jitter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">2</span><span class="w"></span>
+<span class="o">)</span><span class="w"></span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="w"> </span><span class="s">"wing length [mm]"</span><span class="w"></span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div><div id="d27634fa-057c-46fc-9342-02c5672a8083"><!-- Plotly chart will be drawn inside this DIV --></div><script type="text/javascript">
+var renderPlotly_d27634fa057c46fc934202c5672a8083 = function() {
+    var fsharpPlotlyRequire = requirejs.config({context:'fsharp-plotly',paths:{plotly:'https://cdn.plot.ly/plotly-2.18.1.min'}}) || require;
+    fsharpPlotlyRequire(['plotly'], function(Plotly) {
+        var data = [{"type":"box","name":"housefly","y":[3.6,3.7,3.8,3.8,3.9,3.9,4.0,4.0,4.0,4.0,4.1,4.1,4.1,4.1,4.1,4.1,4.2,4.2,4.2,4.2,4.2,4.2,4.2,4.3,4.3,4.3,4.3,4.3,4.3,4.3,4.3,4.4,4.4,4.4,4.4,4.4,4.4,4.4,4.4,4.4,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.6,4.6,4.6,4.6,4.6,4.6,4.6,4.6,4.6,4.6,4.7,4.7,4.7,4.7,4.7,4.7,4.7,4.7,4.7,4.8,4.8,4.8,4.8,4.8,4.8,4.8,4.8,4.9,4.9,4.9,4.9,4.9,4.9,4.9,5.0,5.0,5.0,5.0,5.0,5.0,5.1,5.1,5.1,5.1,5.2,5.2,5.3,5.3,5.4,5.5],"marker":{},"line":{},"boxpoints":"all","jitter":0.2}];
+        var layout = {"width":600,"height":600,"template":{"layout":{"title":{"x":0.05},"font":{"color":"rgba(42, 63, 95, 1.0)"},"paper_bgcolor":"rgba(255, 255, 255, 1.0)","plot_bgcolor":"rgba(229, 236, 246, 1.0)","autotypenumbers":"strict","colorscale":{"diverging":[[0.0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1.0,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"hovermode":"closest","hoverlabel":{"align":"left"},"coloraxis":{"colorbar":{"outlinewidth":0.0,"ticks":""}},"geo":{"showland":true,"landcolor":"rgba(229, 236, 246, 1.0)","showlakes":true,"lakecolor":"rgba(255, 255, 255, 1.0)","subunitcolor":"rgba(255, 255, 255, 1.0)","bgcolor":"rgba(255, 255, 255, 1.0)"},"mapbox":{"style":"light"},"polar":{"bgcolor":"rgba(229, 236, 246, 1.0)","radialaxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","ticks":""},"angularaxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","ticks":""}},"scene":{"xaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","gridwidth":2.0,"zerolinecolor":"rgba(255, 255, 255, 1.0)","backgroundcolor":"rgba(229, 236, 246, 1.0)","showbackground":true},"yaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","gridwidth":2.0,"zerolinecolor":"rgba(255, 255, 255, 1.0)","backgroundcolor":"rgba(229, 236, 246, 1.0)","showbackground":true},"zaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","gridwidth":2.0,"zerolinecolor":"rgba(255, 255, 255, 1.0)","backgroundcolor":"rgba(229, 236, 246, 1.0)","showbackground":true}},"ternary":{"aaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)"},"baxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)"},"caxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)"},"bgcolor":"rgba(229, 236, 246, 1.0)"},"xaxis":{"title":{"standoff":15},"ticks":"","automargin":"height+width+left+right+top+bottom","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","zerolinecolor":"rgba(255, 255, 255, 1.0)","zerolinewidth":2.0},"yaxis":{"title":{"standoff":15},"ticks":"","automargin":"height+width+left+right+top+bottom","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","zerolinecolor":"rgba(255, 255, 255, 1.0)","zerolinewidth":2.0},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"shapedefaults":{"line":{"color":"rgba(42, 63, 95, 1.0)"}},"colorway":["rgba(99, 110, 250, 1.0)","rgba(239, 85, 59, 1.0)","rgba(0, 204, 150, 1.0)","rgba(171, 99, 250, 1.0)","rgba(255, 161, 90, 1.0)","rgba(25, 211, 243, 1.0)","rgba(255, 102, 146, 1.0)","rgba(182, 232, 128, 1.0)","rgba(255, 151, 255, 1.0)","rgba(254, 203, 82, 1.0)"]},"data":{"bar":[{"marker":{"line":{"color":"rgba(229, 236, 246, 1.0)","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"error_x":{"color":"rgba(42, 63, 95, 1.0)"},"error_y":{"color":"rgba(42, 63, 95, 1.0)"}}],"barpolar":[{"marker":{"line":{"color":"rgba(229, 236, 246, 1.0)","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}}}],"carpet":[{"aaxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","endlinecolor":"rgba(42, 63, 95, 1.0)","minorgridcolor":"rgba(255, 255, 255, 1.0)","startlinecolor":"rgba(42, 63, 95, 1.0)"},"baxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","endlinecolor":"rgba(42, 63, 95, 1.0)","minorgridcolor":"rgba(255, 255, 255, 1.0)","startlinecolor":"rgba(42, 63, 95, 1.0)"}}],"choropleth":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contour":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"colorbar":{"outlinewidth":0.0,"ticks":""}}],"heatmap":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}}}],"histogram2d":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"colorbar":{"outlinewidth":0.0,"ticks":""}}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"pie":[{"automargin":true}],"scatter":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatter3d":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}},"line":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"surface":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"table":[{"cells":{"fill":{"color":"rgba(235, 240, 248, 1.0)"},"line":{"color":"rgba(255, 255, 255, 1.0)"}},"header":{"fill":{"color":"rgba(200, 212, 227, 1.0)"},"line":{"color":"rgba(255, 255, 255, 1.0)"}}}]}},"yaxis":{"title":{"text":"wing length [mm]"}}};
+        var config = {"responsive":true};
+        Plotly.newPlot('d27634fa-057c-46fc-9342-02c5672a8083', data, layout, config);
+    });
+};
+if ((typeof(requirejs) !==  typeof(Function)) || (typeof(requirejs.config) !== typeof(Function))) {
+    var script = document.createElement("script");
+    script.setAttribute("src", "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js");
+    script.onload = function(){
+        renderPlotly_d27634fa057c46fc934202c5672a8083();
+    };
+    document.getElementsByTagName("head")[0].appendChild(script);
+}
+else {
+    renderPlotly_d27634fa057c46fc934202c5672a8083();
+}
+</script></div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="One-sample-t-test">One-sample t-test<a class="anchor-link" href="#One-sample-t-test">&#182;</a></h2><p>We want to analyze if an estimated expected value differs from the sample above. Therefore, we perform a one-sample t-test which covers exactly this situation.</p>
+<p><img style="max-width:75%" src="../../images/OneSampleTTest.png"></img></p>
+<p>Fig. 1: <strong>The one-sample t-test</strong> The dashed orange line depicts the distribution of our sample, the green bar the expected value to test against.</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats</span><span class="w"></span>
+<span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats.Testing</span><span class="w"></span>
+
+<span class="c1">// The testing module in FSharp.Stats require vectors as input types, thus we transform our array into a vector:</span><span class="w"></span>
+<span class="k">let</span><span class="w"> </span><span class="nv">vectorDataHousefly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vector</span><span class="w"> </span><span class="n">dataHousefly</span><span class="w"></span>
+
+<span class="c1">// The expected value of our population.</span><span class="w"></span>
+<span class="k">let</span><span class="w"> </span><span class="nv">expectedValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="o">.</span><span class="mi">5</span><span class="w"></span>
+
+<span class="c1">// Perform the one-sample t-test with our vectorized data and our exptected value as parameters.</span><span class="w"></span>
+<span class="k">let</span><span class="w"> </span><span class="nv">oneSampleResult</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">TTest</span><span class="p">.</span><span class="n">oneSample</span><span class="w"> </span><span class="n">vectorDataHousefly</span><span class="w"> </span><span class="n">expectedValue</span><span class="w"></span>
+
+<span class="n">oneSampleResult</span><span class="w"></span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<details open="open" class="dni-treeview"><summary><span class="dni-code-hint"><code>{ Statistic = 1.275624919\n  DegreesOfFreedom = 99.0\n  PValueLeft = 0.8974634108\n  PValueRight = 0.1025365892\n  PValue = 0.2050731784 }</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>Statistic</td><td><div class="dni-plaintext"><pre>1.2756249193674383</pre></div></td></tr><tr><td>DegreesOfFreedom</td><td><div class="dni-plaintext"><pre>99</pre></div></td></tr><tr><td>PValueLeft</td><td><div class="dni-plaintext"><pre>0.8974634107766597</pre></div></td></tr><tr><td>PValueRight</td><td><div class="dni-plaintext"><pre>0.1025365892233403</pre></div></td></tr><tr><td>PValue</td><td><div class="dni-plaintext"><pre>0.2050731784466806</pre></div></td></tr></tbody></table></div></details><style>
+.dni-code-hint {
+    font-style: italic;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.dni-treeview {
+    white-space: nowrap;
+}
+.dni-treeview td {
+    vertical-align: top;
+    text-align: start;
+}
+details.dni-treeview {
+    padding-left: 1em;
+}
+table td {
+    text-align: start;
+}
+table tr { 
+    vertical-align: top; 
+    margin: 0em 0px;
+}
+table tr td pre 
+{ 
+    vertical-align: top !important; 
+    margin: 0em 0px !important;
+} 
+table th {
+    text-align: start;
+}
+</style>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>The function returns a <code>TTestStatistics</code> type. If contains the fields</p>
+<ul>
+<li><p><code>Statistic</code>: defines the exact teststatistic</p>
+</li>
+<li><p><code>DegreesOfFreedom</code>: defines the degrees of freedom</p>
+</li>
+<li><p><code>PValueLeft</code>: the left-tailed p-value</p>
+</li>
+<li><p><code>PValueRight</code>: the right-tailed p-value</p>
+</li>
+<li><p><code>PValue</code>: the two-tailed p-value</p>
+</li>
+</ul>
+<p>As we can see, when looking at the two-tailed p-value, our sample does <em>not</em> differ significantly from our expected value. This matches our visual impression of the boxplot, where the sample distribution 
+is centered around 4.5.</p>
+<h2 id="Two-sample-t-test-(unpaired-data)">Two-sample t-test (unpaired data)<a class="anchor-link" href="#Two-sample-t-test-(unpaired-data)">&#182;</a></h2><p>The t-test is most often used in its two-sample variant. Here, two samples, independent from each other, are compared. It is required that both samples are normally distributed.
+In this next example, we are going to see if the gender of college athletes determines the number of concussions suffered over 3 years (from: <em>Covassin et al., 2003, Sex Differences and the Incidence of Concussions Among Collegiate Athletes, Journal of Athletic Training</em>).</p>
+<p><img style="max-width:75%" src="../../images/TwoSampleTTest.png"></img></p>
+<p>Fig. 2: <strong>The two-sample t-test</strong> The dashed orange and green lines depict the distribution of both samples that are compared with each other.</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">System.Text</span><span class="w"></span>
+
+<span class="k">let</span><span class="w"> </span><span class="nv">rawDataAthletes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Http</span><span class="p">.</span><span class="n">RequestString</span><span class="w"> </span><span class="s">@"https://raw.githubusercontent.com/fslaborg/datasets/main/data/ConcussionsInMaleAndFemaleCollegeAthletes_adapted.tsv"</span><span class="w"></span>
+
+<span class="k">let</span><span class="w"> </span><span class="nv">dataAthletesAsStream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nn">System</span><span class="p">.</span><span class="nn">IO</span><span class="p">.</span><span class="n">MemoryStream</span><span class="o">(</span><span class="n">rawDataAthletes</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Encoding</span><span class="p">.</span><span class="nn">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="o">)</span><span class="w"></span>
+
+<span class="c1">// The schema helps us setting column keys.</span><span class="w"></span>
+<span class="k">let</span><span class="w"> </span><span class="nv">dataAthletesAsFrame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">ReadCsv</span><span class="o">(</span><span class="n">dataAthletesAsStream</span><span class="o">,</span><span class="w"> </span><span class="n">hasHeaders</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="o">,</span><span class="w"> </span><span class="n">separators</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"</span><span class="se">\t</span><span class="s">"</span><span class="o">,</span><span class="w"> </span><span class="n">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Gender, Sports, Year, Concussion, Count"</span><span class="o">)</span><span class="w"></span>
+
+<span class="n">dataAthletesAsFrame</span><span class="w"></span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div>
+<style scoped>,
+  .dataframe tbody tr th:only-of-type {
+    vertical-align: middle;
+  }
+  .dataframe tbody tr th {,
+    vertical-align: top
+  }
+  .dataframe thead th {
+    text-align: right;
+  }
+  .no-wrap {
+    white-space: nowrap;
+  }
+</style>
+<table border='1' class='dataframe'>
+<thead><th></th><th></th><th>Gender</th><th>Sports</th><th>Year</th><th>Concussion</th><th>Count</th></thead><thead><th></th><th></th><th>(string)</th><th>(string)</th><th>(int)</th><th>(Boolean)</th><th>(int)</th></thead>
+<tr><td><b>0</b></td><td class="no-wrap">-></td><td>Female</td><td>Soccer</td><td>1997</td><td>False</td><td>24930</td></tr><tr><td><b>1</b></td><td class="no-wrap">-></td><td>Female</td><td>Soccer</td><td>1997</td><td>True</td><td>51</td></tr><tr><td><b>2</b></td><td class="no-wrap">-></td><td>Female</td><td>Soccer</td><td>1998</td><td>False</td><td>22887</td></tr><tr><td><b>3</b></td><td class="no-wrap">-></td><td>Female</td><td>Soccer</td><td>1998</td><td>True</td><td>47</td></tr><tr><td><b>4</b></td><td class="no-wrap">-></td><td>Female</td><td>Soccer</td><td>1999</td><td>False</td><td>27107</td></tr><tr><td><b>:</b></td><td class="no-wrap"></td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr><tr><td><b>55</b></td><td class="no-wrap">-></td><td>Male</td><td>Gymnastics</td><td>1997</td><td>True</td><td>0</td></tr><tr><td><b>56</b></td><td class="no-wrap">-></td><td>Male</td><td>Gymnastics</td><td>1998</td><td>False</td><td>221</td></tr><tr><td><b>57</b></td><td class="no-wrap">-></td><td>Male</td><td>Gymnastics</td><td>1998</td><td>True</td><td>0</td></tr><tr><td><b>58</b></td><td class="no-wrap">-></td><td>Male</td><td>Gymnastics</td><td>1999</td><td>False</td><td>1179</td></tr><tr><td><b>59</b></td><td class="no-wrap">-></td><td>Male</td><td>Gymnastics</td><td>1999</td><td>True</td><td>0</td></tr>
+</table>
+<p><b>60</b> rows x <b>5</b> columns</p><p><b>0</b> missing values</p>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[10]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-F#"><pre><span></span><span class="c1">// We need to filter out the columns and rows we don't need. Thus, we filter out the rows where the athletes suffered no concussions  </span><span class="w"></span>
+<span class="c1">// as well as filter out the columns without the number of concussions.</span><span class="w"></span>
+<span class="k">let</span><span class="w"> </span><span class="nv">dataAthletesFemale</span><span class="o">,</span><span class="w"> </span><span class="n">dataAthletesMale</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">getAthleteGenderData</span><span class="w"> </span><span class="n">gender</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">        </span><span class="k">let</span><span class="w"> </span><span class="nv">dataAthletesOnlyConcussion</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">            </span><span class="n">dataAthletesAsFrame</span><span class="w"></span>
+<span class="w">            </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">filterRows</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="n">objS</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">objS</span><span class="o">.</span><span class="n">GetAs</span><span class="w"> </span><span class="s">"Concussion"</span><span class="o">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">let</span><span class="w"> </span><span class="nv">dataAthletesGenderFrame</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">            </span><span class="n">dataAthletesOnlyConcussion</span><span class="w"></span>
+<span class="w">            </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">filterRows</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="n">objS</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">objS</span><span class="o">.</span><span class="n">GetAs</span><span class="w"> </span><span class="s">"Gender"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gender</span><span class="o">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">dataAthletesGenderFrame</span><span class="w"></span>
+<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">getCol</span><span class="w"> </span><span class="s">"Count"</span><span class="w"> </span>
+<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Series</span><span class="p">.</span><span class="n">values</span><span class="w"></span>
+<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">vector</span><span class="w"></span>
+<span class="w">    </span><span class="n">getAthleteGenderData</span><span class="w"> </span><span class="s">"Female"</span><span class="o">,</span><span class="w"> </span><span class="n">getAthleteGenderData</span><span class="w"> </span><span class="s">"Male"</span><span class="w"></span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Again, let's check our data via boxplots before we proceed on comparing them.</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[12]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-F#"><pre><span></span><span class="o">[</span><span class="w"></span>
+<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">BoxPlot</span><span class="o">(</span><span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dataAthletesFemale</span><span class="o">,</span><span class="w"> </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"female college athletes"</span><span class="o">,</span><span class="w"> </span><span class="n">BoxPoints</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">BoxPoints</span><span class="p">.</span><span class="n">All</span><span class="o">,</span><span class="w"> </span><span class="n">Jitter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">2</span><span class="o">)</span><span class="w"></span>
+<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">BoxPlot</span><span class="o">(</span><span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dataAthletesMale</span><span class="o">,</span><span class="w"> </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"male college athletes"</span><span class="o">,</span><span class="w"> </span><span class="n">BoxPoints</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">BoxPoints</span><span class="p">.</span><span class="n">All</span><span class="o">,</span><span class="w"> </span><span class="n">Jitter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">2</span><span class="o">)</span><span class="w"></span>
+<span class="o">]</span><span class="w"></span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">combine</span><span class="w"></span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="w"> </span><span class="s">"number of concussions over 3 years"</span><span class="w"></span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div><div id="9ecaa9ec-9aeb-485e-8ce7-0e1e67741b69"><!-- Plotly chart will be drawn inside this DIV --></div><script type="text/javascript">
+var renderPlotly_9ecaa9ec9aeb485e8ce70e1e67741b69 = function() {
+    var fsharpPlotlyRequire = requirejs.config({context:'fsharp-plotly',paths:{plotly:'https://cdn.plot.ly/plotly-2.18.1.min'}}) || require;
+    fsharpPlotlyRequire(['plotly'], function(Plotly) {
+        var data = [{"type":"box","name":"female college athletes","y":[51.0,47.0,60.0,12.0,7.0,7.0,16.0,30.0,26.0,9.0,10.0,28.0,1.0,0.0,0.0],"marker":{},"line":{},"boxpoints":"all","jitter":0.2},{"type":"box","name":"male college athletes","y":[34.0,27.0,40.0,19.0,15.0,17.0,8.0,21.0,20.0,22.0,6.0,25.0,0.0,0.0,0.0],"marker":{},"line":{},"boxpoints":"all","jitter":0.2}];
+        var layout = {"width":600,"height":600,"template":{"layout":{"title":{"x":0.05},"font":{"color":"rgba(42, 63, 95, 1.0)"},"paper_bgcolor":"rgba(255, 255, 255, 1.0)","plot_bgcolor":"rgba(229, 236, 246, 1.0)","autotypenumbers":"strict","colorscale":{"diverging":[[0.0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1.0,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"hovermode":"closest","hoverlabel":{"align":"left"},"coloraxis":{"colorbar":{"outlinewidth":0.0,"ticks":""}},"geo":{"showland":true,"landcolor":"rgba(229, 236, 246, 1.0)","showlakes":true,"lakecolor":"rgba(255, 255, 255, 1.0)","subunitcolor":"rgba(255, 255, 255, 1.0)","bgcolor":"rgba(255, 255, 255, 1.0)"},"mapbox":{"style":"light"},"polar":{"bgcolor":"rgba(229, 236, 246, 1.0)","radialaxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","ticks":""},"angularaxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","ticks":""}},"scene":{"xaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","gridwidth":2.0,"zerolinecolor":"rgba(255, 255, 255, 1.0)","backgroundcolor":"rgba(229, 236, 246, 1.0)","showbackground":true},"yaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","gridwidth":2.0,"zerolinecolor":"rgba(255, 255, 255, 1.0)","backgroundcolor":"rgba(229, 236, 246, 1.0)","showbackground":true},"zaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","gridwidth":2.0,"zerolinecolor":"rgba(255, 255, 255, 1.0)","backgroundcolor":"rgba(229, 236, 246, 1.0)","showbackground":true}},"ternary":{"aaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)"},"baxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)"},"caxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)"},"bgcolor":"rgba(229, 236, 246, 1.0)"},"xaxis":{"title":{"standoff":15},"ticks":"","automargin":"height+width+left+right+top+bottom","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","zerolinecolor":"rgba(255, 255, 255, 1.0)","zerolinewidth":2.0},"yaxis":{"title":{"standoff":15},"ticks":"","automargin":"height+width+left+right+top+bottom","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","zerolinecolor":"rgba(255, 255, 255, 1.0)","zerolinewidth":2.0},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"shapedefaults":{"line":{"color":"rgba(42, 63, 95, 1.0)"}},"colorway":["rgba(99, 110, 250, 1.0)","rgba(239, 85, 59, 1.0)","rgba(0, 204, 150, 1.0)","rgba(171, 99, 250, 1.0)","rgba(255, 161, 90, 1.0)","rgba(25, 211, 243, 1.0)","rgba(255, 102, 146, 1.0)","rgba(182, 232, 128, 1.0)","rgba(255, 151, 255, 1.0)","rgba(254, 203, 82, 1.0)"]},"data":{"bar":[{"marker":{"line":{"color":"rgba(229, 236, 246, 1.0)","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"error_x":{"color":"rgba(42, 63, 95, 1.0)"},"error_y":{"color":"rgba(42, 63, 95, 1.0)"}}],"barpolar":[{"marker":{"line":{"color":"rgba(229, 236, 246, 1.0)","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}}}],"carpet":[{"aaxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","endlinecolor":"rgba(42, 63, 95, 1.0)","minorgridcolor":"rgba(255, 255, 255, 1.0)","startlinecolor":"rgba(42, 63, 95, 1.0)"},"baxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","endlinecolor":"rgba(42, 63, 95, 1.0)","minorgridcolor":"rgba(255, 255, 255, 1.0)","startlinecolor":"rgba(42, 63, 95, 1.0)"}}],"choropleth":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contour":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"colorbar":{"outlinewidth":0.0,"ticks":""}}],"heatmap":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}}}],"histogram2d":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"colorbar":{"outlinewidth":0.0,"ticks":""}}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"pie":[{"automargin":true}],"scatter":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatter3d":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}},"line":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"surface":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"table":[{"cells":{"fill":{"color":"rgba(235, 240, 248, 1.0)"},"line":{"color":"rgba(255, 255, 255, 1.0)"}},"header":{"fill":{"color":"rgba(200, 212, 227, 1.0)"},"line":{"color":"rgba(255, 255, 255, 1.0)"}}}]}},"yaxis":{"title":{"text":"number of concussions over 3 years"}}};
+        var config = {"responsive":true};
+        Plotly.newPlot('9ecaa9ec-9aeb-485e-8ce7-0e1e67741b69', data, layout, config);
+    });
+};
+if ((typeof(requirejs) !==  typeof(Function)) || (typeof(requirejs.config) !== typeof(Function))) {
+    var script = document.createElement("script");
+    script.setAttribute("src", "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js");
+    script.onload = function(){
+        renderPlotly_9ecaa9ec9aeb485e8ce70e1e67741b69();
+    };
+    document.getElementsByTagName("head")[0].appendChild(script);
+}
+else {
+    renderPlotly_9ecaa9ec9aeb485e8ce70e1e67741b69();
+}
+</script></div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Both samples are tested against using <code>FSharp.Stats.Testing.TTest.twoSample</code> and assuming equal variances.</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[13]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-F#"><pre><span></span><span class="c1">// We test both samples against each other, assuming equal variances.</span><span class="w"></span>
+<span class="k">let</span><span class="w"> </span><span class="nv">twoSampleResult</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">TTest</span><span class="p">.</span><span class="n">twoSample</span><span class="w"> </span><span class="k">true</span><span class="w"> </span><span class="n">dataAthletesFemale</span><span class="w"> </span><span class="n">dataAthletesMale</span><span class="w"></span>
+
+<span class="n">twoSampleResult</span><span class="w"></span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<details open="open" class="dni-treeview"><summary><span class="dni-code-hint"><code>{ Statistic = 0.5616104016\n  DegreesOfFreedom = 28.0\n  PValueLeft = 0.7105752703\n  PValueRight = 0.2894247297\n  PValue = 0.5788494593 }</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>Statistic</td><td><div class="dni-plaintext"><pre>0.56161040164984</pre></div></td></tr><tr><td>DegreesOfFreedom</td><td><div class="dni-plaintext"><pre>28</pre></div></td></tr><tr><td>PValueLeft</td><td><div class="dni-plaintext"><pre>0.7105752703384163</pre></div></td></tr><tr><td>PValueRight</td><td><div class="dni-plaintext"><pre>0.2894247296615837</pre></div></td></tr><tr><td>PValue</td><td><div class="dni-plaintext"><pre>0.5788494593231674</pre></div></td></tr></tbody></table></div></details><style>
+.dni-code-hint {
+    font-style: italic;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.dni-treeview {
+    white-space: nowrap;
+}
+.dni-treeview td {
+    vertical-align: top;
+    text-align: start;
+}
+details.dni-treeview {
+    padding-left: 1em;
+}
+table td {
+    text-align: start;
+}
+table tr { 
+    vertical-align: top; 
+    margin: 0em 0px;
+}
+table tr td pre 
+{ 
+    vertical-align: top !important; 
+    margin: 0em 0px !important;
+} 
+table th {
+    text-align: start;
+}
+</style>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>With a p value of 0.58 the t-test indicate that there's no significant difference between the number of concussions over 3 years between male and female college athletes.</p>
+<h2 id="Two-sample-t-test-(paired-data)">Two-sample t-test (paired data)<a class="anchor-link" href="#Two-sample-t-test-(paired-data)">&#182;</a></h2><p>Paired data describes data where each value from the one sample is connected with its respective value from the other sample.<br>
+In the next case, the endurance performance of several persons in a normal situation (control situation) is compared to their performance after ingesting a specific amount of caffeine*. 
+It is the same person that performs the exercise but under different conditions. Thus, the resulting values of the persons under each condition are compared.<br>
+Another example are time-dependent experiments: One measures, e.g., the condition of cells stressed with a high surrounding temperature in the beginning and after 30 minutes. 
+The measured cells are always the same, yet their conditions might differ.
+Due to the connectivity of the sample pairs the samples must be of equal length.</p>
+<p>*Source: W.J. Pasman, M.A. van Baak, A.E. Jeukendrup, A. de Haan (1995). <em>The Effect of Different Dosages of Caffeine on Endurance Performance Time</em>, International Journal of Sports Medicine, Vol. 16, pp225-230.</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[14]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">rawDataCaffeine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Http</span><span class="p">.</span><span class="n">RequestString</span><span class="w"> </span><span class="s">@"https://raw.githubusercontent.com/fslaborg/datasets/main/data/CaffeineAndEndurance(wide)_adapted.tsv"</span><span class="w"></span>
+
+<span class="k">let</span><span class="w"> </span><span class="nv">dataCaffeineAsStream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nn">System</span><span class="p">.</span><span class="nn">IO</span><span class="p">.</span><span class="n">MemoryStream</span><span class="o">(</span><span class="n">rawDataCaffeine</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Encoding</span><span class="p">.</span><span class="nn">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="o">)</span><span class="w"></span>
+<span class="k">let</span><span class="w"> </span><span class="nv">dataCaffeineAsFrame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">ReadCsv</span><span class="o">(</span><span class="n">dataCaffeineAsStream</span><span class="o">,</span><span class="w"> </span><span class="n">hasHeaders</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="o">,</span><span class="w"> </span><span class="n">separators</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"</span><span class="se">\t</span><span class="s">"</span><span class="o">,</span><span class="w"> </span><span class="n">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Subject ID, no Dose, 5 mg, 9 mg, 13 mg"</span><span class="o">)</span><span class="w"></span>
+
+<span class="c1">// We want to compare the subjects' performances under the influence of 13 mg caffeine and in the control situation.</span><span class="w"></span>
+<span class="k">let</span><span class="w"> </span><span class="nv">dataCaffeineNoDose</span><span class="o">,</span><span class="w"> </span><span class="n">dataCaffeine13mg</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">getVectorFromCol</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
+<span class="w">        </span><span class="n">dataCaffeineAsFrame</span><span class="w"></span>
+<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">getCol</span><span class="w"> </span><span class="n">col</span><span class="w"></span>
+<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Series</span><span class="p">.</span><span class="n">values</span><span class="w"></span>
+<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">vector</span><span class="w"></span>
+<span class="w">    </span><span class="n">getVectorFromCol</span><span class="w"> </span><span class="s">"no Dose"</span><span class="o">,</span><span class="w"> </span><span class="n">getVectorFromCol</span><span class="w"> </span><span class="s">"13 mg"</span><span class="w"></span>
+
+<span class="c1">// Transforming our data into a chart.</span><span class="w"></span>
+
+<span class="nn">Seq</span><span class="p">.</span><span class="n">zip</span><span class="w"> </span><span class="n">dataCaffeineNoDose</span><span class="w"> </span><span class="n">dataCaffeine13mg</span><span class="w"></span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">mapi</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">(</span><span class="n">control</span><span class="o">,</span><span class="n">treatment</span><span class="o">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span>
+<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">participant</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Person "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">i</span><span class="w"> </span>
+<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Line</span><span class="o">([</span><span class="s">"no dose"</span><span class="o">,</span><span class="w"> </span><span class="n">control</span><span class="o">;</span><span class="w"> </span><span class="s">"13 mg"</span><span class="o">,</span><span class="w"> </span><span class="n">treatment</span><span class="o">],</span><span class="w"> </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">participant</span><span class="o">)</span><span class="w"></span>
+<span class="w">    </span><span class="o">)</span><span class="w"></span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">combine</span><span class="w"></span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxisStyle</span><span class="w"> </span><span class="s">""</span><span class="w"></span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="o">(</span><span class="s">"endurance performance"</span><span class="o">,</span><span class="w"> </span><span class="n">MinMax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="mi">0</span><span class="o">.,</span><span class="mi">100</span><span class="o">.))</span><span class="w"></span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div><div id="1c95d56f-e79e-416c-8689-1003bd412761"><!-- Plotly chart will be drawn inside this DIV --></div><script type="text/javascript">
+var renderPlotly_1c95d56fe79e416c86891003bd412761 = function() {
+    var fsharpPlotlyRequire = requirejs.config({context:'fsharp-plotly',paths:{plotly:'https://cdn.plot.ly/plotly-2.18.1.min'}}) || require;
+    fsharpPlotlyRequire(['plotly'], function(Plotly) {
+        var data = [{"type":"scatter","name":"Person 0","mode":"lines","x":["no dose","13 mg"],"y":[36.05,37.55],"marker":{},"line":{}},{"type":"scatter","name":"Person 1","mode":"lines","x":["no dose","13 mg"],"y":[52.47,59.3],"marker":{},"line":{}},{"type":"scatter","name":"Person 2","mode":"lines","x":["no dose","13 mg"],"y":[56.55,79.12],"marker":{},"line":{}},{"type":"scatter","name":"Person 3","mode":"lines","x":["no dose","13 mg"],"y":[45.2,58.33],"marker":{},"line":{}},{"type":"scatter","name":"Person 4","mode":"lines","x":["no dose","13 mg"],"y":[35.25,70.54],"marker":{},"line":{}},{"type":"scatter","name":"Person 5","mode":"lines","x":["no dose","13 mg"],"y":[66.38,69.47],"marker":{},"line":{}},{"type":"scatter","name":"Person 6","mode":"lines","x":["no dose","13 mg"],"y":[40.57,46.48],"marker":{},"line":{}},{"type":"scatter","name":"Person 7","mode":"lines","x":["no dose","13 mg"],"y":[57.15,66.35],"marker":{},"line":{}},{"type":"scatter","name":"Person 8","mode":"lines","x":["no dose","13 mg"],"y":[28.34,36.2],"marker":{},"line":{}}];
+        var layout = {"width":600,"height":600,"template":{"layout":{"title":{"x":0.05},"font":{"color":"rgba(42, 63, 95, 1.0)"},"paper_bgcolor":"rgba(255, 255, 255, 1.0)","plot_bgcolor":"rgba(229, 236, 246, 1.0)","autotypenumbers":"strict","colorscale":{"diverging":[[0.0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1.0,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"hovermode":"closest","hoverlabel":{"align":"left"},"coloraxis":{"colorbar":{"outlinewidth":0.0,"ticks":""}},"geo":{"showland":true,"landcolor":"rgba(229, 236, 246, 1.0)","showlakes":true,"lakecolor":"rgba(255, 255, 255, 1.0)","subunitcolor":"rgba(255, 255, 255, 1.0)","bgcolor":"rgba(255, 255, 255, 1.0)"},"mapbox":{"style":"light"},"polar":{"bgcolor":"rgba(229, 236, 246, 1.0)","radialaxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","ticks":""},"angularaxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","ticks":""}},"scene":{"xaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","gridwidth":2.0,"zerolinecolor":"rgba(255, 255, 255, 1.0)","backgroundcolor":"rgba(229, 236, 246, 1.0)","showbackground":true},"yaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","gridwidth":2.0,"zerolinecolor":"rgba(255, 255, 255, 1.0)","backgroundcolor":"rgba(229, 236, 246, 1.0)","showbackground":true},"zaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","gridwidth":2.0,"zerolinecolor":"rgba(255, 255, 255, 1.0)","backgroundcolor":"rgba(229, 236, 246, 1.0)","showbackground":true}},"ternary":{"aaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)"},"baxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)"},"caxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)"},"bgcolor":"rgba(229, 236, 246, 1.0)"},"xaxis":{"title":{"standoff":15},"ticks":"","automargin":"height+width+left+right+top+bottom","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","zerolinecolor":"rgba(255, 255, 255, 1.0)","zerolinewidth":2.0},"yaxis":{"title":{"standoff":15},"ticks":"","automargin":"height+width+left+right+top+bottom","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","zerolinecolor":"rgba(255, 255, 255, 1.0)","zerolinewidth":2.0},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"shapedefaults":{"line":{"color":"rgba(42, 63, 95, 1.0)"}},"colorway":["rgba(99, 110, 250, 1.0)","rgba(239, 85, 59, 1.0)","rgba(0, 204, 150, 1.0)","rgba(171, 99, 250, 1.0)","rgba(255, 161, 90, 1.0)","rgba(25, 211, 243, 1.0)","rgba(255, 102, 146, 1.0)","rgba(182, 232, 128, 1.0)","rgba(255, 151, 255, 1.0)","rgba(254, 203, 82, 1.0)"]},"data":{"bar":[{"marker":{"line":{"color":"rgba(229, 236, 246, 1.0)","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"error_x":{"color":"rgba(42, 63, 95, 1.0)"},"error_y":{"color":"rgba(42, 63, 95, 1.0)"}}],"barpolar":[{"marker":{"line":{"color":"rgba(229, 236, 246, 1.0)","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}}}],"carpet":[{"aaxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","endlinecolor":"rgba(42, 63, 95, 1.0)","minorgridcolor":"rgba(255, 255, 255, 1.0)","startlinecolor":"rgba(42, 63, 95, 1.0)"},"baxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","endlinecolor":"rgba(42, 63, 95, 1.0)","minorgridcolor":"rgba(255, 255, 255, 1.0)","startlinecolor":"rgba(42, 63, 95, 1.0)"}}],"choropleth":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contour":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"colorbar":{"outlinewidth":0.0,"ticks":""}}],"heatmap":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}}}],"histogram2d":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"colorbar":{"outlinewidth":0.0,"ticks":""}}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"pie":[{"automargin":true}],"scatter":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatter3d":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}},"line":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"surface":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"table":[{"cells":{"fill":{"color":"rgba(235, 240, 248, 1.0)"},"line":{"color":"rgba(255, 255, 255, 1.0)"}},"header":{"fill":{"color":"rgba(200, 212, 227, 1.0)"},"line":{"color":"rgba(255, 255, 255, 1.0)"}}}]}},"xaxis":{"title":{"text":""}},"yaxis":{"title":{"text":"endurance performance"},"range":[0.0,100.0]}};
+        var config = {"responsive":true};
+        Plotly.newPlot('1c95d56f-e79e-416c-8689-1003bd412761', data, layout, config);
+    });
+};
+if ((typeof(requirejs) !==  typeof(Function)) || (typeof(requirejs.config) !== typeof(Function))) {
+    var script = document.createElement("script");
+    script.setAttribute("src", "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js");
+    script.onload = function(){
+        renderPlotly_1c95d56fe79e416c86891003bd412761();
+    };
+    document.getElementsByTagName("head")[0].appendChild(script);
+}
+else {
+    renderPlotly_1c95d56fe79e416c86891003bd412761();
+}
+</script></div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>The function for pairwise t-tests can be found at <code>FSharp.Stats.Testing.TTest.twoSamplePaired</code>. Note, that the order of the elements in each vector must be the same, so that a pairwise comparison can be performed.</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[15]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">twoSamplePairedResult</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">TTest</span><span class="p">.</span><span class="n">twoSamplePaired</span><span class="w"> </span><span class="n">dataCaffeineNoDose</span><span class="w"> </span><span class="n">dataCaffeine13mg</span><span class="w"></span>
+<span class="n">twoSamplePairedResult</span><span class="w"></span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<details open="open" class="dni-treeview"><summary><span class="dni-code-hint"><code>{ Statistic = 3.252507672\n  DegreesOfFreedom = 8.0\n  PValueLeft = 0.9941713794\n  PValueRight = 0.005828620625\n  PValue = 0.01165724125 }</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>Statistic</td><td><div class="dni-plaintext"><pre>3.2525076715666534</pre></div></td></tr><tr><td>DegreesOfFreedom</td><td><div class="dni-plaintext"><pre>8</pre></div></td></tr><tr><td>PValueLeft</td><td><div class="dni-plaintext"><pre>0.9941713793753144</pre></div></td></tr><tr><td>PValueRight</td><td><div class="dni-plaintext"><pre>0.005828620624685588</pre></div></td></tr><tr><td>PValue</td><td><div class="dni-plaintext"><pre>0.011657241249371175</pre></div></td></tr></tbody></table></div></details><style>
+.dni-code-hint {
+    font-style: italic;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.dni-treeview {
+    white-space: nowrap;
+}
+.dni-treeview td {
+    vertical-align: top;
+    text-align: start;
+}
+details.dni-treeview {
+    padding-left: 1em;
+}
+table td {
+    text-align: start;
+}
+table tr { 
+    vertical-align: top; 
+    margin: 0em 0px;
+}
+table tr td pre 
+{ 
+    vertical-align: top !important; 
+    margin: 0em 0px !important;
+} 
+table th {
+    text-align: start;
+}
+</style>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>The two-sample paired t-test suggests a significant difference beween caffeine and non-caffeine treatment groups with a p-value of 0.012.</p>
+
+</div>
+</div>
+</div>
+</div>
+</
+        </div>
+      </div>
+    </div>
+  </body>
+  <footer class="footer has-bg-darkmagenta">
+    <div class="container">
+      <div class="columns">
+        <div class="column is-4 m-4">
+          <div class="block">
+            <h3 class="subtitle is-white">
+              FsLab - the project incubation space for data science in F#
+            </h3>
+          </div>
+          <div class="block">
+            <p>
+              FsLab is only possible due to the joined forces of F# open source contributors.
+            </p>
+          </div>
+          <div class="block">
+            <p>
+              This website is created and maintained by individual FsLab open source contributors.
+            </p>
+          </div>
+          <div class="block">
+            <div class="icon-text is-white">
+              <span class="icon">
+                <i class="fas fa-code-branch"></i>
+              </span>
+              <span>
+                <a class="footer-link" href="https://github.com/fslaborg/fslaborg.github.io">
+                  website source code
+                </a>
+              </span>
+            </div>
+            <div class="icon-text is-white">
+              <span class="icon">
+                <i class="far fa-handshake"></i>
+              </span>
+              <span>
+                <a class="footer-link" href="https://github.com/orgs/fslaborg/people">
+                  fslab contributors
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="column is-4 m-4">
+          <div class="block">
+            <h3 class="subtitle is-white">
+              More
+            </h3>
+          </div>
+          <div class="block">
+            <div class="block">
+              <div class="icon-text is-white">
+                <span class="icon">
+                  <i class="fab fa-github"></i>
+                </span>
+                <span>
+                  <a class="footer-link" href="https://github.com/fslaborg?type=source">
+                    the fslab organisation on github
+                  </a>
+                </span>
+              </div>
+              <div class="icon-text is-white">
+                <span class="icon">
+                  <i class="fab fa-twitter"></i>
+                </span>
+                <span>
+                  <a class="footer-link" href="https://twitter.com/fslaborg">
+                    fslab on twitter
+                  </a>
+                </span>
+              </div>
+            </div>
+            <div class="block">
+              <div class="icon-text is-white">
+                <span class="icon">
+                  <i class="fas fa-cubes"></i>
+                </span>
+                <span>
+                  <a class="footer-link" href="https://fslab.org/packages.html">
+                    endorsed packages
+                  </a>
+                </span>
+              </div>
+              <div class="icon-text is-white">
+                <span class="icon">
+                  <i class="fas fa-plus"></i>
+                </span>
+                <span>
+                  <a class="footer-link" href="https://github.com/fslaborg/fslaborg.github.io#add-a-project-to-the-packages-site">
+                    add a package to the list
+                  </a>
+                </span>
+              </div>
+            </div>
+            <div class="block">
+              <div class="icon-text is-white">
+                <span class="icon">
+                  <i class="fas fa-graduation-cap"></i>
+                </span>
+                <span>
+                  <a class="footer-link" href="https://fslab.org/tutorials.html">
+                    tutorials and learning resources
+                  </a>
+                </span>
+              </div>
+              <div class="icon-text is-white">
+                <span class="icon">
+                  <i class="fas fa-plus"></i>
+                </span>
+                <span>
+                  <a class="footer-link" href="https://github.com/fslaborg/fslaborg.github.io#add-a-tutorial-guide-or-blogpost">
+                    add tutorial content
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column is-4 m-4">
+          <div class="block">
+            <h3 class="subtitle is-white">
+              External resources
+            </h3>
+          </div>
+          <div class="block">
+            <ul>
+              <li>
+                <a href="https://github.com/fsprojects?type=source" class="footer-link">
+                  fsprojects - general F# project incubation space
+                </a>
+              </li>
+              <li>
+                <a href="https://fsharp.org/" class="footer-link">
+                  fsharp.org
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</html>
