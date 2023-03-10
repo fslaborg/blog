@@ -1,0 +1,399 @@
+<html>
+  <head>
+    <meta charSet="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>
+      FsLab Blog
+    </title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans"/>
+    <script defer="true" src="https://kit.fontawesome.com/0d3e0ea7a6.js" crossOrigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fslab/fslab-styles"/>
+    <script src="https://fslab.org/blog/js/navbar.js"></script>
+    <script src="https://fslab.org/blog/js/prism.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-timeline@3.0.5/dist/css/bulma-timeline.min.css"/>
+    <link rel="stylesheet" href="https://fslab.org/blog/style/notebook.css"/>
+  </head>
+  <body>
+    <div class="columns is-fullheight m-0">
+      <div class="column is-2 is-paddingless box m-0">
+        <aside class="menu p-4" id="graph-menu">
+          <div class="content">
+            <h3 class="title is-capitalized is-inline-block is-emphasized-darkmagenta mb-4">
+              Table of contents
+            </h3>
+            <ul>
+              <li>
+                <a href="#F%23-Introduction-II:-Scripting-in-F" class="is-aquamarine">
+                  F%23 Introduction II: Scripting in F
+                </a>
+              </li>
+              <li>
+                <a href="#Creating-a-.fsx-file" class="is-aquamarine">
+                  Creating a .fsx file
+                </a>
+              </li>
+              <li>
+                <a href="#Visual-Studio" class="is-aquamarine">
+                  Visual Studio
+                </a>
+              </li>
+              <li>
+                <a href="#Visual-Studio-Code" class="is-aquamarine">
+                  Visual Studio Code
+                </a>
+              </li>
+              <li>
+                <a href="#Referencing-packages" class="is-aquamarine">
+                  Referencing packages
+                </a>
+              </li>
+              <li>
+                <a href="#Working-with-notebooks" class="is-aquamarine">
+                  Working with notebooks
+                </a>
+              </li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+      <div class="column is-10 is-paddingless pl-1 pr-6">
+        <nav class="navbar">
+          <div class="navbar-brand">
+            <a class="navbar-item" href="https://fslab.org">
+              <img src="https://fslab.org/blog/images/favicon.png" alt="Logo"/>
+            </a>
+            <a class="navbar-burger" data-target="navMenu" aria-label="menu" role="button" aria-expanded="false">
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+            </a>
+          </div>
+          <div id="navMenu" class="navbar-menu">
+            <div class="navbar-start">
+              <a class="navbar-item" href="/FsLab Blog">
+                FsLab Blog
+              </a>
+            </div>
+            <div class="navbar-end">
+              <a class="navbar-item is-magenta" href="https://twitter.com/fslaborg">
+                <span class="icon">
+                  <i class="fab fa-twitter"></i>
+                </span>
+              </a>
+              <a class="navbar-item is-magenta" href="https://github.com/fslaborg">
+                <span class="icon">
+                  <i class="fab fa-github"></i>
+                </span>
+              </a>
+            </div>
+          </div>
+        </nav>
+        <section class="hero is-small has-bg-darkmagenta">
+          <div class="hero-body">
+            <div class="container has-text-justified">
+              <div class="main-TextField">
+                <h1 class="title is-capitalized is-white is-inline-block is-emphasized-magenta mb-4">
+                  F# Introduction II: Scripting in F#
+                </h1>
+                <div class="block">
+                  <h3 class="subtitle is-white is-block">
+                    Posted on 2021-7-27 by
+                    <a href="https://github.com/joott" class="is-aquamarine">
+                      Jonathan Ott
+                    </a>
+                     in 
+                    <a href="https://fslab.org/blog/posts/categories/Fsharp.html" class="is-aquamarine">
+                      FSharp
+                    </a>
+                  </h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <div class="content jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
+          
+
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h1 id="F%23-Introduction-II:-Scripting-in-F">F# Introduction II: Scripting in F<a class="anchor-link" href="#F%23-Introduction-II:-Scripting-in-F">&#182;</a></h1><h2 id="Creating-a-.fsx-file">Creating a .fsx file<a class="anchor-link" href="#Creating-a-.fsx-file">&#182;</a></h2><h3 id="Visual-Studio">Visual Studio<a class="anchor-link" href="#Visual-Studio">&#182;</a></h3><ul>
+<li>Open Visual Studio and navigate to the "File" tab, where you select to create a new file.</li>
+<li><p>Select the "F# Script File" option.</p>
+<p><img src="{{root}}images/FsxVS.png" alt=""></p>
+</li>
+<li><p>You now have a working script file. You can write code and execute it by selecting it and pressing <code>Alt + Enter</code>.</p>
+</li>
+</ul>
+<h3 id="Visual-Studio-Code">Visual Studio Code<a class="anchor-link" href="#Visual-Studio-Code">&#182;</a></h3><ul>
+<li>Open Visual Studio Code and navigate to the "File" tab, where you select to create a new file.</li>
+<li><p>You will then be prompted to select a language. Choose F# there.</p>
+<p><img src="{{root}}images/FsxVSCode.png" alt=""></p>
+</li>
+<li><p>You now have a working script file. You can write code and execute it by selecting it and pressing <code>Alt + Enter</code>.</p>
+</li>
+<li>When you are done with your file save it as .fsx.</li>
+</ul>
+<h2 id="Referencing-packages">Referencing packages<a class="anchor-link" href="#Referencing-packages">&#182;</a></h2><ul>
+<li>Packages on nuget can be referenced using '#r "nuget: PackageName"':</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-F#"><pre><span></span><span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: FSharp.Stats"</span><span class="w"></span>
+<span class="c1">// References a sepcific package version</span><span class="w"></span>
+<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Plotly.NET, 4.0.0"</span><span class="w"></span>
+<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Plotly.NET.Interactive, 4.0.0"</span><span class="w"></span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div><div></div><div></div><div><strong>Installed Packages</strong><ul><li><span>FSharp.Stats, 0.4.11</span></li><li><span>Plotly.NET, 4.0.0</span></li><li><span>Plotly.NET.Interactive, 4.0.0</span></li></ul></div></div>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
+<pre>Loading extensions from `C:\Users\schne\.nuget\packages\plotly.net.interactive\4.0.0\interactive-extensions\dotnet\Plotly.NET.Interactive.dll`</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Alternatively, .dll files can be referenced directly with the following syntax:</p>
+<div class="highlight"><pre><span></span><span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">@&quot;Your\Path\To\Package\PackageName.dll&quot;</span><span class="w"></span>
+</pre></div>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Working-with-notebooks">Working with notebooks<a class="anchor-link" href="#Working-with-notebooks">&#182;</a></h2><ul>
+<li>Visual Studio Code supports working with notebooks</li>
+<li><p>To work with notebooks, you need to install the <a href="https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.dotnet-interactive-vscode">.NET Interactive Notebooks</a> extension.</p>
+<p><img src="{{root}}images/NotebooksExt.png" alt=""></p>
+</li>
+<li><p>A new Notebook can be opened by pressing <code>Ctrl + Shift + P</code> and selecting ".NET Interactive: Create new blank notebook".</p>
+</li>
+<li>You will then be prompted to create it either as .dib or .ipynb.</li>
+<li>When asked for the language, choose F#</li>
+<li>Notebooks contain Text- and Codeblocks:</li>
+<li><p>Adding a new Text- or Codeblock can be done by hovering at the upper or lower border of an existing block or upper part of the notebook and pressing <code>+Code</code> or <code>+Markdown</code></p>
+<p><img src="{{root}}images/NBBlock.png" alt=""></p>
+</li>
+<li><p>Working with Textblocks:
+  You can edit a Textblock by doubleklicking on it. Inside a Textblock you can write plain text or style it with <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a>.
+  Once you are finished you can press the <code>Esc</code> button.</p>
+</li>
+<li>Working with Codeblocks:
+  You can start editing any Codeblock by clicking in it. In there you can start writing your own code or edit existing code. Once you are done you can execute the Codeblock by pressing <code>Ctrl + Alt + Enter</code>.
+  If you want to execute all codeblocks at once, you can press on the two arrows in the upper left corner of the notebook.</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+</
+        </div>
+      </div>
+    </div>
+  </body>
+  <footer class="footer has-bg-darkmagenta">
+    <div class="container">
+      <div class="columns">
+        <div class="column is-4 m-4">
+          <div class="block">
+            <h3 class="subtitle is-white">
+              FsLab - the project incubation space for data science in F#
+            </h3>
+          </div>
+          <div class="block">
+            <p>
+              FsLab is only possible due to the joined forces of F# open source contributors.
+            </p>
+          </div>
+          <div class="block">
+            <p>
+              This website is created and maintained by individual FsLab open source contributors.
+            </p>
+          </div>
+          <div class="block">
+            <div class="icon-text is-white">
+              <span class="icon">
+                <i class="fas fa-code-branch"></i>
+              </span>
+              <span>
+                <a class="footer-link" href="https://github.com/fslaborg/fslaborg.github.io">
+                  website source code
+                </a>
+              </span>
+            </div>
+            <div class="icon-text is-white">
+              <span class="icon">
+                <i class="far fa-handshake"></i>
+              </span>
+              <span>
+                <a class="footer-link" href="https://github.com/orgs/fslaborg/people">
+                  fslab contributors
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="column is-4 m-4">
+          <div class="block">
+            <h3 class="subtitle is-white">
+              More
+            </h3>
+          </div>
+          <div class="block">
+            <div class="block">
+              <div class="icon-text is-white">
+                <span class="icon">
+                  <i class="fab fa-github"></i>
+                </span>
+                <span>
+                  <a class="footer-link" href="https://github.com/fslaborg?type=source">
+                    the fslab organisation on github
+                  </a>
+                </span>
+              </div>
+              <div class="icon-text is-white">
+                <span class="icon">
+                  <i class="fab fa-twitter"></i>
+                </span>
+                <span>
+                  <a class="footer-link" href="https://twitter.com/fslaborg">
+                    fslab on twitter
+                  </a>
+                </span>
+              </div>
+            </div>
+            <div class="block">
+              <div class="icon-text is-white">
+                <span class="icon">
+                  <i class="fas fa-cubes"></i>
+                </span>
+                <span>
+                  <a class="footer-link" href="https://fslab.org/packages.html">
+                    endorsed packages
+                  </a>
+                </span>
+              </div>
+              <div class="icon-text is-white">
+                <span class="icon">
+                  <i class="fas fa-plus"></i>
+                </span>
+                <span>
+                  <a class="footer-link" href="https://github.com/fslaborg/fslaborg.github.io#add-a-project-to-the-packages-site">
+                    add a package to the list
+                  </a>
+                </span>
+              </div>
+            </div>
+            <div class="block">
+              <div class="icon-text is-white">
+                <span class="icon">
+                  <i class="fas fa-graduation-cap"></i>
+                </span>
+                <span>
+                  <a class="footer-link" href="https://fslab.org/tutorials.html">
+                    tutorials and learning resources
+                  </a>
+                </span>
+              </div>
+              <div class="icon-text is-white">
+                <span class="icon">
+                  <i class="fas fa-plus"></i>
+                </span>
+                <span>
+                  <a class="footer-link" href="https://github.com/fslaborg/fslaborg.github.io#add-a-tutorial-guide-or-blogpost">
+                    add tutorial content
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column is-4 m-4">
+          <div class="block">
+            <h3 class="subtitle is-white">
+              External resources
+            </h3>
+          </div>
+          <div class="block">
+            <ul>
+              <li>
+                <a href="https://github.com/fsprojects?type=source" class="footer-link">
+                  fsprojects - general F# project incubation space
+                </a>
+              </li>
+              <li>
+                <a href="https://fsharp.org/" class="footer-link">
+                  fsharp.org
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</html>
