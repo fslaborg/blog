@@ -54,7 +54,15 @@ type PostConfig = {
 
         let mandatoryFieldMissing (fieldName: string) (source:string) (o:string Option) = if o.IsNone then failwith $"missing field {fieldName} in config from {source}" else o.Value
 
-        let title = m |> Map.tryFind "title" |> mandatoryFieldMissing "title" source
+        let title = 
+            m 
+            |> Map.tryFind "title" 
+            |> mandatoryFieldMissing "title" source
+            |> fun t -> 
+                let t = if t.StartsWith("\"") then t[1..] else t
+                let t = if t.EndsWith("\"") then t[0..(t.Length-2)] else t
+                t
+
         let author = m.TryFind "author" |> mandatoryFieldMissing "author" source
         let author_link = m.TryFind "author_link" |> mandatoryFieldMissing "author_link" source
         let category = 
