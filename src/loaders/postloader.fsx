@@ -90,39 +90,6 @@ type PostConfig = {
             ?preview_image = preview_image,
             ?summary = summary
         )
-
-
-
-let markdownPipeline =
-    MarkdownPipelineBuilder()
-        .UsePipeTables()
-        .UseGridTables()
-        .Build()
-
-let isSeparator (input : string) =
-    input.StartsWith "---"
-
-///`fileContent` - content of page to parse. Usually whole content of `.md` file
-///returns content of config that should be used for the page
-let getConfig (fileContent : string) =
-    let fileContent = fileContent.ReplaceLineEndings(System.Environment.NewLine) // normalize line endings
-    let fileContent = fileContent.Split System.Environment.NewLine
-    let fileContent = fileContent |> Array.skip 1 //First line must be ---
-    let indexOfSeperator = fileContent |> Array.findIndex isSeparator
-    let splitKey (line: string) =
-        let seperatorIndex = line.IndexOf(':')
-        if seperatorIndex > 0 then
-            let key = line.[.. seperatorIndex - 1].Trim().ToLower()
-            let value = line.[seperatorIndex + 1 ..].Trim()
-            Some(key, value)
-        else
-            None
-    fileContent
-    |> Array.splitAt indexOfSeperator
-    |> fst
-    |> Seq.choose splitKey
-    |> Map.ofSeq
-
 type NotebookPost = {
     file_name: string
     post_config: PostConfig
@@ -153,7 +120,7 @@ let loader (projectRoot: string) (siteContent: SiteContents) =
         let post_config =
             config_path
             |> File.ReadAllText
-            |> getConfig
+            |> Globals.getFrontmatter
             |> PostConfig.ofMap config_path
 
         let postName =
