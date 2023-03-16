@@ -49,7 +49,7 @@ let generate (ctx : SiteContents) (projectRoot: string) (page: string) =
                             li [] [
                                 h1 [Class "title is-darkmagenta is-size-2 is-emphasized-magenta"] [
                                     !! (category |> GraphCategory.toString)
-                                    a [Href ""; Class "is-aquamarine is-size-4"] [!! "[view timeline]"]
+                                    a [Href (Globals.prefixUrl $"graph-gallery/categories/{category}.html"); Class "is-aquamarine is-size-4"] [!! "[view timeline]"]
                                 ]
                                 h3 [Class "subtitle is-darkmagenta is-size-4"] [!! (category |> GraphCategory.getDescription)]
                                 div [Class "columns"] [

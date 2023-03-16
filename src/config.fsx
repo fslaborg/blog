@@ -33,12 +33,13 @@ let staticPredicate (projectRoot: string, page: string) =
 
 let config = {
     Generators = [
+        {Script = "graphgallery.fsx"; Trigger = Once; OutputFile = NewFileName "graph-gallery.html"}
         {Script = "graphgalleryposts.fsx"; Trigger = Once; OutputFile = MultipleFiles id}
+        {Script = "graphgallerycategories.fsx"; Trigger = Once; OutputFile = MultipleFiles id}
+        {Script = "index.fsx"; Trigger = Once; OutputFile = NewFileName "index.html"}
         {Script = "posts.fsx"; Trigger = Once; OutputFile = MultipleFiles id}
         {Script = "postcategories.fsx"; Trigger = Once; OutputFile = MultipleFiles id}
         {Script = "notebooks.fsx"; Trigger = Once; OutputFile = MultipleFiles id}
-        {Script = "index.fsx"; Trigger = Once; OutputFile = NewFileName "index.html"}
-        {Script = "graphgallery.fsx"; Trigger = Once; OutputFile = NewFileName "graph-gallery.html"}
         {Script = "staticfile.fsx"; Trigger = OnFilePredicate staticPredicate; OutputFile = SameFileName }
     ]
 }
