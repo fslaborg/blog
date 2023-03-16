@@ -143,7 +143,7 @@ let standardPostLayout (ctx: SiteContents) (post_config: Postloader.PostConfig) 
         (SiteMetadata.create(
             title = post_config.title,
             description = (post_config.summary |> Option.defaultValue post_config.title),
-            ?image = post_config.preview_image
+            ?image = (post_config.preview_image |> Option.map Globals.prefixUrl)
         ))
         (post_config.category |> PostCategory.toString)
         (Globals.prefixUrl $"posts/categories/{post_config.category}.html")
@@ -162,7 +162,7 @@ let graphGalleryPostLayout (ctx: SiteContents) (post_config: Graphgallerypostloa
         (SiteMetadata.create(
             title = post_config.title,
             description = (post_config.summary |> Option.defaultValue post_config.title),
-            ?image = post_config.preview_image
+            ?image = (post_config.preview_image |> Option.map Globals.prefixUrl)
         ))
         (post_config.category |> GraphCategory.toString)
         (Globals.prefixUrl $"graph-gallery/categories/{post_config.category}.html")
