@@ -21,28 +21,37 @@ let generate (ctx : SiteContents) (projectRoot: string) (page: string) =
     posts
     |> List.map (fun post ->
         let full_paths = post.original_paths
-        let tmp_paths = [|for (language,_) in full_paths -> language, Path.GetTempPath ()|]
-        let tmp_outputs = [|for (language,full_path) in full_paths -> language, Path.GetFileName(full_path).Replace("ipynb","html")|]
-        let output_paths = Array.map2 (fun (l1,tmp_path) (l2,tmp_output) -> if l1 = l2 then l1, Path.Combine(tmp_path, tmp_output) else failwith "lol?") tmp_paths tmp_outputs
+        let tmp_path = Path.GetTempPath()
 
-        full_paths |> Array.iter (fun (lang,path) -> Globals.fixNotebookJson lang path)
+        let fileNames = [|for (language,full_path) in full_paths -> language, Path.GetFileName(full_path)|]
+        let html_filenames = fileNames |> Array.map (fun (lang,fileName) -> lang, fileName.Replace("ipynb","html"))
         
+        /// save temporary notebooks to convert here
+        let fixed_nb_files =  fileNames |> Array.map (fun (lang,fileName) -> lang, Path.Combine(tmp_path, fileName))
+        /// save nbconvert result here temporarily
+        let nbconvert_temp_output_files = html_filenames |> Array.map (fun (lang, html_filename) -> lang, Path.Combine(tmp_path, html_filename))
+
+        Array.iter2 (fun (lang,source_path) (lang2, target_path) -> if lang = lang2 then Globals.fixNotebookJson lang source_path target_path else failwith "lol?") full_paths fixed_nb_files
+
         let results = 
-            tmp_paths
-            |> Array.mapi (fun i (language, tmp_path) ->
-                printfn $"[graph gallery generator]: starting jupyter --output-dir='{tmp_path}' nbconvert --to html {snd full_paths[i]}"
+            fixed_nb_files
+            |> Array.mapi (fun i (language, fixed_notebook) ->
+                printfn $"[graph gallery generator]: starting jupyter --output-dir='{tmp_path}' nbconvert --to html {fixed_notebook}"
                 
                 let psi = ProcessStartInfo()
                 psi.FileName <- "jupyter"
-                psi.Arguments <- $"nbconvert --output-dir='{tmp_path}' --to html {snd full_paths[i]}"
+                psi.Arguments <- $"nbconvert --output-dir='{tmp_path}' --to html {fixed_notebook}"
                 psi.CreateNoWindow <- true
                 psi.WindowStyle <- ProcessWindowStyle.Hidden
                 psi.UseShellExecute <- true
                 try
                     let proc = Process.Start psi
                     proc.WaitForExit()
-                    let notebook_content = File.ReadAllText (snd output_paths[i])
-                    File.Delete (snd output_paths[i])
+                    let notebook_content = File.ReadAllText (snd nbconvert_temp_output_files[i])
+                    
+                    File.Delete (snd nbconvert_temp_output_files[i])
+                    File.Delete fixed_notebook
+
                     let processed_notebook = Globals.processConvertedNotebook notebook_content
                     let toc = Globals.getNotebookTOC processed_notebook
  

@@ -49,26 +49,26 @@ let processConvertedNotebook (content:string) =
     let body_end_index = content.IndexOf "</body>" + 1
     content[body_start_index .. body_end_index]
 
-let fixNotebookJson (language:string) (nb_path:string) =
+let fixNotebookJson (language:string) (nb_path:string) (target_path:string) =
     let content = File.ReadAllText(nb_path)
     if language = "fsharp" then
         if content.Contains("\"name\": \"polyglot-notebook\"") then
             printfn $"fixing fsharp notebook json for {nb_path}"
-            File.WriteAllText(nb_path, (content.Replace("\"name\": \"polyglot-notebook\"","\"name\": \"F#\"")))
+            File.WriteAllText(target_path, (content.Replace("\"name\": \"polyglot-notebook\"","\"name\": \"F#\"")))
         elif not (content.Contains("\"language_info\": {\"name\": \"F#\"}")) then
             printfn $"fixing fsharp notebook json for {nb_path}"
             let metadataSection = "\"metadata\": {"
             let metadata_start_index = content.LastIndexOf(metadataSection)
-            File.WriteAllText(nb_path, (content[0..metadata_start_index + metadataSection.Length] + "\"language_info\": {\"name\": \"F#\"}," + content[metadata_start_index + metadataSection.Length..]))
+            File.WriteAllText(target_path, (content[0..metadata_start_index + metadataSection.Length] + "\"language_info\": {\"name\": \"F#\"}," + content[metadata_start_index + metadataSection.Length..]))
     elif language = "csharp" then
         if content.Contains("\"name\": \"polyglot-notebook\"") then
             printfn $"fixing fsharp notebook json for {nb_path}"
-            File.WriteAllText(nb_path, (content.Replace("\"name\": \"polyglot-notebook\"","\"name\": \"C#\"")))
+            File.WriteAllText(target_path, (content.Replace("\"name\": \"polyglot-notebook\"","\"name\": \"C#\"")))
         elif not (content.Contains("\"language_info\": {\"name\": \"C#\"}")) then
             printfn $"fixing fsharp notebook json for {nb_path}"
             let metadataSection = "\"metadata\": {"
             let metadata_start_index = content.LastIndexOf(metadataSection)
-            File.WriteAllText(nb_path, (content[0..metadata_start_index + metadataSection.Length] + "\"language_info\": {\"name\": \"C#\"}," + content[metadata_start_index + metadataSection.Length..]))
+            File.WriteAllText(target_path, (content[0..metadata_start_index + metadataSection.Length] + "\"language_info\": {\"name\": \"C#\"}," + content[metadata_start_index + metadataSection.Length..]))
 
 let anchorRegex = Regex("<a class=\"anchor-link\" href=\"(?<link>#\\S*)\"", RegexOptions.Compiled)
 
