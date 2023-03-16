@@ -9,7 +9,9 @@ type Page = {
 
 let loader (projectRoot: string) (siteContent: SiteContents) =
 
-    // currently, only the Home page (index.fsx) is there
-    siteContent.Add({title = "FsLab Blog"; link = "/FsLab Blog"})
+    siteContent.Add({title = "Home"; link = "https://fslab.org"})
+    siteContent.Add({title = "Data science packages"; link = "https://fslab.org/packages.html"})
+    siteContent.Add({title = "Blog"; link = Globals.prefixUrl ""})
+    siteContent.Add({title = "Graph Gallery"; link = Globals.prefixUrl "graph-gallery.html"})
 
     siteContent

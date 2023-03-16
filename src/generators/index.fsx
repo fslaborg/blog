@@ -70,7 +70,7 @@ let generate' (ctx : SiteContents) (_: string) =
     let latest_post = posts |> List.minBy (fun p -> System.DateTime.Now.Ticks - p.post_config.date.Ticks)
     let latest_graph_gallery_post = graph_gallery_posts |> List.minBy (fun p -> System.DateTime.Now.Ticks - p.post_config.date.Ticks)
     
-    Layout.layout ctx "FsLab Blog" [
+    Layout.layout ctx "Blog" [
         section [Class "hero is-small has-bg-darkmagenta"] [
             div [Class "hero-body"] [
                 div [Class "container has-text-justified"] [

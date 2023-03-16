@@ -15,7 +15,8 @@ open FsLab.Fornax
 // Can be used to set the active item color in the navbar to the same color as the hero to get a bookmark effect
 let getBgColorForActiveItem (siteTitle:string) =
     match siteTitle with
-    | "FsLab Blog" -> "is-active-link-magenta"
+    | "Blog" -> "is-active-link-darkmagenta"
+    | "Graph Gallery" -> "is-active-link-darkmagenta"
     | _ -> siteTitle
 
 
@@ -45,6 +46,7 @@ let layout (ctx : SiteContents) active bodyCnt =
             script [Src (Globals.prefixUrl "js/prism.js")] []
             link [Rel "stylesheet"; Href "https://cdn.jsdelivr.net/npm/bulma-timeline@3.0.5/dist/css/bulma-timeline.min.css"]
             link [Rel "stylesheet"; Href (Globals.prefixUrl "style/notebook.css")]
+            link [Rel "stylesheet"; Href (Globals.prefixUrl "style/custom.css")]
         ]
         body [] [
             Components.Navbar(
@@ -61,7 +63,7 @@ let layout (ctx : SiteContents) active bodyCnt =
         Components.Footer()
     ]
 
-let postLayout (ctx : SiteContents) (post_category:string) (post_category_url:string) (post_title:string) (post_date:System.DateTime) (post_author:string) (post_author_link: string) (toc:HtmlElement) active bodyCnt =
+let postLayout (ctx : SiteContents) (post_category:string) (post_category_url:string) (post_title:string) (post_date:System.DateTime) (post_author:string) (post_author_link: string) (toc:HtmlElement) active heroCnt bodyCnt =
     let pages = ctx.TryGetValues<Pageloader.Page> () |> Option.defaultValue Seq.empty
     let siteInfo = ctx.TryGetValue<Globalloader.SiteInfo> ()
     let ttl =
@@ -84,6 +86,7 @@ let postLayout (ctx : SiteContents) (post_category:string) (post_category_url:st
             script [Src (Globals.prefixUrl "js/prism.js")] []
             link [Rel "stylesheet"; Href "https://cdn.jsdelivr.net/npm/bulma-timeline@3.0.5/dist/css/bulma-timeline.min.css"]
             link [Rel "stylesheet"; Href (Globals.prefixUrl "style/notebook.css")]
+            link [Rel "stylesheet"; Href (Globals.prefixUrl "style/custom.css")]
         ]
         body [] [
             div [Class "columns is-fullheight m-0"] [
@@ -119,6 +122,7 @@ let postLayout (ctx : SiteContents) (post_category:string) (post_category_url:st
                                             a [Href post_category_url; Class "is-aquamarine"] [!! (post_category)]
                                         ]
                                     ]
+                                    yield! heroCnt
                                 ]
                             ]
                         ]
@@ -141,9 +145,10 @@ let standardPostLayout (ctx: SiteContents) (post_config: Postloader.PostConfig) 
         post_config.author_link
         toc
         active
+        []
         bodyCnt
 
-let graphGalleryPostLayout (ctx: SiteContents) (post_config: Graphgallerypostloader.GraphGalleryPostConfig) (toc:HtmlElement) active bodyCnt =
+let graphGalleryPostLayout (ctx: SiteContents) (post_config: Graphgallerypostloader.GraphGalleryPostConfig) (toc:HtmlElement) active heroCnt bodyCnt =
     postLayout
         ctx
         (post_config.category |> GraphCategory.toString)
@@ -154,9 +159,10 @@ let graphGalleryPostLayout (ctx: SiteContents) (post_config: Graphgallerypostloa
         post_config.author_link
         toc
         active
+        heroCnt
         bodyCnt
 
-let postPreview (preview_image_url: string option) (post_summary: string option) (post_url:string) (post_category_url:string) (post_category:string) (post_title:string) (post_date: System.DateTime) (post_author: string) (post_author_link: string) (tags:string list) =
+let postPreview (preview_image_url: string option) (post_summary: string option) (post_url:string) (post_category_url:string) (post_category:string) (post_title:string) (post_date: System.DateTime) (post_author: string) (post_author_link: string) (tags:(string*string) list) =
 
     let has_image = Option.isSome preview_image_url
     let has_summary = Option.isSome post_summary
@@ -178,8 +184,8 @@ let postPreview (preview_image_url: string option) (post_summary: string option)
             if tags.Length > 0 then
                 div [Class "tags"] (
                     tags
-                    |> List.map (fun t ->
-                        span [Class "tag is-light-magenta"] [!! t]
+                    |> List.map (fun (t,l) ->
+                        a [Class "tag is-language is-active"; Href l] [!! t]
                     )
                 )
             !! $"Posted on {post_date.Year}-{post_date.Month}-{post_date.Day} by "
@@ -214,7 +220,7 @@ let graphGalleryPostPreview (post: GraphGalleryPost) =
         post.post_config.date
         post.post_config.author
         post.post_config.author_link
-        (post.html_paths |> Array.toList |> List.map fst)
+        (post.file_names |> Array.toList |> List.map (fun (lang, path) -> lang, Globals.prefixUrl $"graph-gallery/{path}"))
 
 let render (ctx : SiteContents) cnt =
   cnt

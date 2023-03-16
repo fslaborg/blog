@@ -1,0 +1,25 @@
+.timeline.is-centered .timeline-item:nth-of-type(2n+1)::before{background-color:#3d1244}
+.timeline.is-centered .timeline-item:nth-of-type(2n)::before{background-color:#3d1244}
+.timeline .timeline-item .timeline-marker {
+    background: #3d1244;
+    border: #3d1244
+}
+
+.tag.is-language {
+    background-color: #3d1244 !important;
+    color: f0f2f4 !important;
+    border-color: #A00975 !important;
+}
+
+.tag.is-language:hover {
+    background-color: #A00975 !important;
+    color: f0f2f4 !important;
+    border-color: #3d1244 !important; 
+}
+
+
+.tag.is-language.is-active {
+    background-color: #A00975 !important;
+    color: f0f2f4 !important;
+    border-color: #3d1244 !important;
+}

@@ -29,12 +29,12 @@ let generate (ctx : SiteContents) (projectRoot: string) (page: string) =
         
         let results = 
             tmp_paths
-            |> Array.mapi (fun i tmp_path ->
-                printfn $"[graph gallery generator]: starting jupyter --output-dir='{snd tmp_path}' nbconvert --to html {snd full_paths[i]}"
+            |> Array.mapi (fun i (language, tmp_path) ->
+                printfn $"[graph gallery generator]: starting jupyter --output-dir='{tmp_path}' nbconvert --to html {snd full_paths[i]}"
                 
                 let psi = ProcessStartInfo()
                 psi.FileName <- "jupyter"
-                psi.Arguments <- $"nbconvert --output-dir='{snd tmp_path}' --to html {snd full_paths[i]}"
+                psi.Arguments <- $"nbconvert --output-dir='{tmp_path}' --to html {snd full_paths[i]}"
                 psi.CreateNoWindow <- true
                 psi.WindowStyle <- ProcessWindowStyle.Hidden
                 psi.UseShellExecute <- true
@@ -46,8 +46,24 @@ let generate (ctx : SiteContents) (projectRoot: string) (page: string) =
                     let processed_notebook = Globals.processConvertedNotebook notebook_content
                     let toc = Globals.getNotebookTOC processed_notebook
  
+                    let heroLanguageSelection = [
+                        div [Class "container"] [
+                            h1 [Class "subtitle is-size-4 is-white"] [!! "select language:"]
+                            div [Class "tags"] (
+                                post.html_paths
+                                |> Array.toList 
+                                |> List.mapi (fun i (l, path) ->
+                                    a [
+                                        if language = l then Class "tag is-language is-active is-large" else Class "tag is-language is-large"
+                                        Href (Globals.prefixUrl $"graph-gallery/{snd post.file_names[i]}")
+                                    ] [!! l]
+                                )
+                            )
+                        ]
+                    ]
+
                     let content = 
-                        Layout.graphGalleryPostLayout ctx post.post_config toc "Posts" [
+                        Layout.graphGalleryPostLayout ctx post.post_config toc "Graph Gallery" heroLanguageSelection [
                             div [
                                 Class "content jp-Notebook"
                                 HtmlProperties.Custom ("data-jp-theme-light","true")

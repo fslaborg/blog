@@ -43,7 +43,7 @@ let generate (ctx : SiteContents) (projectRoot: string) (page: string) =
             let toc = Globals.getNotebookTOC processed_notebook 
 
             let content = 
-                Layout.standardPostLayout ctx post.post_config toc "Posts" [
+                Layout.standardPostLayout ctx post.post_config toc "Blog" [
                     div [
                         Class "content jp-Notebook"
                         HtmlProperties.Custom ("data-jp-theme-light","true")
