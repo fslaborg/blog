@@ -38,7 +38,7 @@ let config = {
         {Script = "postcategories.fsx"; Trigger = Once; OutputFile = MultipleFiles id}
         {Script = "notebooks.fsx"; Trigger = Once; OutputFile = MultipleFiles id}
         {Script = "index.fsx"; Trigger = Once; OutputFile = NewFileName "index.html"}
-        {Script = "graph-gallery.fsx"; Trigger = Once; OutputFile = NewFileName "graph-gallery.html"}
+        {Script = "graphgallery.fsx"; Trigger = Once; OutputFile = NewFileName "graph-gallery.html"}
         {Script = "staticfile.fsx"; Trigger = OnFilePredicate staticPredicate; OutputFile = SameFileName }
     ]
 }
