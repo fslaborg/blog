@@ -117,3 +117,42 @@ let injectWebsocketCode (webpage:string) =
     let head = "<head>"
     let index = webpage.IndexOf head
     webpage.Insert ( (index + head.Length + 1),websocketScript)
+
+
+/// SEO stuff
+type SiteMetadata = {
+    Title: string
+    Description: string
+    Keywords: string []
+    Image: string option
+} with
+    static member create(title, description, ?keywords, ?image) =
+        let keywords = defaultArg keywords [|"fslab"; "FsLab"; "data science"; "datascience"; "data visualization"; "dataviz"; "F#"; "C#"; ".NET"; "dotnet"|]
+        {
+            Title = title
+            Description = description
+            Keywords = keywords
+            Image = image
+        }
+    static member toMetaTags(sm: SiteMetadata) =
+        [
+            meta [Name "description"; Content sm.Description]
+            meta [Name "tags"; Content (String.concat ", " sm.Keywords)]
+            //open graph
+            meta [Name "og:title"; Content sm.Title]
+            meta [Name "og:description"; Content sm.Description]
+            if sm.Image.IsSome then meta [Name "og:image"; Content sm.Image.Value]
+            //twitter card
+            meta [Name"twitter:card"; Content "summary_large_image"]
+            meta [Name"twitter:site"; Content "@fslaborg"]
+            //meta [Name="twitter:creator" content=""]
+            //meta [Name="twitter:url" content="<Hier kommt der Link hin>"]
+            meta [Name "twitter:title"; Content sm.Title]
+            meta [Name "twitter:description"; Content sm.Description]
+            if sm.Image.IsSome then meta [Name "twitter:image"; Content sm.Image.Value]
+        ]
+    static member toTags (sm: SiteMetadata) =
+        [
+            title [] [!!sm.Title]
+            yield! (sm |> SiteMetadata.toMetaTags)
+        ]

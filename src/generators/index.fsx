@@ -4,6 +4,7 @@
 open Postloader
 open Graphgallerypostloader
 open Html
+open Globals
 
 let latest_post_display (latest_post: NotebookPost) =
 
@@ -70,7 +71,13 @@ let generate' (ctx : SiteContents) (_: string) =
     let latest_post = posts |> List.minBy (fun p -> System.DateTime.Now.Ticks - p.post_config.date.Ticks)
     let latest_graph_gallery_post = graph_gallery_posts |> List.minBy (fun p -> System.DateTime.Now.Ticks - p.post_config.date.Ticks)
     
-    Layout.layout ctx "Blog" [
+    let metadata = 
+        SiteMetadata.create(
+            title = "The FsLab blog - F# data science and data visualization using the FsLab stack",
+            description = "The FsLab blog is where FsLab contributors blog about a wide variety of data science and data visualization tasks using the F# programming language, the FsLab stack, and .NET."
+        )
+
+    Layout.layout ctx metadata "Blog" [
         section [Class "hero is-small has-bg-darkmagenta"] [
             div [Class "hero-body"] [
                 div [Class "container has-text-justified"] [

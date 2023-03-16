@@ -8,6 +8,7 @@ open Html
 
 open System.IO
 open System.Diagnostics
+open Globals
 
 
 let generate (ctx : SiteContents) (projectRoot: string) (page: string) =
@@ -18,7 +19,14 @@ let generate (ctx : SiteContents) (projectRoot: string) (page: string) =
     |> List.groupBy (fun post -> post.post_config.category)
     |> List.map (fun (category, posts) ->
         Path.Combine([|projectRoot; "_public"; "graph-gallery"; "categories"; $"{category}.html"|]),
-        Layout.layout ctx "Posts" [
+
+        let metadata = 
+            SiteMetadata.create(
+                title = $"The Dotnet Graph Gallery - {GraphCategory.toString category}",
+                description = $"The {GraphCategory.toString category} category contains {GraphCategory.getDescription category}"
+            )
+
+        Layout.layout ctx metadata "Posts" [
             section [Class "hero is-small has-bg-darkmagenta"] [
                 div [Class "hero-body"] [
                     div [Class "container has-text-centered"] [

@@ -90,9 +90,7 @@ let generate (ctx : SiteContents) (projectRoot: string) (page: string) =
                 | ex ->
                     printfn "[graph gallery generator] EX: %s" ex.Message
                     printfn "make sure to set up a conda distribution with nbconvert installed."
-                    "",
-                    Layout.layout ctx "" List.empty
-                    |> Layout.render ctx
+                    "", ""
 
             )
             |> Array.toList

@@ -6,6 +6,7 @@ open Graphgallerypostloader
 open Layout
 open Html
 open System.IO
+open Globals
 
 let generate (ctx : SiteContents) (projectRoot: string) (page: string) =
 
@@ -18,7 +19,13 @@ let generate (ctx : SiteContents) (projectRoot: string) (page: string) =
         graph_gallery_posts
         |> List.groupBy (fun p -> p.post_config.category)
 
-    Layout.layout ctx "Graph Gallery" [
+    let metadata = 
+        SiteMetadata.create(
+            title = "The Dotnet Graph Gallery - data visualization with F#, C#, and Plotly.NET",
+            description = "The Dotnet Graph Gallery is a part of fhe FsLab blog where FsLab contributors blog about various ways of visualizing data with the .NET programming languages F# and C#, primarily using the Plotly.NET interactive graphing library"
+        )
+
+    Layout.layout ctx metadata "Graph Gallery" [
         section [Class "hero is-small has-bg-darkmagenta"] [
             div [Class "hero-body"] [
                 div [Class "container has-text-justified"] [

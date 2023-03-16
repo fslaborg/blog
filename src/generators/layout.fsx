@@ -9,6 +9,7 @@
 
 open Html
 open Postloader
+open Globals
 open Graphgallerypostloader
 open FsLab.Fornax
 
@@ -23,13 +24,11 @@ let getBgColorForActiveItem (siteTitle:string) =
 /// The main html skeleton generation happens here.
 /// This function embeds `bodyCnt` into the template's html layout.
 /// Use `active` to control the color of the active menu entry.
-let layout (ctx : SiteContents) active bodyCnt =
+let layout (ctx : SiteContents) (metadata: SiteMetadata) active bodyCnt =
     let pages = ctx.TryGetValues<Pageloader.Page> () |> Option.defaultValue Seq.empty
-    let siteInfo = ctx.TryGetValue<Globalloader.SiteInfo> ()
-    let ttl =
-        siteInfo
-        |> Option.map (fun si -> si.title)
-        |> Option.defaultValue ""
+    
+    let ttl = metadata.Title
+    let metaTags = metadata |> SiteMetadata.toMetaTags
 
     let menuEntries =
         pages
@@ -42,6 +41,7 @@ let layout (ctx : SiteContents) active bodyCnt =
     html [Class "has-navbar-fixed-top"] [
         head [] [
             yield! Components.DefaultHeadTags ttl
+            yield! metaTags
             script [Src (Globals.prefixUrl "js/navbar.js")] []
             script [Src (Globals.prefixUrl "js/prism.js")] []
             link [Rel "stylesheet"; Href "https://cdn.jsdelivr.net/npm/bulma-timeline@3.0.5/dist/css/bulma-timeline.min.css"]
@@ -65,13 +65,11 @@ let layout (ctx : SiteContents) active bodyCnt =
         Components.Footer()
     ]
 
-let postLayout (ctx : SiteContents) (post_category:string) (post_category_url:string) (post_title:string) (post_date:System.DateTime) (post_author:string) (post_author_link: string) (toc:HtmlElement) active heroCnt bodyCnt =
+let postLayout (ctx : SiteContents) (metadata: SiteMetadata) (post_category:string) (post_category_url:string) (post_title:string) (post_date:System.DateTime) (post_author:string) (post_author_link: string) (toc:HtmlElement) active heroCnt bodyCnt =
     let pages = ctx.TryGetValues<Pageloader.Page> () |> Option.defaultValue Seq.empty
-    let siteInfo = ctx.TryGetValue<Globalloader.SiteInfo> ()
-    let ttl =
-        siteInfo
-        |> Option.map (fun si -> si.title)
-        |> Option.defaultValue ""
+    
+    let ttl = metadata.Title
+    let metaTags = metadata |> SiteMetadata.toMetaTags
 
     let menuEntries =
         pages
@@ -84,6 +82,7 @@ let postLayout (ctx : SiteContents) (post_category:string) (post_category_url:st
     html [] [
         head [] [
             yield! Components.DefaultHeadTags ttl
+            yield! metaTags
             script [Src (Globals.prefixUrl "js/navbar.js")] []
             script [Src (Globals.prefixUrl "js/prism.js")] []
             link [Rel "stylesheet"; Href "https://cdn.jsdelivr.net/npm/bulma-timeline@3.0.5/dist/css/bulma-timeline.min.css"]
@@ -141,6 +140,11 @@ let postLayout (ctx : SiteContents) (post_category:string) (post_category_url:st
 let standardPostLayout (ctx: SiteContents) (post_config: Postloader.PostConfig) (toc:HtmlElement) active bodyCnt =
     postLayout
         ctx
+        (SiteMetadata.create(
+            title = post_config.title,
+            description = (post_config.summary |> Option.defaultValue post_config.title),
+            ?image = post_config.preview_image
+        ))
         (post_config.category |> PostCategory.toString)
         (Globals.prefixUrl $"posts/categories/{post_config.category}.html")
         post_config.title
@@ -155,6 +159,11 @@ let standardPostLayout (ctx: SiteContents) (post_config: Postloader.PostConfig) 
 let graphGalleryPostLayout (ctx: SiteContents) (post_config: Graphgallerypostloader.GraphGalleryPostConfig) (toc:HtmlElement) active heroCnt bodyCnt =
     postLayout
         ctx
+        (SiteMetadata.create(
+            title = post_config.title,
+            description = (post_config.summary |> Option.defaultValue post_config.title),
+            ?image = post_config.preview_image
+        ))
         (post_config.category |> GraphCategory.toString)
         (Globals.prefixUrl $"graph-gallery/categories/{post_config.category}.html")
         post_config.title

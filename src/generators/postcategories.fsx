@@ -8,7 +8,7 @@ open Html
 
 open System.IO
 open System.Diagnostics
-
+open Globals
 
 let generate (ctx : SiteContents) (projectRoot: string) (page: string) =
 
@@ -18,7 +18,15 @@ let generate (ctx : SiteContents) (projectRoot: string) (page: string) =
     |> List.groupBy (fun post -> post.post_config.category)
     |> List.map (fun (category, posts) ->
         Path.Combine([|projectRoot; "_public"; "posts"; "categories"; $"{category}.html"|]),
-        Layout.layout ctx "Posts" [
+
+        let metadata = 
+            SiteMetadata.create(
+                title = $"The FsLab blog - {PostCategory.toString category} posts",
+                description = $"The {PostCategory.toString category} category contains {PostCategory.getDescription category}"
+            )
+
+
+        Layout.layout ctx metadata "Posts" [
             section [Class "hero is-small has-bg-darkmagenta"] [
                 div [Class "hero-body"] [
                     div [Class "container has-text-centered"] [
