@@ -1,9 +1,6 @@
 #r "../_lib/Fornax.Core.dll"
 #load "../globals.fsx"
 #load "layout.fsx"
-#if !FORNAX
-#load "../loaders/postloader.fsx"
-#endif
 
 open Postloader
 open Layout
@@ -43,7 +40,7 @@ let generate (ctx : SiteContents) (projectRoot: string) (page: string) =
                                 div [Class "timeline-content"] [
                                     div [Class "content"] [
                                         p [Class "heading is-size-4"] [!! $"{post.post_config.date.Year}-{post.post_config.date.Month}-{post.post_config.date.Day}"]
-                                        Layout.postPreview post
+                                        Layout.standardPostPreview post
                                     ]
                                 ]
                             ]

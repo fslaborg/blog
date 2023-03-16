@@ -61,7 +61,7 @@ let layout (ctx : SiteContents) active bodyCnt =
         Components.Footer()
     ]
 
-let postLayout (ctx : SiteContents) (category:string) (category_url_name:string) (post_title:string) (post_date:System.DateTime) (post_author:string) (post_author_link: string) (toc:HtmlElement) active bodyCnt =
+let postLayout (ctx : SiteContents) (post_category:string) (post_category_url:string) (post_title:string) (post_date:System.DateTime) (post_author:string) (post_author_link: string) (toc:HtmlElement) active bodyCnt =
     let pages = ctx.TryGetValues<Pageloader.Page> () |> Option.defaultValue Seq.empty
     let siteInfo = ctx.TryGetValue<Globalloader.SiteInfo> ()
     let ttl =
@@ -76,8 +76,6 @@ let postLayout (ctx : SiteContents) (category:string) (category_url_name:string)
             a [Class cls; Href p.link] [!! p.title ]
         )
         |> Seq.toList
-
-    let category_url = Globals.prefixUrl $"posts/categories/{category_url_name}.html"
 
     html [] [
         head [] [
@@ -118,7 +116,7 @@ let postLayout (ctx : SiteContents) (category:string) (category_url_name:string)
                                             !! $"Posted on {post_date.Year}-{post_date.Month}-{post_date.Day} by"
                                             a [Href post_author_link; Class "is-aquamarine"] [!! post_author]
                                             !! $" in "
-                                            a [Href category_url; Class "is-aquamarine"] [!! (category)]
+                                            a [Href post_category_url; Class "is-aquamarine"] [!! (post_category)]
                                         ]
                                     ]
                                 ]
@@ -136,7 +134,7 @@ let standardPostLayout (ctx: SiteContents) (post_config: Postloader.PostConfig) 
     postLayout
         ctx
         (post_config.category |> PostCategory.toString)
-        (post_config.category.ToString())
+        (Globals.prefixUrl $"posts/categories/{post_config.category}.html")
         post_config.title
         post_config.date
         post_config.author
@@ -149,7 +147,7 @@ let graphGalleryPostLayout (ctx: SiteContents) (post_config: Graphgallerypostloa
     postLayout
         ctx
         (post_config.category |> GraphCategory.toString)
-        (post_config.category.ToString())
+        (Globals.prefixUrl $"graph-gallery/categories/{post_config.category}.html")
         post_config.title
         post_config.date
         post_config.author
@@ -158,33 +156,65 @@ let graphGalleryPostLayout (ctx: SiteContents) (post_config: Graphgallerypostloa
         active
         bodyCnt
 
-let postPreview (post:NotebookPost) =
-    let has_image = post.post_config.preview_image.IsSome
-    let has_summary = post.post_config.summary.IsSome
+let postPreview (preview_image_url: string option) (post_summary: string option) (post_url:string) (post_category_url:string) (post_category:string) (post_title:string) (post_date: System.DateTime) (post_author: string) (post_author_link: string) (tags:string list) =
 
-    let post_url = Globals.prefixUrl $"posts/{post.file_name}"
-    let post_category_url = Globals.prefixUrl $"posts/categories/{post.post_config.category}.html"
+    let has_image = Option.isSome preview_image_url
+    let has_summary = Option.isSome post_summary
 
     div [Class "card pt-2"] [ 
         if has_image then 
             div [Class "card-image"] [
                 a [Href post_url] [
                     figure [Class "image"] [
-                        img [Src (Globals.prefixUrl post.post_config.preview_image.Value); Alt "post preview image"] 
+                        img [Src (Globals.prefixUrl preview_image_url.Value); Alt "post preview image"] 
                     ]
                 ]
             ]
         div [Class "card-header is-emphasized-darkmagenta"] [
-            h1 [Class "card-header-title is-size-4"] [a [Href post_url; Class "is-magenta"] [!!post.post_config.title]]
+            h1 [Class "card-header-title is-size-4"] [a [Href post_url; Class "is-magenta"] [!!post_title]]
         ]
         div [Class "card-content is-size-6"] [
-            if has_summary then div [Class "content"] [!!post.post_config.summary.Value]
-            !! $"Posted on {post.post_config.date.Year}-{post.post_config.date.Month}-{post.post_config.date.Day} by "
-            a [Href post.post_config.author_link; Class "is-aquamarine"] [!! post.post_config.author]
+            if has_summary then div [Class "content"] [!!post_summary.Value]
+            if tags.Length > 0 then
+                div [Class "tags"] (
+                    tags
+                    |> List.map (fun t ->
+                        span [Class "tag is-light-magenta"] [!! t]
+                    )
+                )
+            !! $"Posted on {post_date.Year}-{post_date.Month}-{post_date.Day} by "
+            a [Href post_author_link; Class "is-aquamarine"] [!! post_author]
             !! "in "
-            a [Href post_category_url; Class "is-aquamarine"] [!! (post.post_config.category |> PostCategory.toString)]
+            a [Href post_category_url; Class "is-aquamarine"] [!! (post_category)]
         ]
     ]
+
+
+let standardPostPreview (post: Postloader.NotebookPost) =
+    postPreview
+        post.post_config.preview_image
+        post.post_config.summary
+        (Globals.prefixUrl $"posts/{post.file_name}")
+        (Globals.prefixUrl $"posts/categories/{post.post_config.category}.html")
+        (post.post_config.category |> PostCategory.toString)
+        post.post_config.title
+        post.post_config.date
+        post.post_config.author
+        post.post_config.author_link
+        []
+
+let graphGalleryPostPreview (post: GraphGalleryPost) =
+    postPreview
+        post.post_config.preview_image
+        post.post_config.summary
+        (Globals.prefixUrl $"graph-gallery/{snd post.file_names[0]}")
+        (Globals.prefixUrl $"graph-gallery/categories/{post.post_config.category}.html")
+        (post.post_config.category |> GraphCategory.toString)
+        post.post_config.title
+        post.post_config.date
+        post.post_config.author
+        post.post_config.author_link
+        (post.html_paths |> Array.toList |> List.map fst)
 
 let render (ctx : SiteContents) cnt =
   cnt

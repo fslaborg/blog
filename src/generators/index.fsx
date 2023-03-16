@@ -1,22 +1,20 @@
 #r "../_lib/Fornax.Core.dll"
 #load "layout.fsx"
-#if !FORNAX
-#load "../loaders/postloader.fsx"
-#endif
 
 open Postloader
+open Graphgallerypostloader
 open Html
 
 let latest_post_display (latest_post: NotebookPost) =
 
     div [Class "content"] [
-        h1 [Class "title is-capitalized is-inline-block is-emphasized-darkmagenta is-size-3"] [!!"Latest post"]
-        Layout.postPreview latest_post
+        h1 [Class "title is-capitalized is-inline-block is-emphasized-darkmagenta is-size-4"] [!!"Latest post"]
+        Layout.standardPostPreview latest_post
     ]
 
-let browse_categories_display (posts: NotebookPost list) =
+let browse_post_categories_display (posts: NotebookPost list) =
     div [Class "content"] [
-        h1 [Class "title is-capitalized is-inline-block is-emphasized-darkmagenta is-size-3"] [!!"Browse categories"]
+        h1 [Class "title is-capitalized is-inline-block is-emphasized-darkmagenta is-size-4"] [!!"Browse post categories"]
         div [Class "container"] [
             ul [Class "mt-0"] (
                 posts
@@ -32,6 +30,30 @@ let browse_categories_display (posts: NotebookPost list) =
         ]
     ]
 
+let latest_graph_gallery_post_display (latest_post: GraphGalleryPost) =
+
+    div [Class "content"] [
+        h1 [Class "title is-capitalized is-inline-block is-emphasized-darkmagenta is-size-4"] [!!"Latest post"]
+        Layout.graphGalleryPostPreview latest_post
+    ]
+
+let browse_graph_gallery_post_categories_display (posts: GraphGalleryPost list) =
+    div [Class "content"] [
+        h1 [Class "title is-capitalized is-inline-block is-emphasized-darkmagenta is-size-4"] [!!"Browse graph categories"]
+        div [Class "container"] [
+            ul [Class "mt-0"] (
+                posts
+                |> List.countBy (fun p -> p.post_config.category)
+                |> List.map (fun (c,count) -> 
+                    let link = Globals.prefixUrl $"graph-gallery/categories/{c}.html"
+                    li [] [
+                        h3 [Class "subtitle mb-1 is-size-4"] [a [Href link; Class "is-magenta"] [!! $"{c |> GraphCategory.toString} [{count}]"] ]
+                        p [Class "is-size-6"] [!! (c |> GraphCategory.getDescription)]
+                    ]
+                )
+            )
+        ]
+    ]
 
 let generate' (ctx : SiteContents) (_: string) =
 
@@ -40,7 +62,13 @@ let generate' (ctx : SiteContents) (_: string) =
         |> Option.defaultValue Seq.empty
         |> List.ofSeq
 
+    let graph_gallery_posts = 
+        ctx.TryGetValues<GraphGalleryPost>() 
+        |> Option.defaultValue Seq.empty
+        |> List.ofSeq
+
     let latest_post = posts |> List.minBy (fun p -> System.DateTime.Now.Ticks - p.post_config.date.Ticks)
+    let latest_graph_gallery_post = graph_gallery_posts |> List.minBy (fun p -> System.DateTime.Now.Ticks - p.post_config.date.Ticks)
     
     Layout.layout ctx "FsLab Blog" [
         section [Class "hero is-small has-bg-darkmagenta"] [
@@ -67,12 +95,31 @@ let generate' (ctx : SiteContents) (_: string) =
         section [] [
             div [Class "container has-text-justified"] [
                 div [Class "main-TextField"] [
+                    h1 [Class "title is-size-2 is-darkmagenta is-emphasized-magenta is-inline-block"] [!! "FsLab blog"]
+                    h3 [Class "subtitle"] [!! "The FsLab blog is a diverse collection of datascience content, mainly focused on F#."]
                     div [Class "columns"] [
                         div [Class "column is-6"] [
                             latest_post_display latest_post
                         ]
                         div [Class "column is-6"] [
-                            browse_categories_display posts
+                            browse_post_categories_display posts
+                        ]
+                    ]
+                    hr [Class "has-bg-darkmagenta"]
+                ]
+            ]
+        ]
+        section [] [
+            div [Class "container has-text-justified"] [
+                div [Class "main-TextField"] [
+                    h1 [Class "title is-size-2 is-darkmagenta is-emphasized-magenta is-inline-block"] [!! "Dotnet Graph Gallery"]
+                    h3 [Class "subtitle"] [!! "The Dotnet Graph Gallery contains posts about all kinds of data visualizations using Plotly.NET with both F# and C#."]
+                    div [Class "columns"] [
+                        div [Class "column is-6"] [
+                            latest_graph_gallery_post_display latest_graph_gallery_post
+                        ]
+                        div [Class "column is-6"] [
+                            browse_graph_gallery_post_categories_display graph_gallery_posts
                         ]
                     ]
                 ]
