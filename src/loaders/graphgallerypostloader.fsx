@@ -149,8 +149,7 @@ let loader (projectRoot: string) (siteContent: SiteContents) =
                     path
                         .Replace(graphGalleryRootPath, "")
                         .Replace("\\","/")
-                        .Replace("/.ipynb",".html")
-                        .Replace("/","")
+                        .Replace(".ipynb",".html")
 
                 language, name
             )
@@ -162,7 +161,7 @@ let loader (projectRoot: string) (siteContent: SiteContents) =
                 html_paths = (
                     postNames 
                     |> Array.map (fun (language, name) -> 
-                        language, Path.Combine([|projectRoot; "_public"; "graph-gallery"; name|])
+                        language, Path.Combine([|projectRoot; "_public"; "graph-gallery"; yield! name.Split("/")|])
                     )
                 ),
                 original_paths = notebooks
@@ -171,7 +170,7 @@ let loader (projectRoot: string) (siteContent: SiteContents) =
         // printfn "%A" post
         let languages = postNames |> Array.map fst |> String.concat ", "
         siteContent.Add(graph_post)
-        printfn $"[post loader] loaded | {languages} | graph posts from {graph_folder}"
+        printfn $"[graph gallery loader] loaded | {languages} | graph posts from {graph_folder}"
     )
         
     siteContent

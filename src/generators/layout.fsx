@@ -3,11 +3,13 @@
 #if !FORNAX
 #load "../loaders/pageloader.fsx"
 #load "../loaders/postloader.fsx"
+#load "../loaders/graphgallerypostloader.fsx"
 #load "../loaders/globalloader.fsx"
 #endif
 
 open Html
 open Postloader
+open Graphgallerypostloader
 open FsLab.Fornax
 
 // Can be used to set the active item color in the navbar to the same color as the hero to get a bookmark effect
@@ -59,7 +61,7 @@ let layout (ctx : SiteContents) active bodyCnt =
         Components.Footer()
     ]
 
-let postLayout (ctx : SiteContents) (post_config:PostConfig) (toc:HtmlElement) active bodyCnt =
+let postLayout (ctx : SiteContents) (category:string) (category_url_name:string) (post_title:string) (post_date:System.DateTime) (post_author:string) (post_author_link: string) (toc:HtmlElement) active bodyCnt =
     let pages = ctx.TryGetValues<Pageloader.Page> () |> Option.defaultValue Seq.empty
     let siteInfo = ctx.TryGetValue<Globalloader.SiteInfo> ()
     let ttl =
@@ -75,7 +77,7 @@ let postLayout (ctx : SiteContents) (post_config:PostConfig) (toc:HtmlElement) a
         )
         |> Seq.toList
 
-    let category_url = Globals.prefixUrl $"posts/categories/{post_config.category}.html"
+    let category_url = Globals.prefixUrl $"posts/categories/{category_url_name}.html"
 
     html [] [
         head [] [
@@ -110,13 +112,13 @@ let postLayout (ctx : SiteContents) (post_config:PostConfig) (toc:HtmlElement) a
                         div [Class "hero-body"] [
                             div [Class "container has-text-justified"] [
                                 div [Class "main-TextField"] [
-                                    h1 [Class "title is-capitalized is-white is-inline-block is-emphasized-magenta mb-4"] [!! post_config.title]
+                                    h1 [Class "title is-capitalized is-white is-inline-block is-emphasized-magenta mb-4"] [!! post_title]
                                     div [Class "block"] [
                                         h3 [Class "subtitle is-white is-block"] [
-                                            !! $"Posted on {post_config.date.Year}-{post_config.date.Month}-{post_config.date.Day} by"
-                                            a [Href post_config.author_link; Class "is-aquamarine"] [!! post_config.author]
+                                            !! $"Posted on {post_date.Year}-{post_date.Month}-{post_date.Day} by"
+                                            a [Href post_author_link; Class "is-aquamarine"] [!! post_author]
                                             !! $" in "
-                                            a [Href category_url; Class "is-aquamarine"] [!! (post_config.category |> PostCategory.toString)]
+                                            a [Href category_url; Class "is-aquamarine"] [!! (category)]
                                         ]
                                     ]
                                 ]
@@ -129,6 +131,32 @@ let postLayout (ctx : SiteContents) (post_config:PostConfig) (toc:HtmlElement) a
         ]
         Components.Footer()
     ]
+
+let standardPostLayout (ctx: SiteContents) (post_config: Postloader.PostConfig) (toc:HtmlElement) active bodyCnt =
+    postLayout
+        ctx
+        (post_config.category |> PostCategory.toString)
+        (post_config.category.ToString())
+        post_config.title
+        post_config.date
+        post_config.author
+        post_config.author_link
+        toc
+        active
+        bodyCnt
+
+let graphGalleryPostLayout (ctx: SiteContents) (post_config: Graphgallerypostloader.GraphGalleryPostConfig) (toc:HtmlElement) active bodyCnt =
+    postLayout
+        ctx
+        (post_config.category |> GraphCategory.toString)
+        (post_config.category.ToString())
+        post_config.title
+        post_config.date
+        post_config.author
+        post_config.author_link
+        toc
+        active
+        bodyCnt
 
 let postPreview (post:NotebookPost) =
     let has_image = post.post_config.preview_image.IsSome

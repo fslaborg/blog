@@ -1,9 +1,6 @@
 #r "../_lib/Fornax.Core.dll"
 #load "../globals.fsx"
 #load "layout.fsx"
-#if !FORNAX
-#load "../loaders/postloader.fsx"
-#endif
 
 open Postloader
 open Layout
@@ -27,7 +24,7 @@ let generate (ctx : SiteContents) (projectRoot: string) (page: string) =
         let tmp_output = Path.GetFileName(full_path).Replace("ipynb","html")
         let output_path = Path.Combine(tmp_path, tmp_output)
 
-        full_path |> Globals.fixNotebookJson
+        full_path |> Globals.fixNotebookJson "fsharp"
 
         printfn $"[post generator]: starting jupyter --output-dir='{tmp_path}' nbconvert --to html {full_path}"
         let psi = ProcessStartInfo()
@@ -43,10 +40,10 @@ let generate (ctx : SiteContents) (projectRoot: string) (page: string) =
             File.Delete output_path
 
             let processed_notebook = Globals.processConvertedNotebook notebook_content
-            let toc = Globals.getNotebookTOC processed_notebook
+            let toc = Globals.getNotebookTOC processed_notebook 
 
             let content = 
-                Layout.postLayout ctx post.post_config toc "Posts" [
+                Layout.standardPostLayout ctx post.post_config toc "Posts" [
                     div [
                         Class "content jp-Notebook"
                         HtmlProperties.Custom ("data-jp-theme-light","true")

@@ -33,6 +33,7 @@ let staticPredicate (projectRoot: string, page: string) =
 
 let config = {
     Generators = [
+        {Script = "graphgalleryposts.fsx"; Trigger = Once; OutputFile = MultipleFiles id}
         {Script = "posts.fsx"; Trigger = Once; OutputFile = MultipleFiles id}
         {Script = "postcategories.fsx"; Trigger = Once; OutputFile = MultipleFiles id}
         {Script = "notebooks.fsx"; Trigger = Once; OutputFile = MultipleFiles id}
