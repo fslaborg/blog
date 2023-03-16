@@ -13,7 +13,12 @@
     <script src="https://fslab.org/blog/js/navbar.js"></script>
     <script src="https://fslab.org/blog/js/prism.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-timeline@3.0.5/dist/css/bulma-timeline.min.css"/>
+    <script>
+      MathJax = {tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}}
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-svg.js"></script>
     <link rel="stylesheet" href="https://fslab.org/blog/style/notebook.css"/>
+    <link rel="stylesheet" href="https://fslab.org/blog/style/custom.css"/>
   </head>
   <body>
     <div class="columns is-fullheight m-0">
@@ -62,8 +67,17 @@
           </div>
           <div id="navMenu" class="navbar-menu">
             <div class="navbar-start">
-              <a class="navbar-item" href="/FsLab Blog">
-                FsLab Blog
+              <a class="navbar-item" href="https://fslab.org">
+                Home
+              </a>
+              <a class="navbar-item" href="https://fslab.org/packages.html">
+                Data science packages
+              </a>
+              <a class="navbar-item is-active-link-darkmagenta smooth-hover" href="https://fslab.org/blog/">
+                Blog
+              </a>
+              <a class="navbar-item" href="https://fslab.org/blog/graph-gallery.html">
+                Graph Gallery
               </a>
             </div>
             <div class="navbar-end">
