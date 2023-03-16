@@ -5,7 +5,7 @@
 open Graphgallerypostloader
 open Layout
 open Html
-
+open System.IO
 
 let generate (ctx : SiteContents) (projectRoot: string) (page: string) =
 
@@ -47,13 +47,44 @@ let generate (ctx : SiteContents) (projectRoot: string) (page: string) =
                         groupedCategories
                         |> List.map (fun (category, posts) ->
                             li [] [
-                                h1 [Class "title is-darkmagenta is-size-2 is-emphasized-magenta"] [!! (category |> GraphCategory.toString)]
+                                h1 [Class "title is-darkmagenta is-size-2 is-emphasized-magenta"] [
+                                    !! (category |> GraphCategory.toString)
+                                    a [Href ""; Class "is-aquamarine is-size-4"] [!! "[view timeline]"]
+                                ]
                                 h3 [Class "subtitle is-darkmagenta is-size-4"] [!! (category |> GraphCategory.getDescription)]
-                                ul [] [
-                                    for post in posts -> 
-                                        li [] [
-                                            a [Class ""; Href (Globals.prefixUrl $"graph-gallery/{snd post.file_names[0]}")] [!! post.post_config.title]
+                                div [Class "columns"] [
+                                    let mutable c1, c2, c3 = [], [], []
+                                    posts
+                                    |> List.iteri (fun i p ->
+                                        match (i%3) with
+                                        | 0 -> c1 <- c1@[p]
+                                        | 1 -> c2 <- c2@[p]
+                                        | _ -> c3 <- c3@[p]
+                                    )
+                                    div [if posts.Length > 1 then Class "column has-text-centered has-border-right-magenta is-4" else Class "column has-text-centered is-4"] [
+                                        ul [] [
+                                            for post in c1 -> 
+                                                li [] [
+                                                    a [Class "is-magenta is-size-5"; Href (Globals.prefixUrl (Path.Combine[|"graph-gallery"; snd post.file_names[0]|]))] [!! post.post_config.title]
+                                                ]
                                         ]
+                                    ]
+                                    div [if posts.Length > 2 then Class "column has-text-centered has-border-right-magenta is-4" else Class "column has-text-centered is-4"] [
+                                        ul [] [
+                                            for post in c2 -> 
+                                                li [] [
+                                                    a [Class "is-magenta is-size-5"; Href (Globals.prefixUrl (Path.Combine[|"graph-gallery"; snd post.file_names[0]|]))] [!! post.post_config.title]
+                                                ]
+                                        ]
+                                    ]
+                                    div [Class "column has-text-centered is-4"] [
+                                        ul [] [
+                                            for post in c3 -> 
+                                                li [] [
+                                                    a [Class "is-magenta is-size-5"; Href (Globals.prefixUrl (Path.Combine[|"graph-gallery"; snd post.file_names[0]|]))] [!! post.post_config.title]
+                                                ]
+                                        ]
+                                    ]
                                 ]
                             ]
                         )

@@ -151,7 +151,7 @@ let loader (projectRoot: string) (siteContent: SiteContents) =
                         .Replace("\\","/")
                         .Replace(".ipynb",".html")
 
-                language, name
+                language, name[1..]
             )
 
         let graph_post =
