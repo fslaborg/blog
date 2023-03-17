@@ -36,6 +36,8 @@ To add a new post:
     author_link: <a link>
     category: <post category>
     date: <YYYY-MM-DD>
+    summary: <post summary>
+    preview_image: images/<your_image_here.png>
     ---
     ```
     - `title` is the title of your post
@@ -43,6 +45,8 @@ To add a new post:
     - `author_link` is a link that will be associated with your name. You can for example link your github or twitter account here
     - `category` is one of `fsharp`, `datascience`, `advanced`
     - `date` is the date of submission in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+    - `summary` is an optional short summary of the post. It is recommended to add for SEO.
+    - `perview_image` is an optional image that will be shown on post previews. ideally a 2-by-1 or 3-by-1 image with a width of 1200px. It is recommended to add for SEO.
 
 - create a `post.ipynb` file that contains your blogpost. This notebook will be parsed and rendered to a html site. **do not forget to save the notebook with cell output**, as the notebook will not be executed on site generation.
 
@@ -57,8 +61,10 @@ To add a graph post:
     title: <your post title>
     author: <your name>
     author_link: <a link>
-    chart_category: <chart category>
+    graph_category: <chart category>
     date: <YYYY-MM-DD>
+    summary: <post summary>
+    preview_image: images/<your_image_here.png>
     ---
     ```
     - `title` is the title of your post
@@ -66,5 +72,7 @@ To add a graph post:
     - `author_link` is a link that will be associated with your name. You can for example link your github or twitter account here
     - `graph_category` is one of `basic`, `distribution`, `finance`, `3d`, `map`, `special` (corresponding to the categories of [plotly's docs](https://plotly.com/javascript/reference/))
     - `date` is the date of submission in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+    - `summary` is an optional short summary of the post. It is recommended to add for SEO.
+    - `perview_image` is an optional image that will be shown on post previews. ideally a 2-by-1 or 3-by-1 image with a width of 1200px. It is recommended to add for SEO.
 
 - create a `<language>.ipynb` file that contains your graph post. This notebook will be parsed and rendered to a html site. Ideally, you provide both `fsharp.ipynb` and `csharp.ipynb`, but F#-only is okay as well. **do not forget to save the notebook with cell output**, as the notebook will not be executed on site generation.

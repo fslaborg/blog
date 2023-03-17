@@ -46,8 +46,13 @@ let getFrontmatter (fileContent : string) =
 let processConvertedNotebook (content:string) =
     let nb_start_tag = """<body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">"""
     let body_start_index = content.IndexOf(nb_start_tag) + nb_start_tag.Length
-    let body_end_index = content.IndexOf "</body>" + 1
+    let body_end_index = content.IndexOf "</body>" - 1
+    let image_url = prefixUrl "images"
     content[body_start_index .. body_end_index]
+        .Replace(
+            "src=\"../../images",
+            $"src=\"{image_url}"
+        )
 
 let fixNotebookJson (language:string) (nb_path:string) (target_path:string) =
     let content = File.ReadAllText(nb_path)

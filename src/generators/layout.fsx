@@ -131,10 +131,10 @@ let postLayout (ctx : SiteContents) (metadata: SiteMetadata) (post_category:stri
                         ]
                     ]
                     yield! bodyCnt
+                    Components.Footer()
                 ]
             ]
         ]
-        Components.Footer()
     ]
 
 let standardPostLayout (ctx: SiteContents) (post_config: Postloader.PostConfig) (toc:HtmlElement) active bodyCnt =
