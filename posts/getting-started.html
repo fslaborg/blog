@@ -149,13 +149,13 @@ practical data science challenges. Note that every package used througout the tu
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="c1">// Packages hosted by the Fslab community</span><span class="w"></span>
-<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Deedle.Interactive, 3.0.0"</span><span class="w"></span>
-<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: FSharp.Stats"</span><span class="w"></span>
-<span class="c1">// third party .net packages </span><span class="w"></span>
-<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Plotly.NET.Interactive, 4.0.0"</span><span class="w"></span>
-<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: FSharpAux"</span><span class="w"></span>
-<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: FSharp.Data, 5.0.2"</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="c1">// Packages hosted by the Fslab community</span>
+<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Deedle.Interactive, 3.0.0"</span>
+<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: FSharp.Stats"</span>
+<span class="c1">// third party .net packages </span>
+<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Plotly.NET.Interactive, 4.0.0"</span>
+<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: FSharpAux"</span>
+<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: FSharp.Data, 5.0.2"</span>
 </pre></div>
 
      </div>
@@ -208,9 +208,9 @@ top level namespaces and then use a function provided by the FSharp.Stats packag
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats</span>
 
-<span class="nn">SpecialFunctions</span><span class="p">.</span><span class="nn">Factorial</span><span class="p">.</span><span class="n">factorial</span><span class="w"> </span><span class="mi">3</span><span class="w"></span>
+<span class="nn">SpecialFunctions</span><span class="p">.</span><span class="nn">Factorial</span><span class="p">.</span><span class="n">factorial</span><span class="w"> </span><span class="mi">3</span>
 </pre></div>
 
      </div>
@@ -293,17 +293,17 @@ table th {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Data</span><span class="w"></span>
-<span class="k">open</span><span class="w"> </span><span class="nn">Deedle</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Data</span>
+<span class="k">open</span><span class="w"> </span><span class="nn">Deedle</span>
 
-<span class="c1">// Retrieve data using the FSharp.Data package</span><span class="w"></span>
-<span class="k">let</span><span class="w"> </span><span class="nv">rawData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Http</span><span class="p">.</span><span class="n">RequestString</span><span class="w"> </span><span class="s">@"https://raw.githubusercontent.com/dotnet/machinelearning/master/test/data/housing.txt"</span><span class="w"></span>
+<span class="c1">// Retrieve data using the FSharp.Data package</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">rawData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Http</span><span class="p">.</span><span class="n">RequestString</span><span class="w"> </span><span class="s">@"https://raw.githubusercontent.com/dotnet/machinelearning/master/test/data/housing.txt"</span>
 
-<span class="c1">// And create a data frame object using the ReadCsvString method provided by Deedle.</span><span class="w"></span>
-<span class="c1">// Note: Of course you can directly provide the path to a local source.</span><span class="w"></span>
-<span class="k">let</span><span class="w"> </span><span class="nv">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">ReadCsvString</span><span class="o">(</span><span class="n">rawData</span><span class="o">,</span><span class="n">hasHeaders</span><span class="o">=</span><span class="k">true</span><span class="o">,</span><span class="n">separators</span><span class="o">=</span><span class="s">"</span><span class="se">\t</span><span class="s">"</span><span class="o">)</span><span class="w"></span>
+<span class="c1">// And create a data frame object using the ReadCsvString method provided by Deedle.</span>
+<span class="c1">// Note: Of course you can directly provide the path to a local source.</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">ReadCsvString</span><span class="o">(</span><span class="n">rawData</span><span class="o">,</span><span class="n">hasHeaders</span><span class="o">=</span><span class="k">true</span><span class="o">,</span><span class="n">separators</span><span class="o">=</span><span class="s">"</span><span class="se">\t</span><span class="s">"</span><span class="o">)</span>
 
-<span class="n">df</span><span class="w"></span>
+<span class="n">df</span>
 </pre></div>
 
      </div>
@@ -378,11 +378,11 @@ table th {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">housesNotAtRiver</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
-<span class="w">    </span><span class="n">df</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">sliceCols</span><span class="w"> </span><span class="o">[</span><span class="s">"RoomsPerDwelling"</span><span class="o">;</span><span class="s">"MedianHomeValue"</span><span class="o">;</span><span class="s">"CharlesRiver"</span><span class="o">]</span><span class="w"></span>
+<span class="w">    </span><span class="n">df</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">sliceCols</span><span class="w"> </span><span class="o">[</span><span class="s">"RoomsPerDwelling"</span><span class="o">;</span><span class="s">"MedianHomeValue"</span><span class="o">;</span><span class="s">"CharlesRiver"</span><span class="o">]</span>
 <span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">filterRowValues</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">s</span><span class="o">.</span><span class="n">GetAs</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;(</span><span class="s">"CharlesRiver"</span><span class="o">)</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="o">)</span><span class="w"> </span>
 
-<span class="n">housesNotAtRiver</span><span class="w"></span>
+<span class="n">housesNotAtRiver</span>
 </pre></div>
 
      </div>
@@ -455,20 +455,20 @@ table th {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">Plotly.NET</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">Plotly.NET</span>
 
-<span class="c1">// Note that we explicitly specify that we want to work with the values as floats. </span><span class="w"></span>
-<span class="c1">// Since the row identity is not needed anymore when plotting the distribution we can</span><span class="w"></span>
-<span class="c1">// directly convert the collection to a FSharp Sequence. </span><span class="w"></span>
+<span class="c1">// Note that we explicitly specify that we want to work with the values as floats. </span>
+<span class="c1">// Since the row identity is not needed anymore when plotting the distribution we can</span>
+<span class="c1">// directly convert the collection to a FSharp Sequence. </span>
 <span class="k">let</span><span class="w"> </span><span class="nv">pricesNotAtRiver</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">seq</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
-<span class="w">    </span><span class="n">housesNotAtRiver</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">getCol</span><span class="w"> </span><span class="s">"MedianHomeValue"</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Series</span><span class="p">.</span><span class="n">values</span><span class="w"></span>
+<span class="w">    </span><span class="n">housesNotAtRiver</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">getCol</span><span class="w"> </span><span class="s">"MedianHomeValue"</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Series</span><span class="p">.</span><span class="n">values</span>
 <span class="w">    </span>
 
-<span class="nn">Chart</span><span class="p">.</span><span class="n">Histogram</span><span class="o">(</span><span class="n">pricesNotAtRiver</span><span class="o">)</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="o">(</span><span class="s">"median value of owner occupied homes in 1000s"</span><span class="o">)</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxisStyle</span><span class="o">(</span><span class="s">"price distribution"</span><span class="o">)</span><span class="w"></span>
+<span class="nn">Chart</span><span class="p">.</span><span class="n">Histogram</span><span class="o">(</span><span class="n">pricesNotAtRiver</span><span class="o">)</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="o">(</span><span class="s">"median value of owner occupied homes in 1000s"</span><span class="o">)</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxisStyle</span><span class="o">(</span><span class="s">"price distribution"</span><span class="o">)</span>
 </pre></div>
 
      </div>
@@ -542,25 +542,25 @@ else {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">housesAtRiver</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
-<span class="w">    </span><span class="n">df</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">sliceCols</span><span class="w"> </span><span class="o">[</span><span class="s">"RoomsPerDwelling"</span><span class="o">;</span><span class="s">"MedianHomeValue"</span><span class="o">;</span><span class="s">"CharlesRiver"</span><span class="o">]</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">filterRowValues</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">s</span><span class="o">.</span><span class="n">GetAs</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;(</span><span class="s">"CharlesRiver"</span><span class="o">))</span><span class="w"></span>
+<span class="w">    </span><span class="n">df</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">sliceCols</span><span class="w"> </span><span class="o">[</span><span class="s">"RoomsPerDwelling"</span><span class="o">;</span><span class="s">"MedianHomeValue"</span><span class="o">;</span><span class="s">"CharlesRiver"</span><span class="o">]</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">filterRowValues</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">s</span><span class="o">.</span><span class="n">GetAs</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;(</span><span class="s">"CharlesRiver"</span><span class="o">))</span>
 
 <span class="k">let</span><span class="w"> </span><span class="nv">pricesAtRiver</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">seq</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
-<span class="w">    </span><span class="n">housesAtRiver</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">getCol</span><span class="w"> </span><span class="s">"MedianHomeValue"</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Series</span><span class="p">.</span><span class="n">values</span><span class="w"></span>
+<span class="w">    </span><span class="n">housesAtRiver</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">getCol</span><span class="w"> </span><span class="s">"MedianHomeValue"</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Series</span><span class="p">.</span><span class="n">values</span>
 
 
-<span class="o">[</span><span class="w"></span>
-<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Histogram</span><span class="o">(</span><span class="n">pricesNotAtRiver</span><span class="o">,</span><span class="w"> </span><span class="n">Opacity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">66</span><span class="o">,</span><span class="w"> </span><span class="n">OffsetGroup</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"A"</span><span class="o">)</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTraceInfo</span><span class="w"> </span><span class="s">"not at river"</span><span class="w"></span>
-<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Histogram</span><span class="o">(</span><span class="n">pricesAtRiver</span><span class="o">,</span><span class="w"> </span><span class="n">Opacity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">66</span><span class="o">,</span><span class="w"> </span><span class="n">OffsetGroup</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"A"</span><span class="o">)</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTraceInfo</span><span class="w"> </span><span class="s">"at river"</span><span class="w"></span>
-<span class="o">]</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">combine</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="o">(</span><span class="s">"median value of owner occupied homes in 1000s"</span><span class="o">)</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxisStyle</span><span class="o">(</span><span class="s">"Comparison of price distributions"</span><span class="o">)</span><span class="w"></span>
+<span class="o">[</span>
+<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Histogram</span><span class="o">(</span><span class="n">pricesNotAtRiver</span><span class="o">,</span><span class="w"> </span><span class="n">Opacity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">66</span><span class="o">,</span><span class="w"> </span><span class="n">OffsetGroup</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"A"</span><span class="o">)</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTraceInfo</span><span class="w"> </span><span class="s">"not at river"</span>
+<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Histogram</span><span class="o">(</span><span class="n">pricesAtRiver</span><span class="o">,</span><span class="w"> </span><span class="n">Opacity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">66</span><span class="o">,</span><span class="w"> </span><span class="n">OffsetGroup</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"A"</span><span class="o">)</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTraceInfo</span><span class="w"> </span><span class="s">"at river"</span>
+<span class="o">]</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">combine</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="o">(</span><span class="s">"median value of owner occupied homes in 1000s"</span><span class="o">)</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxisStyle</span><span class="o">(</span><span class="s">"Comparison of price distributions"</span><span class="o">)</span>
 </pre></div>
 
      </div>
@@ -636,26 +636,26 @@ This could also be backed by analyzing the tails of the distribution: it seems t
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats</span><span class="w"></span>
-<span class="k">open</span><span class="w"> </span><span class="nn">FSharpAux</span><span class="w"></span>
-<span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats.Correlation</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats</span>
+<span class="k">open</span><span class="w"> </span><span class="nn">FSharpAux</span>
+<span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats.Correlation</span>
 
 <span class="k">let</span><span class="w"> </span><span class="nv">pricesAll</span><span class="w"> </span><span class="o">:</span><span class="n">Series</span><span class="o">&lt;</span><span class="n">int</span><span class="o">,</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
-<span class="w">    </span><span class="n">df</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">getCol</span><span class="w"> </span><span class="s">"MedianHomeValue"</span><span class="w"></span>
+<span class="w">    </span><span class="n">df</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">getCol</span><span class="w"> </span><span class="s">"MedianHomeValue"</span>
 
 <span class="k">let</span><span class="w"> </span><span class="nv">roomsPerDwellingAll</span><span class="w"> </span><span class="o">:</span><span class="n">Series</span><span class="o">&lt;</span><span class="n">int</span><span class="o">,</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
-<span class="w">    </span><span class="n">df</span><span class="w"></span>
+<span class="w">    </span><span class="n">df</span>
 <span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">getCol</span><span class="w"> </span><span class="s">"RoomsPerDwelling"</span><span class="w">   </span>
 
 <span class="k">let</span><span class="w"> </span><span class="nv">correlation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
 <span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">tmpPrices</span><span class="o">,</span><span class="w"> </span><span class="n">tmpRooms</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
 <span class="w">        </span><span class="nn">Series</span><span class="p">.</span><span class="n">zipInner</span><span class="w"> </span><span class="n">pricesAll</span><span class="w"> </span><span class="n">roomsPerDwellingAll</span><span class="w">    </span>
 <span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Series</span><span class="p">.</span><span class="n">values</span><span class="w"> </span>
-<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">unzip</span><span class="w"></span>
-<span class="w">    </span><span class="nn">Seq</span><span class="p">.</span><span class="n">pearson</span><span class="w"> </span><span class="n">tmpPrices</span><span class="w"> </span><span class="n">tmpRooms</span><span class="w"></span>
+<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">unzip</span>
+<span class="w">    </span><span class="nn">Seq</span><span class="p">.</span><span class="n">pearson</span><span class="w"> </span><span class="n">tmpPrices</span><span class="w"> </span><span class="n">tmpRooms</span>
 
-<span class="n">correlation</span><span class="w"></span>
+<span class="n">correlation</span>
 </pre></div>
 
      </div>
@@ -739,36 +739,36 @@ table th {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">Fitting.LinearRegression.OrdinaryLeastSquares</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">Fitting.LinearRegression.OrdinaryLeastSquares</span>
 
 <span class="k">let</span><span class="w"> </span><span class="nv">predictPricesByRooms</span><span class="w"> </span><span class="n">description</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
 <span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">pricesAll</span><span class="w"> </span><span class="o">:</span><span class="n">Series</span><span class="o">&lt;_,</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
-<span class="w">        </span><span class="n">data</span><span class="w"></span>
-<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">getCol</span><span class="w"> </span><span class="s">"MedianHomeValue"</span><span class="w"></span>
+<span class="w">        </span><span class="n">data</span>
+<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">getCol</span><span class="w"> </span><span class="s">"MedianHomeValue"</span>
 
 <span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">roomsPerDwellingAll</span><span class="w"> </span><span class="o">:</span><span class="n">Series</span><span class="o">&lt;_,</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
-<span class="w">        </span><span class="n">data</span><span class="w"></span>
+<span class="w">        </span><span class="n">data</span>
 <span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">getCol</span><span class="w"> </span><span class="s">"RoomsPerDwelling"</span><span class="w">   </span>
 
 <span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">fit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
 <span class="w">        </span><span class="k">let</span><span class="w"> </span><span class="nv">tmpRooms</span><span class="o">,</span><span class="w"> </span><span class="n">tmpPrices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
 <span class="w">            </span><span class="nn">Series</span><span class="p">.</span><span class="n">zipInner</span><span class="w"> </span><span class="n">roomsPerDwellingAll</span><span class="w"> </span><span class="n">pricesAll</span><span class="w">    </span>
-<span class="w">            </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Series</span><span class="p">.</span><span class="n">sortBy</span><span class="w"> </span><span class="n">fst</span><span class="w"></span>
+<span class="w">            </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Series</span><span class="p">.</span><span class="n">sortBy</span><span class="w"> </span><span class="n">fst</span>
 <span class="w">            </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Series</span><span class="p">.</span><span class="n">values</span><span class="w"> </span>
-<span class="w">            </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">unzip</span><span class="w"></span>
-<span class="w">        </span><span class="k">let</span><span class="w"> </span><span class="nv">coeffs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Linear</span><span class="p">.</span><span class="nn">Univariable</span><span class="p">.</span><span class="n">coefficient</span><span class="w"> </span><span class="o">(</span><span class="n">vector</span><span class="w"> </span><span class="n">tmpRooms</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="n">vector</span><span class="w"> </span><span class="n">tmpPrices</span><span class="o">)</span><span class="w"></span>
+<span class="w">            </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">unzip</span>
+<span class="w">        </span><span class="k">let</span><span class="w"> </span><span class="nv">coeffs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Linear</span><span class="p">.</span><span class="nn">Univariable</span><span class="p">.</span><span class="n">coefficient</span><span class="w"> </span><span class="o">(</span><span class="n">vector</span><span class="w"> </span><span class="n">tmpRooms</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="n">vector</span><span class="w"> </span><span class="n">tmpPrices</span><span class="o">)</span>
 <span class="w">        </span><span class="k">let</span><span class="w"> </span><span class="nv">model</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="nn">Linear</span><span class="p">.</span><span class="nn">Univariable</span><span class="p">.</span><span class="n">fit</span><span class="w"> </span><span class="n">coeffs</span><span class="w"> </span>
-<span class="w">        </span><span class="k">let</span><span class="w"> </span><span class="nv">predictedPrices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tmpRooms</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="n">model</span><span class="w"></span>
-<span class="w">        </span><span class="o">[</span><span class="w"></span>
-<span class="w">        </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Point</span><span class="o">(</span><span class="n">tmpRooms</span><span class="o">,</span><span class="n">tmpPrices</span><span class="o">)</span><span class="w"></span>
-<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTraceInfo</span><span class="w"> </span><span class="o">(</span><span class="n">sprintf</span><span class="w"> </span><span class="s">"%s: data"</span><span class="w"> </span><span class="n">description</span><span class="w"> </span><span class="o">)</span><span class="w"></span>
-<span class="w">        </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Line</span><span class="o">(</span><span class="n">tmpRooms</span><span class="o">,</span><span class="n">predictedPrices</span><span class="o">)</span><span class="w"></span>
-<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTraceInfo</span><span class="w"> </span><span class="o">(</span><span class="n">sprintf</span><span class="w"> </span><span class="s">"%s: coefficients: intercept:%f, slope:%f"</span><span class="w"> </span><span class="n">description</span><span class="w"> </span><span class="n">coeffs</span><span class="o">.[</span><span class="mi">0</span><span class="o">]</span><span class="w"> </span><span class="n">coeffs</span><span class="o">.[</span><span class="mi">1</span><span class="o">])</span><span class="w"></span>
+<span class="w">        </span><span class="k">let</span><span class="w"> </span><span class="nv">predictedPrices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tmpRooms</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="n">model</span>
+<span class="w">        </span><span class="o">[</span>
+<span class="w">        </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Point</span><span class="o">(</span><span class="n">tmpRooms</span><span class="o">,</span><span class="n">tmpPrices</span><span class="o">)</span>
+<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTraceInfo</span><span class="w"> </span><span class="o">(</span><span class="n">sprintf</span><span class="w"> </span><span class="s">"%s: data"</span><span class="w"> </span><span class="n">description</span><span class="w"> </span><span class="o">)</span>
+<span class="w">        </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Line</span><span class="o">(</span><span class="n">tmpRooms</span><span class="o">,</span><span class="n">predictedPrices</span><span class="o">)</span>
+<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTraceInfo</span><span class="w"> </span><span class="o">(</span><span class="n">sprintf</span><span class="w"> </span><span class="s">"%s: coefficients: intercept:%f, slope:%f"</span><span class="w"> </span><span class="n">description</span><span class="w"> </span><span class="n">coeffs</span><span class="o">.[</span><span class="mi">0</span><span class="o">]</span><span class="w"> </span><span class="n">coeffs</span><span class="o">.[</span><span class="mi">1</span><span class="o">])</span>
 <span class="w">        </span><span class="o">]</span><span class="w">                                  </span>
-<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">combine</span><span class="w"></span>
-<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxisStyle</span><span class="o">(</span><span class="s">"rooms per dwelling"</span><span class="o">)</span><span class="w"></span>
-<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="o">(</span><span class="s">"median value"</span><span class="o">)</span><span class="w"></span>
-<span class="w">    </span><span class="n">fit</span><span class="w"></span>
+<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">combine</span>
+<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxisStyle</span><span class="o">(</span><span class="s">"rooms per dwelling"</span><span class="o">)</span>
+<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="o">(</span><span class="s">"median value"</span><span class="o">)</span>
+<span class="w">    </span><span class="n">fit</span>
 </pre></div>
 
      </div>
@@ -796,12 +796,12 @@ table th {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="o">[</span><span class="w"></span>
-<span class="w">    </span><span class="n">predictPricesByRooms</span><span class="w"> </span><span class="s">"not at river"</span><span class="w"> </span><span class="n">housesNotAtRiver</span><span class="w"></span>
-<span class="w">    </span><span class="n">predictPricesByRooms</span><span class="w"> </span><span class="s">"at river"</span><span class="w"> </span><span class="n">housesAtRiver</span><span class="w"></span>
-<span class="o">]</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">combine</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withSize</span><span class="o">(</span><span class="mi">1200</span><span class="o">.,</span><span class="mi">700</span><span class="o">.)</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="o">[</span>
+<span class="w">    </span><span class="n">predictPricesByRooms</span><span class="w"> </span><span class="s">"not at river"</span><span class="w"> </span><span class="n">housesNotAtRiver</span>
+<span class="w">    </span><span class="n">predictPricesByRooms</span><span class="w"> </span><span class="s">"at river"</span><span class="w"> </span><span class="n">housesAtRiver</span>
+<span class="o">]</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">combine</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withSize</span><span class="o">(</span><span class="mi">1200</span><span class="o">.,</span><span class="mi">700</span><span class="o">.)</span>
 </pre></div>
 
      </div>

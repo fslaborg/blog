@@ -170,14 +170,14 @@ at least as extreme as you observed (in the comparison) by chance. Low p values 
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Deedle.Interactive, 3.0.0"</span><span class="w"></span>
-<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: FSharp.Stats, 0.4.3"</span><span class="w"></span>
-<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Plotly.NET.Interactive, 4.0.0"</span><span class="w"></span>
-<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: FSharp.Data, 4.2.7"</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Deedle.Interactive, 3.0.0"</span>
+<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: FSharp.Stats, 0.4.3"</span>
+<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Plotly.NET.Interactive, 4.0.0"</span>
+<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: FSharp.Data, 4.2.7"</span>
 
-<span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Data</span><span class="w"></span>
-<span class="k">open</span><span class="w"> </span><span class="nn">Deedle</span><span class="w"></span>
-<span class="k">open</span><span class="w"> </span><span class="nn">Plotly.NET</span><span class="w"></span>
+<span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Data</span>
+<span class="k">open</span><span class="w"> </span><span class="nn">Deedle</span>
+<span class="k">open</span><span class="w"> </span><span class="nn">Plotly.NET</span>
 </pre></div>
 
      </div>
@@ -230,15 +230,15 @@ Head over to the <a href="001_getting-started.html#Data-access">Getting started<
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="c1">// We retrieve the dataset via FSharp.Data:</span><span class="w"></span>
-<span class="k">let</span><span class="w"> </span><span class="nv">rawDataHousefly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Http</span><span class="p">.</span><span class="n">RequestString</span><span class="w"> </span><span class="s">@"https://raw.githubusercontent.com/fslaborg/datasets/main/data/HouseflyWingLength.txt"</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="c1">// We retrieve the dataset via FSharp.Data:</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">rawDataHousefly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Http</span><span class="p">.</span><span class="n">RequestString</span><span class="w"> </span><span class="s">@"https://raw.githubusercontent.com/fslaborg/datasets/main/data/HouseflyWingLength.txt"</span>
 
 <span class="k">let</span><span class="w"> </span><span class="nv">dataHousefly</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">seq</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
-<span class="w">    </span><span class="nn">Frame</span><span class="p">.</span><span class="n">ReadCsvString</span><span class="o">(</span><span class="n">rawDataHousefly</span><span class="o">,</span><span class="w"> </span><span class="k">false</span><span class="o">,</span><span class="w"> </span><span class="n">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"wing length (mm * 10^1)"</span><span class="o">)</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">getCol</span><span class="w"> </span><span class="s">"wing length (mm * 10^1)"</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Series</span><span class="p">.</span><span class="n">values</span><span class="w"></span>
-<span class="w">    </span><span class="c1">// We convert the values to mm</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">10</span><span class="o">.)</span><span class="w"></span>
+<span class="w">    </span><span class="nn">Frame</span><span class="p">.</span><span class="n">ReadCsvString</span><span class="o">(</span><span class="n">rawDataHousefly</span><span class="o">,</span><span class="w"> </span><span class="k">false</span><span class="o">,</span><span class="w"> </span><span class="n">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"wing length (mm * 10^1)"</span><span class="o">)</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">getCol</span><span class="w"> </span><span class="s">"wing length (mm * 10^1)"</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Series</span><span class="p">.</span><span class="n">values</span>
+<span class="w">    </span><span class="c1">// We convert the values to mm</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">10</span><span class="o">.)</span>
 </pre></div>
 
      </div>
@@ -266,13 +266,13 @@ Head over to the <a href="001_getting-started.html#Data-access">Getting started<
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="nn">Chart</span><span class="p">.</span><span class="n">BoxPlot</span><span class="o">(</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="nn">Chart</span><span class="p">.</span><span class="n">BoxPlot</span><span class="o">(</span>
 <span class="w">    </span><span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dataHousefly</span><span class="o">,</span><span class="w"> </span>
 <span class="w">    </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"housefly"</span><span class="o">,</span><span class="w"> </span>
 <span class="w">    </span><span class="n">BoxPoints</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">BoxPoints</span><span class="p">.</span><span class="n">All</span><span class="o">,</span><span class="w"> </span>
-<span class="w">    </span><span class="n">Jitter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">2</span><span class="w"></span>
-<span class="o">)</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="w"> </span><span class="s">"wing length [mm]"</span><span class="w"></span>
+<span class="w">    </span><span class="n">Jitter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">2</span>
+<span class="o">)</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="w"> </span><span class="s">"wing length [mm]"</span>
 </pre></div>
 
      </div>
@@ -347,19 +347,19 @@ else {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats</span><span class="w"></span>
-<span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats.Testing</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats</span>
+<span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats.Testing</span>
 
-<span class="c1">// The testing module in FSharp.Stats require vectors as input types, thus we transform our array into a vector:</span><span class="w"></span>
-<span class="k">let</span><span class="w"> </span><span class="nv">vectorDataHousefly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vector</span><span class="w"> </span><span class="n">dataHousefly</span><span class="w"></span>
+<span class="c1">// The testing module in FSharp.Stats require vectors as input types, thus we transform our array into a vector:</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">vectorDataHousefly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vector</span><span class="w"> </span><span class="n">dataHousefly</span>
 
-<span class="c1">// The expected value of our population.</span><span class="w"></span>
-<span class="k">let</span><span class="w"> </span><span class="nv">expectedValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="o">.</span><span class="mi">5</span><span class="w"></span>
+<span class="c1">// The expected value of our population.</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">expectedValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="o">.</span><span class="mi">5</span>
 
-<span class="c1">// Perform the one-sample t-test with our vectorized data and our exptected value as parameters.</span><span class="w"></span>
-<span class="k">let</span><span class="w"> </span><span class="nv">oneSampleResult</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">TTest</span><span class="p">.</span><span class="n">oneSample</span><span class="w"> </span><span class="n">vectorDataHousefly</span><span class="w"> </span><span class="n">expectedValue</span><span class="w"></span>
+<span class="c1">// Perform the one-sample t-test with our vectorized data and our exptected value as parameters.</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">oneSampleResult</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">TTest</span><span class="p">.</span><span class="n">oneSample</span><span class="w"> </span><span class="n">vectorDataHousefly</span><span class="w"> </span><span class="n">expectedValue</span>
 
-<span class="n">oneSampleResult</span><span class="w"></span>
+<span class="n">oneSampleResult</span>
 </pre></div>
 
      </div>
@@ -460,16 +460,16 @@ In this next example, we are going to see if the gender of college athletes dete
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">System.Text</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">System.Text</span>
 
-<span class="k">let</span><span class="w"> </span><span class="nv">rawDataAthletes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Http</span><span class="p">.</span><span class="n">RequestString</span><span class="w"> </span><span class="s">@"https://raw.githubusercontent.com/fslaborg/datasets/main/data/ConcussionsInMaleAndFemaleCollegeAthletes_adapted.tsv"</span><span class="w"></span>
+<span class="k">let</span><span class="w"> </span><span class="nv">rawDataAthletes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Http</span><span class="p">.</span><span class="n">RequestString</span><span class="w"> </span><span class="s">@"https://raw.githubusercontent.com/fslaborg/datasets/main/data/ConcussionsInMaleAndFemaleCollegeAthletes_adapted.tsv"</span>
 
-<span class="k">let</span><span class="w"> </span><span class="nv">dataAthletesAsStream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nn">System</span><span class="p">.</span><span class="nn">IO</span><span class="p">.</span><span class="n">MemoryStream</span><span class="o">(</span><span class="n">rawDataAthletes</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Encoding</span><span class="p">.</span><span class="nn">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="o">)</span><span class="w"></span>
+<span class="k">let</span><span class="w"> </span><span class="nv">dataAthletesAsStream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nn">System</span><span class="p">.</span><span class="nn">IO</span><span class="p">.</span><span class="n">MemoryStream</span><span class="o">(</span><span class="n">rawDataAthletes</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Encoding</span><span class="p">.</span><span class="nn">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="o">)</span>
 
-<span class="c1">// The schema helps us setting column keys.</span><span class="w"></span>
-<span class="k">let</span><span class="w"> </span><span class="nv">dataAthletesAsFrame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">ReadCsv</span><span class="o">(</span><span class="n">dataAthletesAsStream</span><span class="o">,</span><span class="w"> </span><span class="n">hasHeaders</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="o">,</span><span class="w"> </span><span class="n">separators</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"</span><span class="se">\t</span><span class="s">"</span><span class="o">,</span><span class="w"> </span><span class="n">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Gender, Sports, Year, Concussion, Count"</span><span class="o">)</span><span class="w"></span>
+<span class="c1">// The schema helps us setting column keys.</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">dataAthletesAsFrame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">ReadCsv</span><span class="o">(</span><span class="n">dataAthletesAsStream</span><span class="o">,</span><span class="w"> </span><span class="n">hasHeaders</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="o">,</span><span class="w"> </span><span class="n">separators</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"</span><span class="se">\t</span><span class="s">"</span><span class="o">,</span><span class="w"> </span><span class="n">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Gender, Sports, Year, Concussion, Count"</span><span class="o">)</span>
 
-<span class="n">dataAthletesAsFrame</span><span class="w"></span>
+<span class="n">dataAthletesAsFrame</span>
 </pre></div>
 
      </div>
@@ -530,21 +530,21 @@ In this next example, we are going to see if the gender of college athletes dete
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="c1">// We need to filter out the columns and rows we don't need. Thus, we filter out the rows where the athletes suffered no concussions  </span><span class="w"></span>
-<span class="c1">// as well as filter out the columns without the number of concussions.</span><span class="w"></span>
-<span class="k">let</span><span class="w"> </span><span class="nv">dataAthletesFemale</span><span class="o">,</span><span class="w"> </span><span class="n">dataAthletesMale</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">getAthleteGenderData</span><span class="w"> </span><span class="n">gender</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">        </span><span class="k">let</span><span class="w"> </span><span class="nv">dataAthletesOnlyConcussion</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">            </span><span class="n">dataAthletesAsFrame</span><span class="w"></span>
-<span class="w">            </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">filterRows</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="n">objS</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">objS</span><span class="o">.</span><span class="n">GetAs</span><span class="w"> </span><span class="s">"Concussion"</span><span class="o">)</span><span class="w"></span>
-<span class="w">        </span><span class="k">let</span><span class="w"> </span><span class="nv">dataAthletesGenderFrame</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">            </span><span class="n">dataAthletesOnlyConcussion</span><span class="w"></span>
-<span class="w">            </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">filterRows</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="n">objS</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">objS</span><span class="o">.</span><span class="n">GetAs</span><span class="w"> </span><span class="s">"Gender"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gender</span><span class="o">)</span><span class="w"></span>
-<span class="w">        </span><span class="n">dataAthletesGenderFrame</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="c1">// We need to filter out the columns and rows we don't need. Thus, we filter out the rows where the athletes suffered no concussions  </span>
+<span class="c1">// as well as filter out the columns without the number of concussions.</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">dataAthletesFemale</span><span class="o">,</span><span class="w"> </span><span class="n">dataAthletesMale</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">getAthleteGenderData</span><span class="w"> </span><span class="n">gender</span><span class="w"> </span><span class="o">=</span>
+<span class="w">        </span><span class="k">let</span><span class="w"> </span><span class="nv">dataAthletesOnlyConcussion</span><span class="w"> </span><span class="o">=</span>
+<span class="w">            </span><span class="n">dataAthletesAsFrame</span>
+<span class="w">            </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">filterRows</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="n">objS</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">objS</span><span class="o">.</span><span class="n">GetAs</span><span class="w"> </span><span class="s">"Concussion"</span><span class="o">)</span>
+<span class="w">        </span><span class="k">let</span><span class="w"> </span><span class="nv">dataAthletesGenderFrame</span><span class="w"> </span><span class="o">=</span>
+<span class="w">            </span><span class="n">dataAthletesOnlyConcussion</span>
+<span class="w">            </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">filterRows</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="n">objS</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">objS</span><span class="o">.</span><span class="n">GetAs</span><span class="w"> </span><span class="s">"Gender"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gender</span><span class="o">)</span>
+<span class="w">        </span><span class="n">dataAthletesGenderFrame</span>
 <span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">getCol</span><span class="w"> </span><span class="s">"Count"</span><span class="w"> </span>
-<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Series</span><span class="p">.</span><span class="n">values</span><span class="w"></span>
-<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">vector</span><span class="w"></span>
-<span class="w">    </span><span class="n">getAthleteGenderData</span><span class="w"> </span><span class="s">"Female"</span><span class="o">,</span><span class="w"> </span><span class="n">getAthleteGenderData</span><span class="w"> </span><span class="s">"Male"</span><span class="w"></span>
+<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Series</span><span class="p">.</span><span class="n">values</span>
+<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">vector</span>
+<span class="w">    </span><span class="n">getAthleteGenderData</span><span class="w"> </span><span class="s">"Female"</span><span class="o">,</span><span class="w"> </span><span class="n">getAthleteGenderData</span><span class="w"> </span><span class="s">"Male"</span>
 </pre></div>
 
      </div>
@@ -572,12 +572,12 @@ In this next example, we are going to see if the gender of college athletes dete
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[12]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="o">[</span><span class="w"></span>
-<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">BoxPlot</span><span class="o">(</span><span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dataAthletesFemale</span><span class="o">,</span><span class="w"> </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"female college athletes"</span><span class="o">,</span><span class="w"> </span><span class="n">BoxPoints</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">BoxPoints</span><span class="p">.</span><span class="n">All</span><span class="o">,</span><span class="w"> </span><span class="n">Jitter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">2</span><span class="o">)</span><span class="w"></span>
-<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">BoxPlot</span><span class="o">(</span><span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dataAthletesMale</span><span class="o">,</span><span class="w"> </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"male college athletes"</span><span class="o">,</span><span class="w"> </span><span class="n">BoxPoints</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">BoxPoints</span><span class="p">.</span><span class="n">All</span><span class="o">,</span><span class="w"> </span><span class="n">Jitter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">2</span><span class="o">)</span><span class="w"></span>
-<span class="o">]</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">combine</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="w"> </span><span class="s">"number of concussions over 3 years"</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="o">[</span>
+<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">BoxPlot</span><span class="o">(</span><span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dataAthletesFemale</span><span class="o">,</span><span class="w"> </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"female college athletes"</span><span class="o">,</span><span class="w"> </span><span class="n">BoxPoints</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">BoxPoints</span><span class="p">.</span><span class="n">All</span><span class="o">,</span><span class="w"> </span><span class="n">Jitter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">2</span><span class="o">)</span>
+<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">BoxPlot</span><span class="o">(</span><span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dataAthletesMale</span><span class="o">,</span><span class="w"> </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"male college athletes"</span><span class="o">,</span><span class="w"> </span><span class="n">BoxPoints</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">BoxPoints</span><span class="p">.</span><span class="n">All</span><span class="o">,</span><span class="w"> </span><span class="n">Jitter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">2</span><span class="o">)</span>
+<span class="o">]</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">combine</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="w"> </span><span class="s">"number of concussions over 3 years"</span>
 </pre></div>
 
      </div>
@@ -650,10 +650,10 @@ else {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[13]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="c1">// We test both samples against each other, assuming equal variances.</span><span class="w"></span>
-<span class="k">let</span><span class="w"> </span><span class="nv">twoSampleResult</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">TTest</span><span class="p">.</span><span class="n">twoSample</span><span class="w"> </span><span class="k">true</span><span class="w"> </span><span class="n">dataAthletesFemale</span><span class="w"> </span><span class="n">dataAthletesMale</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="c1">// We test both samples against each other, assuming equal variances.</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">twoSampleResult</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">TTest</span><span class="p">.</span><span class="n">twoSample</span><span class="w"> </span><span class="k">true</span><span class="w"> </span><span class="n">dataAthletesFemale</span><span class="w"> </span><span class="n">dataAthletesMale</span>
 
-<span class="n">twoSampleResult</span><span class="w"></span>
+<span class="n">twoSampleResult</span>
 </pre></div>
 
      </div>
@@ -743,30 +743,30 @@ Due to the connectivity of the sample pairs the samples must be of equal length.
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[14]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">rawDataCaffeine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Http</span><span class="p">.</span><span class="n">RequestString</span><span class="w"> </span><span class="s">@"https://raw.githubusercontent.com/fslaborg/datasets/main/data/CaffeineAndEndurance(wide)_adapted.tsv"</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">rawDataCaffeine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Http</span><span class="p">.</span><span class="n">RequestString</span><span class="w"> </span><span class="s">@"https://raw.githubusercontent.com/fslaborg/datasets/main/data/CaffeineAndEndurance(wide)_adapted.tsv"</span>
 
-<span class="k">let</span><span class="w"> </span><span class="nv">dataCaffeineAsStream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nn">System</span><span class="p">.</span><span class="nn">IO</span><span class="p">.</span><span class="n">MemoryStream</span><span class="o">(</span><span class="n">rawDataCaffeine</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Encoding</span><span class="p">.</span><span class="nn">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="o">)</span><span class="w"></span>
-<span class="k">let</span><span class="w"> </span><span class="nv">dataCaffeineAsFrame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">ReadCsv</span><span class="o">(</span><span class="n">dataCaffeineAsStream</span><span class="o">,</span><span class="w"> </span><span class="n">hasHeaders</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="o">,</span><span class="w"> </span><span class="n">separators</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"</span><span class="se">\t</span><span class="s">"</span><span class="o">,</span><span class="w"> </span><span class="n">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Subject ID, no Dose, 5 mg, 9 mg, 13 mg"</span><span class="o">)</span><span class="w"></span>
+<span class="k">let</span><span class="w"> </span><span class="nv">dataCaffeineAsStream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nn">System</span><span class="p">.</span><span class="nn">IO</span><span class="p">.</span><span class="n">MemoryStream</span><span class="o">(</span><span class="n">rawDataCaffeine</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Encoding</span><span class="p">.</span><span class="nn">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="o">)</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">dataCaffeineAsFrame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">ReadCsv</span><span class="o">(</span><span class="n">dataCaffeineAsStream</span><span class="o">,</span><span class="w"> </span><span class="n">hasHeaders</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="o">,</span><span class="w"> </span><span class="n">separators</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"</span><span class="se">\t</span><span class="s">"</span><span class="o">,</span><span class="w"> </span><span class="n">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Subject ID, no Dose, 5 mg, 9 mg, 13 mg"</span><span class="o">)</span>
 
-<span class="c1">// We want to compare the subjects' performances under the influence of 13 mg caffeine and in the control situation.</span><span class="w"></span>
-<span class="k">let</span><span class="w"> </span><span class="nv">dataCaffeineNoDose</span><span class="o">,</span><span class="w"> </span><span class="n">dataCaffeine13mg</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="c1">// We want to compare the subjects' performances under the influence of 13 mg caffeine and in the control situation.</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">dataCaffeineNoDose</span><span class="o">,</span><span class="w"> </span><span class="n">dataCaffeine13mg</span><span class="w"> </span><span class="o">=</span>
 <span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">getVectorFromCol</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
-<span class="w">        </span><span class="n">dataCaffeineAsFrame</span><span class="w"></span>
-<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">getCol</span><span class="w"> </span><span class="n">col</span><span class="w"></span>
-<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Series</span><span class="p">.</span><span class="n">values</span><span class="w"></span>
-<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">vector</span><span class="w"></span>
-<span class="w">    </span><span class="n">getVectorFromCol</span><span class="w"> </span><span class="s">"no Dose"</span><span class="o">,</span><span class="w"> </span><span class="n">getVectorFromCol</span><span class="w"> </span><span class="s">"13 mg"</span><span class="w"></span>
+<span class="w">        </span><span class="n">dataCaffeineAsFrame</span>
+<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">getCol</span><span class="w"> </span><span class="n">col</span>
+<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Series</span><span class="p">.</span><span class="n">values</span>
+<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">vector</span>
+<span class="w">    </span><span class="n">getVectorFromCol</span><span class="w"> </span><span class="s">"no Dose"</span><span class="o">,</span><span class="w"> </span><span class="n">getVectorFromCol</span><span class="w"> </span><span class="s">"13 mg"</span>
 
-<span class="c1">// Transforming our data into a chart.</span><span class="w"></span>
+<span class="c1">// Transforming our data into a chart.</span>
 
-<span class="nn">Seq</span><span class="p">.</span><span class="n">zip</span><span class="w"> </span><span class="n">dataCaffeineNoDose</span><span class="w"> </span><span class="n">dataCaffeine13mg</span><span class="w"></span>
+<span class="nn">Seq</span><span class="p">.</span><span class="n">zip</span><span class="w"> </span><span class="n">dataCaffeineNoDose</span><span class="w"> </span><span class="n">dataCaffeine13mg</span>
 <span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">mapi</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">(</span><span class="n">control</span><span class="o">,</span><span class="n">treatment</span><span class="o">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span>
 <span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">participant</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Person "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">i</span><span class="w"> </span>
-<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Line</span><span class="o">([</span><span class="s">"no dose"</span><span class="o">,</span><span class="w"> </span><span class="n">control</span><span class="o">;</span><span class="w"> </span><span class="s">"13 mg"</span><span class="o">,</span><span class="w"> </span><span class="n">treatment</span><span class="o">],</span><span class="w"> </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">participant</span><span class="o">)</span><span class="w"></span>
-<span class="w">    </span><span class="o">)</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">combine</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxisStyle</span><span class="w"> </span><span class="s">""</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="o">(</span><span class="s">"endurance performance"</span><span class="o">,</span><span class="w"> </span><span class="n">MinMax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="mi">0</span><span class="o">.,</span><span class="mi">100</span><span class="o">.))</span><span class="w"></span>
+<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Line</span><span class="o">([</span><span class="s">"no dose"</span><span class="o">,</span><span class="w"> </span><span class="n">control</span><span class="o">;</span><span class="w"> </span><span class="s">"13 mg"</span><span class="o">,</span><span class="w"> </span><span class="n">treatment</span><span class="o">],</span><span class="w"> </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">participant</span><span class="o">)</span>
+<span class="w">    </span><span class="o">)</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">combine</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxisStyle</span><span class="w"> </span><span class="s">""</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="o">(</span><span class="s">"endurance performance"</span><span class="o">,</span><span class="w"> </span><span class="n">MinMax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="mi">0</span><span class="o">.,</span><span class="mi">100</span><span class="o">.))</span>
 </pre></div>
 
      </div>
@@ -839,8 +839,8 @@ else {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[15]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">twoSamplePairedResult</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">TTest</span><span class="p">.</span><span class="n">twoSamplePaired</span><span class="w"> </span><span class="n">dataCaffeineNoDose</span><span class="w"> </span><span class="n">dataCaffeine13mg</span><span class="w"></span>
-<span class="n">twoSamplePairedResult</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">twoSamplePairedResult</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">TTest</span><span class="p">.</span><span class="n">twoSamplePaired</span><span class="w"> </span><span class="n">dataCaffeineNoDose</span><span class="w"> </span><span class="n">dataCaffeine13mg</span>
+<span class="n">twoSamplePairedResult</span>
 </pre></div>
 
      </div>

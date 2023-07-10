@@ -163,11 +163,11 @@
                     select language:
                   </h1>
                   <div class="tags">
-                    <a class="tag is-language is-active is-large" href="https://fslab.org/blog/graph-gallery/scatter/fsharp.html">
-                      fsharp
-                    </a>
                     <a class="tag is-language is-large" href="https://fslab.org/blog/graph-gallery/scatter/csharp.html">
                       csharp
+                    </a>
+                    <a class="tag is-language is-active is-large" href="https://fslab.org/blog/graph-gallery/scatter/fsharp.html">
+                      fsharp
                     </a>
                   </div>
                 </div>
@@ -213,8 +213,8 @@ _<a href="https://en.wikipedia.org/wiki/Scatter_plot">wikipedia</a>_</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="mi">0</span><span class="o">.</span><span class="w"> </span><span class="o">..</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span><span class="w"> </span><span class="o">..</span><span class="w"> </span><span class="o">(</span><span class="mi">2</span><span class="o">.*</span><span class="nn">System</span><span class="p">.</span><span class="nn">Math</span><span class="p">.</span><span class="n">PI</span><span class="o">)]</span><span class="w"></span>
-<span class="k">let</span><span class="w"> </span><span class="nv">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">List</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="n">sin</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="mi">0</span><span class="o">.</span><span class="w"> </span><span class="o">..</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span><span class="w"> </span><span class="o">..</span><span class="w"> </span><span class="o">(</span><span class="mi">2</span><span class="o">.*</span><span class="nn">System</span><span class="p">.</span><span class="nn">Math</span><span class="p">.</span><span class="n">PI</span><span class="o">)]</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">List</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="n">sin</span>
 </pre></div>
 
      </div>
@@ -241,7 +241,7 @@ _<a href="https://en.wikipedia.org/wiki/Scatter_plot">wikipedia</a>_</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Plotly.NET.Interactive"</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Plotly.NET.Interactive"</span>
 </pre></div>
 
      </div>
@@ -309,13 +309,13 @@ _<a href="https://en.wikipedia.org/wiki/Scatter_plot">wikipedia</a>_</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">Plotly.NET</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">Plotly.NET</span>
 
-<span class="nn">Chart</span><span class="p">.</span><span class="n">Scatter</span><span class="o">(</span><span class="w"></span>
-<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="o">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="o">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">Mode</span><span class="p">.</span><span class="n">Markers</span><span class="w"></span>
-<span class="o">)</span><span class="w"></span>
+<span class="nn">Chart</span><span class="p">.</span><span class="n">Scatter</span><span class="o">(</span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="o">,</span>
+<span class="w">    </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="o">,</span>
+<span class="w">    </span><span class="n">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">Mode</span><span class="p">.</span><span class="n">Markers</span>
+<span class="o">)</span>
 </pre></div>
 
      </div>
@@ -388,15 +388,15 @@ else {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="nn">Chart</span><span class="p">.</span><span class="n">Point</span><span class="o">(</span><span class="w"></span>
-<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="o">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="o">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"y = sin(x)"</span><span class="o">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">ShowLegend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="w"></span>
-<span class="o">)</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxisStyle</span><span class="o">(</span><span class="n">TitleText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"x"</span><span class="o">)</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="o">(</span><span class="n">TitleText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"y"</span><span class="o">)</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTitle</span><span class="w"> </span><span class="o">(</span><span class="s">"f(x) = sin(x)"</span><span class="o">)</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="nn">Chart</span><span class="p">.</span><span class="n">Point</span><span class="o">(</span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="o">,</span>
+<span class="w">    </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="o">,</span>
+<span class="w">    </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"y = sin(x)"</span><span class="o">,</span>
+<span class="w">    </span><span class="n">ShowLegend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span>
+<span class="o">)</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxisStyle</span><span class="o">(</span><span class="n">TitleText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"x"</span><span class="o">)</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="o">(</span><span class="n">TitleText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"y"</span><span class="o">)</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTitle</span><span class="w"> </span><span class="o">(</span><span class="s">"f(x) = sin(x)"</span><span class="o">)</span>
 </pre></div>
 
      </div>
@@ -470,13 +470,13 @@ else {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="nn">Chart</span><span class="p">.</span><span class="n">Line</span><span class="o">(</span><span class="w"></span>
-<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="o">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="w"></span>
-<span class="o">)</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxisStyle</span><span class="o">(</span><span class="n">TitleText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"time [s]"</span><span class="o">)</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="o">(</span><span class="n">TitleText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"some observation value"</span><span class="o">)</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTitle</span><span class="w"> </span><span class="o">(</span><span class="s">"Our observations"</span><span class="o">)</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="nn">Chart</span><span class="p">.</span><span class="n">Line</span><span class="o">(</span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="o">,</span>
+<span class="w">    </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span>
+<span class="o">)</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxisStyle</span><span class="o">(</span><span class="n">TitleText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"time [s]"</span><span class="o">)</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="o">(</span><span class="n">TitleText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"some observation value"</span><span class="o">)</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTitle</span><span class="w"> </span><span class="o">(</span><span class="s">"Our observations"</span><span class="o">)</span>
 </pre></div>
 
      </div>
@@ -552,29 +552,29 @@ else {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">rnd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nn">System</span><span class="p">.</span><span class="n">Random</span><span class="o">(</span><span class="mi">69</span><span class="o">)</span><span class="w"></span>
-<span class="k">let</span><span class="w"> </span><span class="nv">rnd_x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">..</span><span class="w"> </span><span class="mi">200</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">rnd</span><span class="o">.</span><span class="n">NextDouble</span><span class="bp">()</span><span class="o">]</span><span class="w"></span>
-<span class="k">let</span><span class="w"> </span><span class="nv">rnd_y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">..</span><span class="w"> </span><span class="mi">200</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">rnd</span><span class="o">.</span><span class="n">NextDouble</span><span class="bp">()</span><span class="o">]</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">rnd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nn">System</span><span class="p">.</span><span class="n">Random</span><span class="o">(</span><span class="mi">69</span><span class="o">)</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">rnd_x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">..</span><span class="w"> </span><span class="mi">200</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">rnd</span><span class="o">.</span><span class="n">NextDouble</span><span class="bp">()</span><span class="o">]</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">rnd_y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">..</span><span class="w"> </span><span class="mi">200</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">rnd</span><span class="o">.</span><span class="n">NextDouble</span><span class="bp">()</span><span class="o">]</span>
 
-<span class="o">[</span><span class="w"></span>
-<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Point</span><span class="o">(</span><span class="w"></span>
-<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rnd_x</span><span class="o">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rnd_y</span><span class="o">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Point cloud"</span><span class="w"></span>
-<span class="w">    </span><span class="o">)</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxisStyle</span><span class="o">(</span><span class="n">TitleText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"x"</span><span class="o">)</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="o">(</span><span class="n">TitleText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"y"</span><span class="o">)</span><span class="w"></span>
-<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Line</span><span class="o">(</span><span class="w"></span>
-<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rnd_x</span><span class="o">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rnd_y</span><span class="o">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"lines"</span><span class="w"></span>
-<span class="w">    </span><span class="o">)</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxisStyle</span><span class="o">(</span><span class="n">TitleText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"x"</span><span class="o">)</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="o">(</span><span class="n">TitleText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"y"</span><span class="o">)</span><span class="w"></span>
-<span class="o">]</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Grid</span><span class="o">(</span><span class="n">nRows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="o">,</span><span class="w"> </span><span class="n">nCols</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="o">)</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withSize</span><span class="o">(</span><span class="n">Width</span><span class="o">=</span><span class="mi">1000</span><span class="o">,</span><span class="n">Height</span><span class="w"> </span><span class="o">=</span><span class="mi">600</span><span class="o">)</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTitle</span><span class="w"> </span><span class="s">"sometimes, lines do not make sense"</span><span class="w"></span>
+<span class="o">[</span>
+<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Point</span><span class="o">(</span>
+<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rnd_x</span><span class="o">,</span>
+<span class="w">        </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rnd_y</span><span class="o">,</span>
+<span class="w">        </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Point cloud"</span>
+<span class="w">    </span><span class="o">)</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxisStyle</span><span class="o">(</span><span class="n">TitleText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"x"</span><span class="o">)</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="o">(</span><span class="n">TitleText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"y"</span><span class="o">)</span>
+<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Line</span><span class="o">(</span>
+<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rnd_x</span><span class="o">,</span>
+<span class="w">        </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rnd_y</span><span class="o">,</span>
+<span class="w">        </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"lines"</span>
+<span class="w">    </span><span class="o">)</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxisStyle</span><span class="o">(</span><span class="n">TitleText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"x"</span><span class="o">)</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="o">(</span><span class="n">TitleText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"y"</span><span class="o">)</span>
+<span class="o">]</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Grid</span><span class="o">(</span><span class="n">nRows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="o">,</span><span class="w"> </span><span class="n">nCols</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="o">)</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withSize</span><span class="o">(</span><span class="n">Width</span><span class="o">=</span><span class="mi">1000</span><span class="o">,</span><span class="n">Height</span><span class="w"> </span><span class="o">=</span><span class="mi">600</span><span class="o">)</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTitle</span><span class="w"> </span><span class="s">"sometimes, lines do not make sense"</span>
 </pre></div>
 
      </div>
@@ -651,39 +651,39 @@ else {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="c1">// A Land</span><span class="w"></span>
-<span class="k">let</span><span class="w"> </span><span class="nv">gdp_a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="mi">20</span><span class="o">;</span><span class="w"> </span><span class="mi">25</span><span class="o">;</span><span class="w"> </span><span class="mi">35</span><span class="o">;</span><span class="w"> </span><span class="mi">40</span><span class="o">;</span><span class="w"> </span><span class="mi">50</span><span class="o">]</span><span class="w"></span>
-<span class="k">let</span><span class="w"> </span><span class="nv">population_a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="mi">500</span><span class="o">;</span><span class="w"> </span><span class="mi">530</span><span class="o">;</span><span class="w"> </span><span class="mi">520</span><span class="o">;</span><span class="w"> </span><span class="mi">500</span><span class="o">;</span><span class="w"> </span><span class="mi">510</span><span class="o">]</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="c1">// A Land</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">gdp_a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="mi">20</span><span class="o">;</span><span class="w"> </span><span class="mi">25</span><span class="o">;</span><span class="w"> </span><span class="mi">35</span><span class="o">;</span><span class="w"> </span><span class="mi">40</span><span class="o">;</span><span class="w"> </span><span class="mi">50</span><span class="o">]</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">population_a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="mi">500</span><span class="o">;</span><span class="w"> </span><span class="mi">530</span><span class="o">;</span><span class="w"> </span><span class="mi">520</span><span class="o">;</span><span class="w"> </span><span class="mi">500</span><span class="o">;</span><span class="w"> </span><span class="mi">510</span><span class="o">]</span>
 
-<span class="c1">//B Land</span><span class="w"></span>
-<span class="k">let</span><span class="w"> </span><span class="nv">gdp_b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="mi">30</span><span class="o">;</span><span class="w"> </span><span class="mi">30</span><span class="o">;</span><span class="w"> </span><span class="mi">33</span><span class="o">;</span><span class="w"> </span><span class="mi">31</span><span class="o">;</span><span class="w"> </span><span class="mi">35</span><span class="o">]</span><span class="w"></span>
-<span class="k">let</span><span class="w"> </span><span class="nv">population_b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="mi">400</span><span class="o">;</span><span class="w"> </span><span class="mi">500</span><span class="o">;</span><span class="w"> </span><span class="mi">600</span><span class="o">;</span><span class="w"> </span><span class="mi">700</span><span class="o">;</span><span class="w"> </span><span class="mi">800</span><span class="o">]</span><span class="w"></span>
+<span class="c1">//B Land</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">gdp_b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="mi">30</span><span class="o">;</span><span class="w"> </span><span class="mi">30</span><span class="o">;</span><span class="w"> </span><span class="mi">33</span><span class="o">;</span><span class="w"> </span><span class="mi">31</span><span class="o">;</span><span class="w"> </span><span class="mi">35</span><span class="o">]</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">population_b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="mi">400</span><span class="o">;</span><span class="w"> </span><span class="mi">500</span><span class="o">;</span><span class="w"> </span><span class="mi">600</span><span class="o">;</span><span class="w"> </span><span class="mi">700</span><span class="o">;</span><span class="w"> </span><span class="mi">800</span><span class="o">]</span>
 
-<span class="k">let</span><span class="w"> </span><span class="nv">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="mi">1900</span><span class="o">;</span><span class="w"> </span><span class="mi">1910</span><span class="o">;</span><span class="w"> </span><span class="mi">1920</span><span class="o">;</span><span class="w"> </span><span class="mi">1930</span><span class="o">;</span><span class="w"> </span><span class="mi">1940</span><span class="o">]</span><span class="w"></span>
+<span class="k">let</span><span class="w"> </span><span class="nv">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="mi">1900</span><span class="o">;</span><span class="w"> </span><span class="mi">1910</span><span class="o">;</span><span class="w"> </span><span class="mi">1920</span><span class="o">;</span><span class="w"> </span><span class="mi">1930</span><span class="o">;</span><span class="w"> </span><span class="mi">1940</span><span class="o">]</span>
 
-<span class="o">[</span><span class="w"></span>
-<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Bubble</span><span class="o">(</span><span class="w"></span>
-<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">time</span><span class="o">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">population_a</span><span class="o">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">sizes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gdp_a</span><span class="o">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"ALand"</span><span class="o">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">MultiText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gdp_a</span><span class="o">,</span><span class="w"> </span><span class="c1">// show gdp values as text in addition to bubble size</span><span class="w"></span>
-<span class="w">        </span><span class="n">TextPosition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">TextPosition</span><span class="p">.</span><span class="n">Auto</span><span class="w"> </span><span class="c1">// set textposition to make gdp values visible</span><span class="w"></span>
-<span class="w">    </span><span class="o">)</span><span class="w"></span>
+<span class="o">[</span>
+<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Bubble</span><span class="o">(</span>
+<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">time</span><span class="o">,</span>
+<span class="w">        </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">population_a</span><span class="o">,</span>
+<span class="w">        </span><span class="n">sizes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gdp_a</span><span class="o">,</span>
+<span class="w">        </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"ALand"</span><span class="o">,</span>
+<span class="w">        </span><span class="n">MultiText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gdp_a</span><span class="o">,</span><span class="w"> </span><span class="c1">// show gdp values as text in addition to bubble size</span>
+<span class="w">        </span><span class="n">TextPosition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">TextPosition</span><span class="p">.</span><span class="n">Auto</span><span class="w"> </span><span class="c1">// set textposition to make gdp values visible</span>
+<span class="w">    </span><span class="o">)</span>
 
-<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Bubble</span><span class="o">(</span><span class="w"></span>
-<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">time</span><span class="o">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">population_b</span><span class="o">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">sizes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gdp_b</span><span class="o">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"BLand"</span><span class="o">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">MultiText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gdp_b</span><span class="o">,</span><span class="w"> </span><span class="c1">// show gdp values as text in addition to bubble size</span><span class="w"></span>
-<span class="w">        </span><span class="n">TextPosition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">TextPosition</span><span class="p">.</span><span class="n">Auto</span><span class="w">  </span><span class="c1">// set textposition to make gdp values visible</span><span class="w"></span>
-<span class="w">    </span><span class="o">)</span><span class="w"></span>
-<span class="o">]</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">combine</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxisStyle</span><span class="w"> </span><span class="o">(</span><span class="n">TitleText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Time [y]"</span><span class="o">)</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="w"> </span><span class="o">(</span><span class="n">TitleText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Population [Million]"</span><span class="o">)</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTitle</span><span class="w"> </span><span class="s">"Comparison of ALand and BLand&lt;br&gt;regarding GDP and population growth over time"</span><span class="w"></span>
+<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Bubble</span><span class="o">(</span>
+<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">time</span><span class="o">,</span>
+<span class="w">        </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">population_b</span><span class="o">,</span>
+<span class="w">        </span><span class="n">sizes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gdp_b</span><span class="o">,</span>
+<span class="w">        </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"BLand"</span><span class="o">,</span>
+<span class="w">        </span><span class="n">MultiText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gdp_b</span><span class="o">,</span><span class="w"> </span><span class="c1">// show gdp values as text in addition to bubble size</span>
+<span class="w">        </span><span class="n">TextPosition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">TextPosition</span><span class="p">.</span><span class="n">Auto</span><span class="w">  </span><span class="c1">// set textposition to make gdp values visible</span>
+<span class="w">    </span><span class="o">)</span>
+<span class="o">]</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">combine</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxisStyle</span><span class="w"> </span><span class="o">(</span><span class="n">TitleText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Time [y]"</span><span class="o">)</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="w"> </span><span class="o">(</span><span class="n">TitleText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Population [Million]"</span><span class="o">)</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTitle</span><span class="w"> </span><span class="s">"Comparison of ALand and BLand&lt;br&gt;regarding GDP and population growth over time"</span>
 </pre></div>
 
      </div>
@@ -762,33 +762,33 @@ else {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">Plotly.NET.TraceObjects</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">Plotly.NET.TraceObjects</span>
 
-<span class="o">[</span><span class="w"></span>
-<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Scatter</span><span class="o">(</span><span class="w"></span>
-<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">time</span><span class="o">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">population_a</span><span class="o">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">Mode</span><span class="p">.</span><span class="n">Lines_Markers_Text</span><span class="o">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"ALand"</span><span class="o">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">MultiText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gdp_a</span><span class="o">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">TextPosition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">TextPosition</span><span class="p">.</span><span class="n">Auto</span><span class="o">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">Marker</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Marker</span><span class="p">.</span><span class="n">init</span><span class="o">(</span><span class="n">MultiSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gdp_a</span><span class="o">)</span><span class="w"> </span><span class="c1">// the marker object controls the style of the individual points</span><span class="w"></span>
-<span class="w">    </span><span class="o">)</span><span class="w"></span>
+<span class="o">[</span>
+<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Scatter</span><span class="o">(</span>
+<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">time</span><span class="o">,</span>
+<span class="w">        </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">population_a</span><span class="o">,</span>
+<span class="w">        </span><span class="n">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">Mode</span><span class="p">.</span><span class="n">Lines_Markers_Text</span><span class="o">,</span>
+<span class="w">        </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"ALand"</span><span class="o">,</span>
+<span class="w">        </span><span class="n">MultiText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gdp_a</span><span class="o">,</span>
+<span class="w">        </span><span class="n">TextPosition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">TextPosition</span><span class="p">.</span><span class="n">Auto</span><span class="o">,</span>
+<span class="w">        </span><span class="n">Marker</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Marker</span><span class="p">.</span><span class="n">init</span><span class="o">(</span><span class="n">MultiSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gdp_a</span><span class="o">)</span><span class="w"> </span><span class="c1">// the marker object controls the style of the individual points</span>
+<span class="w">    </span><span class="o">)</span>
 
-<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Scatter</span><span class="o">(</span><span class="w"></span>
-<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">time</span><span class="o">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">population_b</span><span class="o">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">Mode</span><span class="p">.</span><span class="n">Lines_Markers_Text</span><span class="o">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"BLand"</span><span class="o">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">MultiText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gdp_b</span><span class="o">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">TextPosition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">TextPosition</span><span class="p">.</span><span class="n">Auto</span><span class="o">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">Marker</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Marker</span><span class="p">.</span><span class="n">init</span><span class="o">(</span><span class="n">MultiSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gdp_b</span><span class="o">)</span><span class="w"> </span><span class="c1">// the marker object controls the style of the individual points</span><span class="w"></span>
-<span class="w">    </span><span class="o">)</span><span class="w"></span>
-<span class="o">]</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">combine</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxisStyle</span><span class="w"> </span><span class="o">(</span><span class="n">TitleText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Time [y]"</span><span class="o">)</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="w"> </span><span class="o">(</span><span class="n">TitleText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Population [Million]"</span><span class="o">)</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTitle</span><span class="w"> </span><span class="s">"Comparison of ALand and BLand&lt;br&gt;regarding GDP and population growth over time"</span><span class="w"></span>
+<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Scatter</span><span class="o">(</span>
+<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">time</span><span class="o">,</span>
+<span class="w">        </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">population_b</span><span class="o">,</span>
+<span class="w">        </span><span class="n">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">Mode</span><span class="p">.</span><span class="n">Lines_Markers_Text</span><span class="o">,</span>
+<span class="w">        </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"BLand"</span><span class="o">,</span>
+<span class="w">        </span><span class="n">MultiText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gdp_b</span><span class="o">,</span>
+<span class="w">        </span><span class="n">TextPosition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">TextPosition</span><span class="p">.</span><span class="n">Auto</span><span class="o">,</span>
+<span class="w">        </span><span class="n">Marker</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Marker</span><span class="p">.</span><span class="n">init</span><span class="o">(</span><span class="n">MultiSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gdp_b</span><span class="o">)</span><span class="w"> </span><span class="c1">// the marker object controls the style of the individual points</span>
+<span class="w">    </span><span class="o">)</span>
+<span class="o">]</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">combine</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxisStyle</span><span class="w"> </span><span class="o">(</span><span class="n">TitleText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Time [y]"</span><span class="o">)</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="w"> </span><span class="o">(</span><span class="n">TitleText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Population [Million]"</span><span class="o">)</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTitle</span><span class="w"> </span><span class="s">"Comparison of ALand and BLand&lt;br&gt;regarding GDP and population growth over time"</span>
 </pre></div>
 
      </div>

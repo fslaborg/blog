@@ -172,14 +172,14 @@ a german organization for climate data. We will do this for both the original da
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Deedle.Interactive, 3.0.0"</span><span class="w"></span>
-<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: FSharp.Stats, 0.4.3"</span><span class="w"></span>
-<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Plotly.NET.Interactive, 4.0.0"</span><span class="w"></span>
-<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: FSharp.Data, 4.2.7"</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Deedle.Interactive, 3.0.0"</span>
+<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: FSharp.Stats, 0.4.3"</span>
+<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Plotly.NET.Interactive, 4.0.0"</span>
+<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: FSharp.Data, 4.2.7"</span>
 
-<span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Data</span><span class="w"></span>
-<span class="k">open</span><span class="w"> </span><span class="nn">Deedle</span><span class="w"></span>
-<span class="k">open</span><span class="w"> </span><span class="nn">Plotly.NET</span><span class="w"></span>
+<span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Data</span>
+<span class="k">open</span><span class="w"> </span><span class="nn">Deedle</span>
+<span class="k">open</span><span class="w"> </span><span class="nn">Plotly.NET</span>
 </pre></div>
 
      </div>
@@ -260,12 +260,12 @@ and will return a single string in the original format.</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="c1">// Get data from Deutscher Wetterdienst</span><span class="w"></span>
-<span class="c1">// Explanation for Abbreviations: https://www.dwd.de/DE/leistungen/klimadatendeutschland/beschreibung_tagesmonatswerte.html</span><span class="w"></span>
-<span class="k">let</span><span class="w"> </span><span class="nv">rawData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">FSharp</span><span class="p">.</span><span class="nn">Data</span><span class="p">.</span><span class="nn">Http</span><span class="p">.</span><span class="n">RequestString</span><span class="w"> </span><span class="s">@"https://raw.githubusercontent.com/fslaborg/datasets/main/data/WeatherDataAachen-Orsbach_daily_1year.txt"</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="c1">// Get data from Deutscher Wetterdienst</span>
+<span class="c1">// Explanation for Abbreviations: https://www.dwd.de/DE/leistungen/klimadatendeutschland/beschreibung_tagesmonatswerte.html</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">rawData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">FSharp</span><span class="p">.</span><span class="nn">Data</span><span class="p">.</span><span class="nn">Http</span><span class="p">.</span><span class="n">RequestString</span><span class="w"> </span><span class="s">@"https://raw.githubusercontent.com/fslaborg/datasets/main/data/WeatherDataAachen-Orsbach_daily_1year.txt"</span>
 
-<span class="c1">// print first 1000 characters to console.</span><span class="w"></span>
-<span class="n">rawData</span><span class="o">.[..</span><span class="mi">1000</span><span class="o">]</span><span class="w"></span>
+<span class="c1">// print first 1000 characters to console.</span>
+<span class="n">rawData</span><span class="o">.[..</span><span class="mi">1000</span><span class="o">]</span>
 </pre></div>
 
      </div>
@@ -331,47 +331,47 @@ the Deedle package to read in the data into a <a href="https://fslab.org/Deedle/
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">System</span><span class="w"></span>
-<span class="k">open</span><span class="w"> </span><span class="nn">System.Text.RegularExpressions</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">System</span>
+<span class="k">open</span><span class="w"> </span><span class="nn">System.Text.RegularExpressions</span>
 
-<span class="sd">/// Tuple of 4 data arrays representing the measured temperature for over a year.</span><span class="w"></span>
+<span class="sd">/// Tuple of 4 data arrays representing the measured temperature for over a year.</span>
 <span class="k">let</span><span class="w"> </span><span class="nv">processedData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
-<span class="w">    </span><span class="c1">// First separate the huge string in lines</span><span class="w"></span>
-<span class="w">    </span><span class="n">rawData</span><span class="o">.</span><span class="n">Split</span><span class="o">([|</span><span class="sc">'\n'</span><span class="o">|],</span><span class="w"> </span><span class="nn">StringSplitOptions</span><span class="p">.</span><span class="n">RemoveEmptyEntries</span><span class="o">)</span><span class="w"></span>
-<span class="w">    </span><span class="c1">// Skip the first 5 rows until the real data starts, also skip the last row (length-2) to remove a "&lt;/pre&gt;" at the end</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="k">fun</span><span class="w"> </span><span class="n">arr</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">arr</span><span class="o">.[</span><span class="mi">5</span><span class="o">..</span><span class="n">arr</span><span class="o">.</span><span class="n">Length</span><span class="o">-</span><span class="mi">2</span><span class="o">]</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// First separate the huge string in lines</span>
+<span class="w">    </span><span class="n">rawData</span><span class="o">.</span><span class="n">Split</span><span class="o">([|</span><span class="sc">'\n'</span><span class="o">|],</span><span class="w"> </span><span class="nn">StringSplitOptions</span><span class="p">.</span><span class="n">RemoveEmptyEntries</span><span class="o">)</span>
+<span class="w">    </span><span class="c1">// Skip the first 5 rows until the real data starts, also skip the last row (length-2) to remove a "&lt;/pre&gt;" at the end</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="k">fun</span><span class="w"> </span><span class="n">arr</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">arr</span><span class="o">.[</span><span class="mi">5</span><span class="o">..</span><span class="n">arr</span><span class="o">.</span><span class="n">Length</span><span class="o">-</span><span class="mi">2</span><span class="o">]</span>
 <span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Array</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span>
-<span class="w">        </span><span class="c1">// Regex pattern that will match groups of whitespace</span><span class="w"></span>
-<span class="w">        </span><span class="k">let</span><span class="w"> </span><span class="nv">whitespacePattern</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">@"\s+"</span><span class="w"></span>
-<span class="w">        </span><span class="c1">// This is needed to tell regex to replace hits with a tabulator</span><span class="w"></span>
-<span class="w">        </span><span class="k">let</span><span class="w"> </span><span class="nv">matchEval</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MatchEvaluator</span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="o">_</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="s">@"\t"</span><span class="w"> </span><span class="o">)</span><span class="w"></span>
-<span class="w">        </span><span class="c1">// The original data columns are separated by different amounts of whitespace.</span><span class="w"></span>
-<span class="w">        </span><span class="c1">// Therefore, we need a flexible string parsing option to replace any amount of whitespace with a single tabulator.</span><span class="w"></span>
-<span class="w">        </span><span class="c1">// This is done with the regex pattern above and the fsharp core library "System.Text.RegularExpressions" </span><span class="w"></span>
-<span class="w">        </span><span class="k">let</span><span class="w"> </span><span class="nv">tabSeparated</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Regex</span><span class="p">.</span><span class="n">Replace</span><span class="o">(</span><span class="n">data</span><span class="o">,</span><span class="w"> </span><span class="n">whitespacePattern</span><span class="o">,</span><span class="w"> </span><span class="n">matchEval</span><span class="o">)</span><span class="w"></span>
-<span class="w">        </span><span class="n">tabSeparated</span><span class="w"></span>
-<span class="w">        </span><span class="c1">// Split each row by tabulator will return rows with an equal amount of values, which we can access.</span><span class="w"></span>
-<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="k">fun</span><span class="w"> </span><span class="n">dataStr</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">dataStr</span><span class="o">.</span><span class="n">Split</span><span class="o">([|</span><span class="s">@"\t"</span><span class="o">|],</span><span class="w"> </span><span class="nn">StringSplitOptions</span><span class="p">.</span><span class="n">RemoveEmptyEntries</span><span class="o">)</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// Regex pattern that will match groups of whitespace</span>
+<span class="w">        </span><span class="k">let</span><span class="w"> </span><span class="nv">whitespacePattern</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">@"\s+"</span>
+<span class="w">        </span><span class="c1">// This is needed to tell regex to replace hits with a tabulator</span>
+<span class="w">        </span><span class="k">let</span><span class="w"> </span><span class="nv">matchEval</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MatchEvaluator</span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="o">_</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="s">@"\t"</span><span class="w"> </span><span class="o">)</span>
+<span class="w">        </span><span class="c1">// The original data columns are separated by different amounts of whitespace.</span>
+<span class="w">        </span><span class="c1">// Therefore, we need a flexible string parsing option to replace any amount of whitespace with a single tabulator.</span>
+<span class="w">        </span><span class="c1">// This is done with the regex pattern above and the fsharp core library "System.Text.RegularExpressions" </span>
+<span class="w">        </span><span class="k">let</span><span class="w"> </span><span class="nv">tabSeparated</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Regex</span><span class="p">.</span><span class="n">Replace</span><span class="o">(</span><span class="n">data</span><span class="o">,</span><span class="w"> </span><span class="n">whitespacePattern</span><span class="o">,</span><span class="w"> </span><span class="n">matchEval</span><span class="o">)</span>
+<span class="w">        </span><span class="n">tabSeparated</span>
+<span class="w">        </span><span class="c1">// Split each row by tabulator will return rows with an equal amount of values, which we can access.</span>
+<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="k">fun</span><span class="w"> </span><span class="n">dataStr</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">dataStr</span><span class="o">.</span><span class="n">Split</span><span class="o">([|</span><span class="s">@"\t"</span><span class="o">|],</span><span class="w"> </span><span class="nn">StringSplitOptions</span><span class="p">.</span><span class="n">RemoveEmptyEntries</span><span class="o">)</span>
 <span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="k">fun</span><span class="w"> </span><span class="n">dataArr</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span>
-<span class="w">            </span><span class="c1">// Second value is the date of measurement, which we will parse to the DateTime type</span><span class="w"></span>
-<span class="w">            </span><span class="nn">DateTime</span><span class="p">.</span><span class="n">ParseExact</span><span class="o">(</span><span class="n">dataArr</span><span class="o">.[</span><span class="mi">1</span><span class="o">],</span><span class="w"> </span><span class="s">"yyyyMMdd"</span><span class="o">,</span><span class="w"> </span><span class="nn">Globalization</span><span class="p">.</span><span class="nn">CultureInfo</span><span class="p">.</span><span class="n">InvariantCulture</span><span class="o">),</span><span class="w"></span>
-<span class="w">            </span><span class="c1">// 5th value is minimal temperature at that date.</span><span class="w"></span>
-<span class="w">            </span><span class="kt">float</span><span class="w"> </span><span class="n">dataArr</span><span class="o">.[</span><span class="mi">4</span><span class="o">],</span><span class="w"></span>
-<span class="w">            </span><span class="c1">// 6th value is average temperature over 24 timepoints at that date.</span><span class="w"></span>
-<span class="w">            </span><span class="kt">float</span><span class="w"> </span><span class="n">dataArr</span><span class="o">.[</span><span class="mi">5</span><span class="o">],</span><span class="w"></span>
-<span class="w">            </span><span class="c1">// 7th value is maximal temperature at that date.</span><span class="w"></span>
-<span class="w">            </span><span class="kt">float</span><span class="w"> </span><span class="n">dataArr</span><span class="o">.[</span><span class="mi">6</span><span class="o">]</span><span class="w"></span>
-<span class="w">    </span><span class="o">)</span><span class="w"></span>
-<span class="w">    </span><span class="c1">// Sort by date</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Array</span><span class="p">.</span><span class="n">sortBy</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="o">(</span><span class="n">day</span><span class="o">,</span><span class="n">tn</span><span class="o">,</span><span class="n">tm</span><span class="o">,</span><span class="n">tx</span><span class="o">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">day</span><span class="o">)</span><span class="w"></span>
-<span class="w">    </span><span class="c1">// Unzip the array of value tuples, to make the different values easier accessible</span><span class="w"></span>
+<span class="w">            </span><span class="c1">// Second value is the date of measurement, which we will parse to the DateTime type</span>
+<span class="w">            </span><span class="nn">DateTime</span><span class="p">.</span><span class="n">ParseExact</span><span class="o">(</span><span class="n">dataArr</span><span class="o">.[</span><span class="mi">1</span><span class="o">],</span><span class="w"> </span><span class="s">"yyyyMMdd"</span><span class="o">,</span><span class="w"> </span><span class="nn">Globalization</span><span class="p">.</span><span class="nn">CultureInfo</span><span class="p">.</span><span class="n">InvariantCulture</span><span class="o">),</span>
+<span class="w">            </span><span class="c1">// 5th value is minimal temperature at that date.</span>
+<span class="w">            </span><span class="kt">float</span><span class="w"> </span><span class="n">dataArr</span><span class="o">.[</span><span class="mi">4</span><span class="o">],</span>
+<span class="w">            </span><span class="c1">// 6th value is average temperature over 24 timepoints at that date.</span>
+<span class="w">            </span><span class="kt">float</span><span class="w"> </span><span class="n">dataArr</span><span class="o">.[</span><span class="mi">5</span><span class="o">],</span>
+<span class="w">            </span><span class="c1">// 7th value is maximal temperature at that date.</span>
+<span class="w">            </span><span class="kt">float</span><span class="w"> </span><span class="n">dataArr</span><span class="o">.[</span><span class="mi">6</span><span class="o">]</span>
+<span class="w">    </span><span class="o">)</span>
+<span class="w">    </span><span class="c1">// Sort by date</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Array</span><span class="p">.</span><span class="n">sortBy</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="o">(</span><span class="n">day</span><span class="o">,</span><span class="n">tn</span><span class="o">,</span><span class="n">tm</span><span class="o">,</span><span class="n">tx</span><span class="o">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">day</span><span class="o">)</span>
+<span class="w">    </span><span class="c1">// Unzip the array of value tuples, to make the different values easier accessible</span>
 <span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="k">fun</span><span class="w"> </span><span class="n">arr</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span>
-<span class="w">        </span><span class="n">arr</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Array</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="o">(</span><span class="n">day</span><span class="o">,</span><span class="n">tn</span><span class="o">,</span><span class="n">tm</span><span class="o">,</span><span class="n">tx</span><span class="o">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">day</span><span class="o">.</span><span class="n">ToShortDateString</span><span class="bp">()</span><span class="o">),</span><span class="w"></span>
-<span class="w">        </span><span class="n">arr</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Array</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="o">(</span><span class="n">day</span><span class="o">,</span><span class="n">tn</span><span class="o">,</span><span class="n">tm</span><span class="o">,</span><span class="n">tx</span><span class="o">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">tm</span><span class="o">),</span><span class="w"></span>
-<span class="w">        </span><span class="n">arr</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Array</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="o">(</span><span class="n">day</span><span class="o">,</span><span class="n">tn</span><span class="o">,</span><span class="n">tm</span><span class="o">,</span><span class="n">tx</span><span class="o">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">tx</span><span class="o">),</span><span class="w"></span>
-<span class="w">        </span><span class="n">arr</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Array</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="o">(</span><span class="n">day</span><span class="o">,</span><span class="n">tn</span><span class="o">,</span><span class="n">tm</span><span class="o">,</span><span class="n">tx</span><span class="o">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">tn</span><span class="o">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">arr</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Array</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="o">(</span><span class="n">day</span><span class="o">,</span><span class="n">tn</span><span class="o">,</span><span class="n">tm</span><span class="o">,</span><span class="n">tx</span><span class="o">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">day</span><span class="o">.</span><span class="n">ToShortDateString</span><span class="bp">()</span><span class="o">),</span>
+<span class="w">        </span><span class="n">arr</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Array</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="o">(</span><span class="n">day</span><span class="o">,</span><span class="n">tn</span><span class="o">,</span><span class="n">tm</span><span class="o">,</span><span class="n">tx</span><span class="o">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">tm</span><span class="o">),</span>
+<span class="w">        </span><span class="n">arr</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Array</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="o">(</span><span class="n">day</span><span class="o">,</span><span class="n">tn</span><span class="o">,</span><span class="n">tm</span><span class="o">,</span><span class="n">tx</span><span class="o">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">tx</span><span class="o">),</span>
+<span class="w">        </span><span class="n">arr</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Array</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="o">(</span><span class="n">day</span><span class="o">,</span><span class="n">tn</span><span class="o">,</span><span class="n">tm</span><span class="o">,</span><span class="n">tx</span><span class="o">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">tn</span><span class="o">)</span>
 
-<span class="n">processedData</span><span class="w"></span>
+<span class="n">processedData</span>
 </pre></div>
 
      </div>
@@ -454,48 +454,48 @@ table th {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">Plotly.NET</span><span class="w"></span>
-<span class="k">open</span><span class="w"> </span><span class="nn">Plotly.NET.LayoutObjects</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">Plotly.NET</span>
+<span class="k">open</span><span class="w"> </span><span class="nn">Plotly.NET.LayoutObjects</span>
 
-<span class="c1">// Because our data set is already rather wide we want to move the legend from the right side of the plot</span><span class="w"></span>
-<span class="c1">// to the right center.</span><span class="w"></span>
+<span class="c1">// Because our data set is already rather wide we want to move the legend from the right side of the plot</span>
+<span class="c1">// to the right center.</span>
 <span class="k">let</span><span class="w"> </span><span class="nv">legend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
-<span class="w">    </span><span class="nn">Legend</span><span class="p">.</span><span class="n">init</span><span class="o">(</span><span class="w"></span>
-<span class="w">        </span><span class="n">YAnchor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">YAnchorPosition</span><span class="p">.</span><span class="n">Top</span><span class="o">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">99</span><span class="o">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">XAnchor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">XAnchorPosition</span><span class="p">.</span><span class="n">Left</span><span class="o">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">5</span><span class="w"></span>
-<span class="w">    </span><span class="o">)</span><span class="w"></span>
+<span class="w">    </span><span class="nn">Legend</span><span class="p">.</span><span class="n">init</span><span class="o">(</span>
+<span class="w">        </span><span class="n">YAnchor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">YAnchorPosition</span><span class="p">.</span><span class="n">Top</span><span class="o">,</span>
+<span class="w">        </span><span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">99</span><span class="o">,</span>
+<span class="w">        </span><span class="n">XAnchor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">XAnchorPosition</span><span class="p">.</span><span class="n">Left</span><span class="o">,</span>
+<span class="w">        </span><span class="n">X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">5</span>
+<span class="w">    </span><span class="o">)</span>
 
-<span class="sd">/// This function will take 'processedData' as input and return a range chart with a line for the average temperature</span><span class="w"></span>
-<span class="sd">/// and a different colored area for the range between minimal and maximal temperature at that date.</span><span class="w"></span>
-<span class="k">let</span><span class="w"> </span><span class="nv">createTempChart</span><span class="w"> </span><span class="o">(</span><span class="n">days</span><span class="o">,</span><span class="n">tm</span><span class="o">,</span><span class="n">tmUpper</span><span class="o">,</span><span class="n">tmLower</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Range</span><span class="o">(</span><span class="w"></span>
-<span class="w">        </span><span class="c1">// data arrays</span><span class="w"></span>
+<span class="sd">/// This function will take 'processedData' as input and return a range chart with a line for the average temperature</span>
+<span class="sd">/// and a different colored area for the range between minimal and maximal temperature at that date.</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">createTempChart</span><span class="w"> </span><span class="o">(</span><span class="n">days</span><span class="o">,</span><span class="n">tm</span><span class="o">,</span><span class="n">tmUpper</span><span class="o">,</span><span class="n">tmLower</span><span class="o">)</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Range</span><span class="o">(</span>
+<span class="w">        </span><span class="c1">// data arrays</span>
 <span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">days</span><span class="o">,</span><span class="w"> </span>
 <span class="w">        </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tm</span><span class="o">,</span><span class="w"> </span>
 <span class="w">        </span><span class="n">upper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tmUpper</span><span class="o">,</span><span class="w"> </span>
-<span class="w">        </span><span class="n">lower</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tmLower</span><span class="o">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">Mode</span><span class="p">.</span><span class="n">Lines</span><span class="o">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">MarkerColor</span><span class="o">=</span><span class="w"> </span><span class="nn">Color</span><span class="p">.</span><span class="n">fromString</span><span class="w"> </span><span class="s">"#3D1244"</span><span class="o">,</span><span class="w"></span>
-<span class="w">        </span><span class="n">RangeColor</span><span class="o">=</span><span class="w"> </span><span class="nn">Color</span><span class="p">.</span><span class="n">fromString</span><span class="w"> </span><span class="s">"#F99BDE"</span><span class="o">,</span><span class="w"></span>
-<span class="w">        </span><span class="c1">// Name for line in legend</span><span class="w"></span>
-<span class="w">        </span><span class="n">Name</span><span class="o">=</span><span class="s">"Average temperature over 24 timepoints each day"</span><span class="o">,</span><span class="w"></span>
-<span class="w">        </span><span class="c1">// Name for lower point when hovering over chart</span><span class="w"></span>
-<span class="w">        </span><span class="n">LowerName</span><span class="o">=</span><span class="s">"Min temp"</span><span class="o">,</span><span class="w"></span>
-<span class="w">        </span><span class="c1">// Name for upper point when hovering over chart</span><span class="w"></span>
-<span class="w">        </span><span class="n">UpperName</span><span class="o">=</span><span class="s">"Max temp"</span><span class="w"></span>
-<span class="w">    </span><span class="o">)</span><span class="w"></span>
-<span class="w">    </span><span class="c1">// Configure the chart with the legend from above</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withLegend</span><span class="w"> </span><span class="n">legend</span><span class="w"></span>
-<span class="w">    </span><span class="c1">// Add name to y axis</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="o">(</span><span class="s">"daily temperature [°C]"</span><span class="o">)</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withSize</span><span class="w"> </span><span class="o">(</span><span class="mi">1000</span><span class="o">.,</span><span class="mi">600</span><span class="o">.)</span><span class="w"></span>
+<span class="w">        </span><span class="n">lower</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tmLower</span><span class="o">,</span>
+<span class="w">        </span><span class="n">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">Mode</span><span class="p">.</span><span class="n">Lines</span><span class="o">,</span>
+<span class="w">        </span><span class="n">MarkerColor</span><span class="o">=</span><span class="w"> </span><span class="nn">Color</span><span class="p">.</span><span class="n">fromString</span><span class="w"> </span><span class="s">"#3D1244"</span><span class="o">,</span>
+<span class="w">        </span><span class="n">RangeColor</span><span class="o">=</span><span class="w"> </span><span class="nn">Color</span><span class="p">.</span><span class="n">fromString</span><span class="w"> </span><span class="s">"#F99BDE"</span><span class="o">,</span>
+<span class="w">        </span><span class="c1">// Name for line in legend</span>
+<span class="w">        </span><span class="n">Name</span><span class="o">=</span><span class="s">"Average temperature over 24 timepoints each day"</span><span class="o">,</span>
+<span class="w">        </span><span class="c1">// Name for lower point when hovering over chart</span>
+<span class="w">        </span><span class="n">LowerName</span><span class="o">=</span><span class="s">"Min temp"</span><span class="o">,</span>
+<span class="w">        </span><span class="c1">// Name for upper point when hovering over chart</span>
+<span class="w">        </span><span class="n">UpperName</span><span class="o">=</span><span class="s">"Max temp"</span>
+<span class="w">    </span><span class="o">)</span>
+<span class="w">    </span><span class="c1">// Configure the chart with the legend from above</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withLegend</span><span class="w"> </span><span class="n">legend</span>
+<span class="w">    </span><span class="c1">// Add name to y axis</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="o">(</span><span class="s">"daily temperature [°C]"</span><span class="o">)</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withSize</span><span class="w"> </span><span class="o">(</span><span class="mi">1000</span><span class="o">.,</span><span class="mi">600</span><span class="o">.)</span>
 
-<span class="sd">/// Chart for original data set </span><span class="w"></span>
+<span class="sd">/// Chart for original data set </span>
 
 <span class="n">processedData</span><span class="w"> </span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="n">createTempChart</span><span class="w"></span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="n">createTempChart</span>
 </pre></div>
 
      </div>
@@ -579,18 +579,18 @@ smooth the data to clearly see temperature trends.</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats</span>
 
-<span class="k">let</span><span class="w"> </span><span class="nv">smootheTemp</span><span class="w"> </span><span class="n">ws</span><span class="w"> </span><span class="n">order</span><span class="w"> </span><span class="o">(</span><span class="n">days</span><span class="o">,</span><span class="n">tm</span><span class="o">,</span><span class="n">tmUpper</span><span class="o">,</span><span class="n">tmLower</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">tm</span><span class="k">'</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Signal</span><span class="p">.</span><span class="nn">Filtering</span><span class="p">.</span><span class="n">savitzkyGolay</span><span class="w"> </span><span class="n">ws</span><span class="w"> </span><span class="n">order</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">tm</span><span class="w"></span>
-<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">tmUpper</span><span class="k">'</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Signal</span><span class="p">.</span><span class="nn">Filtering</span><span class="p">.</span><span class="n">savitzkyGolay</span><span class="w"> </span><span class="n">ws</span><span class="w"> </span><span class="n">order</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">tmUpper</span><span class="w"></span>
-<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">tmLower</span><span class="k">'</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Signal</span><span class="p">.</span><span class="nn">Filtering</span><span class="p">.</span><span class="n">savitzkyGolay</span><span class="w"> </span><span class="n">ws</span><span class="w"> </span><span class="n">order</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">tmLower</span><span class="w"></span>
-<span class="w">    </span><span class="n">days</span><span class="o">,</span><span class="n">tm'</span><span class="o">,</span><span class="n">tmUpper'</span><span class="o">,</span><span class="n">tmLower'</span><span class="w"></span>
+<span class="k">let</span><span class="w"> </span><span class="nv">smootheTemp</span><span class="w"> </span><span class="n">ws</span><span class="w"> </span><span class="n">order</span><span class="w"> </span><span class="o">(</span><span class="n">days</span><span class="o">,</span><span class="n">tm</span><span class="o">,</span><span class="n">tmUpper</span><span class="o">,</span><span class="n">tmLower</span><span class="o">)</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">tm</span><span class="k">'</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Signal</span><span class="p">.</span><span class="nn">Filtering</span><span class="p">.</span><span class="n">savitzkyGolay</span><span class="w"> </span><span class="n">ws</span><span class="w"> </span><span class="n">order</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">tm</span>
+<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">tmUpper</span><span class="k">'</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Signal</span><span class="p">.</span><span class="nn">Filtering</span><span class="p">.</span><span class="n">savitzkyGolay</span><span class="w"> </span><span class="n">ws</span><span class="w"> </span><span class="n">order</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">tmUpper</span>
+<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">tmLower</span><span class="k">'</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Signal</span><span class="p">.</span><span class="nn">Filtering</span><span class="p">.</span><span class="n">savitzkyGolay</span><span class="w"> </span><span class="n">ws</span><span class="w"> </span><span class="n">order</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">tmLower</span>
+<span class="w">    </span><span class="n">days</span><span class="o">,</span><span class="n">tm'</span><span class="o">,</span><span class="n">tmUpper'</span><span class="o">,</span><span class="n">tmLower'</span>
 
 
-<span class="n">processedData</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="n">smootheTemp</span><span class="w"> </span><span class="mi">31</span><span class="w"> </span><span class="mi">4</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="n">createTempChart</span><span class="w"></span>
+<span class="n">processedData</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="n">smootheTemp</span><span class="w"> </span><span class="mi">31</span><span class="w"> </span><span class="mi">4</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="n">createTempChart</span>
 </pre></div>
 
      </div>

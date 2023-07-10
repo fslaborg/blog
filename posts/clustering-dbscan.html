@@ -205,10 +205,10 @@ In this tutorial we are going to perform DBSCAN on two- and three-dimensional da
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Deedle.Interactive, 3.0.0"</span><span class="w"></span>
-<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: FSharp.Stats, 0.4.3"</span><span class="w"></span>
-<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Plotly.NET.Interactive, 4.0.0"</span><span class="w"></span>
-<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: FSharp.Data, 4.2.7"</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Deedle.Interactive, 3.0.0"</span>
+<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: FSharp.Stats, 0.4.3"</span>
+<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Plotly.NET.Interactive, 4.0.0"</span>
+<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: FSharp.Data, 4.2.7"</span>
 </pre></div>
 
      </div>
@@ -287,15 +287,15 @@ In this tutorial we are going to perform DBSCAN on two- and three-dimensional da
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Data</span><span class="w"></span>
-<span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats</span><span class="w"></span>
-<span class="k">open</span><span class="w"> </span><span class="nn">Deedle</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Data</span>
+<span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats</span>
+<span class="k">open</span><span class="w"> </span><span class="nn">Deedle</span>
 
-<span class="c1">// Retrieve data using the FSharp.Data package and read it as dataframe using the Deedle package</span><span class="w"></span>
-<span class="k">let</span><span class="w"> </span><span class="nv">rawData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Http</span><span class="p">.</span><span class="n">RequestString</span><span class="w"> </span><span class="s">@"https://raw.githubusercontent.com/fslaborg/datasets/main/data/iris.csv"</span><span class="w"></span>
-<span class="k">let</span><span class="w"> </span><span class="nv">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">ReadCsvString</span><span class="o">(</span><span class="n">rawData</span><span class="o">)</span><span class="w"></span>
+<span class="c1">// Retrieve data using the FSharp.Data package and read it as dataframe using the Deedle package</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">rawData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Http</span><span class="p">.</span><span class="n">RequestString</span><span class="w"> </span><span class="s">@"https://raw.githubusercontent.com/fslaborg/datasets/main/data/iris.csv"</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">ReadCsvString</span><span class="o">(</span><span class="n">rawData</span><span class="o">)</span>
 
-<span class="n">df</span><span class="w"></span>
+<span class="n">df</span>
 </pre></div>
 
      </div>
@@ -369,45 +369,45 @@ Since the species identifier occur several times (Iris-virginica, Iris-versicolo
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[18]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">Plotly.NET</span><span class="w"></span>
-<span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats.ML.Unsupervised</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">Plotly.NET</span>
+<span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats.ML.Unsupervised</span>
 
-<span class="k">let</span><span class="w"> </span><span class="nv">header2D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s">"petal_length"</span><span class="o">;</span><span class="s">"petal_width"</span><span class="o">]</span><span class="w"></span>
-<span class="k">let</span><span class="w"> </span><span class="nv">header3D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s">"sepal_length"</span><span class="o">;</span><span class="s">"petal_length"</span><span class="o">;</span><span class="s">"petal_width"</span><span class="o">]</span><span class="w"></span>
+<span class="k">let</span><span class="w"> </span><span class="nv">header2D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s">"petal_length"</span><span class="o">;</span><span class="s">"petal_width"</span><span class="o">]</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">header3D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s">"sepal_length"</span><span class="o">;</span><span class="s">"petal_length"</span><span class="o">;</span><span class="s">"petal_width"</span><span class="o">]</span>
 
-<span class="c1">//extract petal length and petal width</span><span class="w"></span>
+<span class="c1">//extract petal length and petal width</span>
 <span class="k">let</span><span class="w"> </span><span class="nv">data2D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
-<span class="w">    </span><span class="nn">Frame</span><span class="p">.</span><span class="n">sliceCols</span><span class="w"> </span><span class="n">header2D</span><span class="w"> </span><span class="n">df</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">toJaggedArray</span><span class="w"></span>
+<span class="w">    </span><span class="nn">Frame</span><span class="p">.</span><span class="n">sliceCols</span><span class="w"> </span><span class="n">header2D</span><span class="w"> </span><span class="n">df</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">toJaggedArray</span>
 
-<span class="c1">//extract sepal length, petal length, and petal width</span><span class="w"></span>
+<span class="c1">//extract sepal length, petal length, and petal width</span>
 <span class="k">let</span><span class="w"> </span><span class="nv">data3D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
-<span class="w">    </span><span class="nn">Frame</span><span class="p">.</span><span class="n">sliceCols</span><span class="w"> </span><span class="n">header3D</span><span class="w"> </span><span class="n">df</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">toJaggedArray</span><span class="w"></span>
+<span class="w">    </span><span class="nn">Frame</span><span class="p">.</span><span class="n">sliceCols</span><span class="w"> </span><span class="n">header3D</span><span class="w"> </span><span class="n">df</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">toJaggedArray</span>
 
 <span class="k">let</span><span class="w"> </span><span class="nv">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
-<span class="w">    </span><span class="nn">Frame</span><span class="p">.</span><span class="n">getCol</span><span class="w"> </span><span class="s">"species"</span><span class="w"> </span><span class="n">df</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Series</span><span class="p">.</span><span class="n">values</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">mapi</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">sprintf</span><span class="w"> </span><span class="s">"%s_%i"</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="n">i</span><span class="o">)</span><span class="w"></span>
+<span class="w">    </span><span class="nn">Frame</span><span class="p">.</span><span class="n">getCol</span><span class="w"> </span><span class="s">"species"</span><span class="w"> </span><span class="n">df</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Series</span><span class="p">.</span><span class="n">values</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">mapi</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">sprintf</span><span class="w"> </span><span class="s">"%s_%i"</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="n">i</span><span class="o">)</span>
 
-<span class="k">let</span><span class="w"> </span><span class="nv">rawChart2D</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">unzippedData</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">        </span><span class="n">data2D</span><span class="w"></span>
-<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Array</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">x</span><span class="o">.[</span><span class="mi">0</span><span class="o">],</span><span class="n">x</span><span class="o">.[</span><span class="mi">1</span><span class="o">])</span><span class="w"></span>
-<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Scatter</span><span class="o">(</span><span class="n">unzippedData</span><span class="o">,</span><span class="n">mode</span><span class="o">=</span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">Mode</span><span class="p">.</span><span class="n">Markers</span><span class="o">,</span><span class="n">MultiText</span><span class="o">=</span><span class="n">labels</span><span class="o">)</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxisStyle</span><span class="w"> </span><span class="n">header2D</span><span class="o">.[</span><span class="mi">0</span><span class="o">]</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="w"> </span><span class="n">header2D</span><span class="o">.[</span><span class="mi">1</span><span class="o">]</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTitle</span><span class="w"> </span><span class="s">"rawChart2D"</span><span class="w"></span>
+<span class="k">let</span><span class="w"> </span><span class="nv">rawChart2D</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">unzippedData</span><span class="w"> </span><span class="o">=</span>
+<span class="w">        </span><span class="n">data2D</span>
+<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Array</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">x</span><span class="o">.[</span><span class="mi">0</span><span class="o">],</span><span class="n">x</span><span class="o">.[</span><span class="mi">1</span><span class="o">])</span>
+<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Scatter</span><span class="o">(</span><span class="n">unzippedData</span><span class="o">,</span><span class="n">mode</span><span class="o">=</span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">Mode</span><span class="p">.</span><span class="n">Markers</span><span class="o">,</span><span class="n">MultiText</span><span class="o">=</span><span class="n">labels</span><span class="o">)</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxisStyle</span><span class="w"> </span><span class="n">header2D</span><span class="o">.[</span><span class="mi">0</span><span class="o">]</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="w"> </span><span class="n">header2D</span><span class="o">.[</span><span class="mi">1</span><span class="o">]</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTitle</span><span class="w"> </span><span class="s">"rawChart2D"</span>
 
-<span class="k">let</span><span class="w"> </span><span class="nv">rawChart3D</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">unzippedData</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">        </span><span class="n">data3D</span><span class="w"></span>
-<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Array</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">x</span><span class="o">.[</span><span class="mi">0</span><span class="o">],</span><span class="n">x</span><span class="o">.[</span><span class="mi">1</span><span class="o">],</span><span class="n">x</span><span class="o">.[</span><span class="mi">2</span><span class="o">])</span><span class="w"></span>
-<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Scatter3D</span><span class="o">(</span><span class="n">unzippedData</span><span class="o">,</span><span class="n">mode</span><span class="o">=</span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">Mode</span><span class="p">.</span><span class="n">Markers</span><span class="o">,</span><span class="n">MultiText</span><span class="o">=</span><span class="n">labels</span><span class="o">)</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxisStyle</span><span class="w"> </span><span class="n">header3D</span><span class="o">.[</span><span class="mi">0</span><span class="o">]</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="w"> </span><span class="n">header3D</span><span class="o">.[</span><span class="mi">1</span><span class="o">]</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withZAxisStyle</span><span class="w"> </span><span class="n">header3D</span><span class="o">.[</span><span class="mi">2</span><span class="o">]</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTitle</span><span class="w"> </span><span class="s">"rawChart3D"</span><span class="w"></span>
+<span class="k">let</span><span class="w"> </span><span class="nv">rawChart3D</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">unzippedData</span><span class="w"> </span><span class="o">=</span>
+<span class="w">        </span><span class="n">data3D</span>
+<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Array</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">x</span><span class="o">.[</span><span class="mi">0</span><span class="o">],</span><span class="n">x</span><span class="o">.[</span><span class="mi">1</span><span class="o">],</span><span class="n">x</span><span class="o">.[</span><span class="mi">2</span><span class="o">])</span>
+<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Scatter3D</span><span class="o">(</span><span class="n">unzippedData</span><span class="o">,</span><span class="n">mode</span><span class="o">=</span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">Mode</span><span class="p">.</span><span class="n">Markers</span><span class="o">,</span><span class="n">MultiText</span><span class="o">=</span><span class="n">labels</span><span class="o">)</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxisStyle</span><span class="w"> </span><span class="n">header3D</span><span class="o">.[</span><span class="mi">0</span><span class="o">]</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="w"> </span><span class="n">header3D</span><span class="o">.[</span><span class="mi">1</span><span class="o">]</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withZAxisStyle</span><span class="w"> </span><span class="n">header3D</span><span class="o">.[</span><span class="mi">2</span><span class="o">]</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTitle</span><span class="w"> </span><span class="s">"rawChart3D"</span>
 </pre></div>
 
      </div>
@@ -423,7 +423,7 @@ Since the species identifier occur several times (Iris-virginica, Iris-versicolo
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[19]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="n">rawChart2D</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="n">rawChart2D</span>
 </pre></div>
 
      </div>
@@ -484,7 +484,7 @@ else {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[20]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="n">rawChart3D</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="n">rawChart3D</span>
 </pre></div>
 
      </div>
@@ -564,17 +564,17 @@ else {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[24]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats.ML</span><span class="w"></span>
-<span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats.ML.Unsupervised</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats.ML</span>
+<span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats.ML.Unsupervised</span>
 
-<span class="k">let</span><span class="w"> </span><span class="nv">eps2D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">5</span><span class="w"></span>
-<span class="k">let</span><span class="w"> </span><span class="nv">eps3D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">7</span><span class="w"></span>
+<span class="k">let</span><span class="w"> </span><span class="nv">eps2D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">5</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">eps3D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">7</span>
 
-<span class="k">let</span><span class="w"> </span><span class="nv">minPts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">20</span><span class="w"></span>
+<span class="k">let</span><span class="w"> </span><span class="nv">minPts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">20</span>
 
-<span class="k">let</span><span class="w"> </span><span class="nv">result2D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">DbScan</span><span class="p">.</span><span class="n">compute</span><span class="w"> </span><span class="nn">DistanceMetrics</span><span class="p">.</span><span class="nn">Array</span><span class="p">.</span><span class="n">euclidean</span><span class="w"> </span><span class="n">minPts</span><span class="w"> </span><span class="n">eps2D</span><span class="w"> </span><span class="n">data2D</span><span class="w"></span>
+<span class="k">let</span><span class="w"> </span><span class="nv">result2D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">DbScan</span><span class="p">.</span><span class="n">compute</span><span class="w"> </span><span class="nn">DistanceMetrics</span><span class="p">.</span><span class="nn">Array</span><span class="p">.</span><span class="n">euclidean</span><span class="w"> </span><span class="n">minPts</span><span class="w"> </span><span class="n">eps2D</span><span class="w"> </span><span class="n">data2D</span>
 
-<span class="n">result2D</span><span class="o">.</span><span class="n">ToString</span><span class="bp">()</span><span class="w"></span>
+<span class="n">result2D</span><span class="o">.</span><span class="n">ToString</span><span class="bp">()</span>
 </pre></div>
 
      </div>
@@ -620,9 +620,9 @@ else {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[25]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">result3D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">DbScan</span><span class="p">.</span><span class="n">compute</span><span class="w"> </span><span class="nn">DistanceMetrics</span><span class="p">.</span><span class="nn">Array</span><span class="p">.</span><span class="n">euclidean</span><span class="w"> </span><span class="n">minPts</span><span class="w"> </span><span class="n">eps3D</span><span class="w"> </span><span class="n">data3D</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">result3D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">DbScan</span><span class="p">.</span><span class="n">compute</span><span class="w"> </span><span class="nn">DistanceMetrics</span><span class="p">.</span><span class="nn">Array</span><span class="p">.</span><span class="n">euclidean</span><span class="w"> </span><span class="n">minPts</span><span class="w"> </span><span class="n">eps3D</span><span class="w"> </span><span class="n">data3D</span>
 
-<span class="n">result3D</span><span class="o">.</span><span class="n">ToString</span><span class="bp">()</span><span class="w"></span>
+<span class="n">result3D</span><span class="o">.</span><span class="n">ToString</span><span class="bp">()</span>
 </pre></div>
 
      </div>
@@ -687,34 +687,34 @@ else {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">chartCluster2D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
-<span class="w">    </span><span class="n">result2D</span><span class="o">.</span><span class="n">Clusterlist</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">mapi</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">        </span><span class="n">l</span><span class="w"></span>
-<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">x</span><span class="o">.[</span><span class="mi">0</span><span class="o">],</span><span class="n">x</span><span class="o">.[</span><span class="mi">1</span><span class="o">])</span><span class="w"></span>
-<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">distinct</span><span class="w"> </span><span class="c1">//more efficient visualization; no difference in plot but in point numbers</span><span class="w"></span>
-<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Point</span><span class="w"></span>
-<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTraceInfo</span><span class="w"> </span><span class="o">(</span><span class="n">sprintf</span><span class="w"> </span><span class="s">"Cluster %i"</span><span class="w"> </span><span class="n">i</span><span class="o">))</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">combine</span><span class="w"></span>
+<span class="w">    </span><span class="n">result2D</span><span class="o">.</span><span class="n">Clusterlist</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">mapi</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">        </span><span class="n">l</span>
+<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">x</span><span class="o">.[</span><span class="mi">0</span><span class="o">],</span><span class="n">x</span><span class="o">.[</span><span class="mi">1</span><span class="o">])</span>
+<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">distinct</span><span class="w"> </span><span class="c1">//more efficient visualization; no difference in plot but in point numbers</span>
+<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Point</span>
+<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTraceInfo</span><span class="w"> </span><span class="o">(</span><span class="n">sprintf</span><span class="w"> </span><span class="s">"Cluster %i"</span><span class="w"> </span><span class="n">i</span><span class="o">))</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">combine</span>
 
 <span class="k">let</span><span class="w"> </span><span class="nv">chartNoise2D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
-<span class="w">    </span><span class="n">result2D</span><span class="o">.</span><span class="n">Noisepoints</span><span class="w"></span>
+<span class="w">    </span><span class="n">result2D</span><span class="o">.</span><span class="n">Noisepoints</span>
 <span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">x</span><span class="o">.[</span><span class="mi">0</span><span class="o">],</span><span class="n">x</span><span class="o">.[</span><span class="mi">1</span><span class="o">])</span><span class="w">  </span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">distinct</span><span class="w"> </span><span class="c1">//more efficient visualization; no difference in plot but in point numbers</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Point</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTraceInfo</span><span class="w"> </span><span class="s">"Noise"</span><span class="w"></span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">distinct</span><span class="w"> </span><span class="c1">//more efficient visualization; no difference in plot but in point numbers</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Point</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTraceInfo</span><span class="w"> </span><span class="s">"Noise"</span>
 
 <span class="k">let</span><span class="w"> </span><span class="nv">chartTitle2D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
-<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">noiseCount</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">result2D</span><span class="o">.</span><span class="n">Noisepoints</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">length</span><span class="w"></span>
-<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">clusterCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">result2D</span><span class="o">.</span><span class="n">Clusterlist</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">length</span><span class="w"></span>
-<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">clPtsCount</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">result2D</span><span class="o">.</span><span class="n">Clusterlist</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">sumBy</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">length</span><span class="w"></span>
+<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">noiseCount</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">result2D</span><span class="o">.</span><span class="n">Noisepoints</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">length</span>
+<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">clusterCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">result2D</span><span class="o">.</span><span class="n">Clusterlist</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">length</span>
+<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">clPtsCount</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">result2D</span><span class="o">.</span><span class="n">Clusterlist</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">sumBy</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">length</span>
 <span class="w">    </span><span class="o">$</span><span class="s">"eps: %.1f{eps2D} minPts: %i{minPts} pts: %i{noiseCount + clPtsCount} cluster: %i{clusterCount} noisePts: %i{noiseCount}"</span><span class="w"> </span>
 
 
-<span class="o">[</span><span class="n">chartNoise2D</span><span class="o">;</span><span class="n">chartCluster2D</span><span class="o">]</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">combine</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTitle</span><span class="w"> </span><span class="n">chartTitle2D</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxisStyle</span><span class="w"> </span><span class="n">header2D</span><span class="o">.[</span><span class="mi">0</span><span class="o">]</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="w"> </span><span class="n">header2D</span><span class="o">.[</span><span class="mi">1</span><span class="o">]</span><span class="w"></span>
+<span class="o">[</span><span class="n">chartNoise2D</span><span class="o">;</span><span class="n">chartCluster2D</span><span class="o">]</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">combine</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTitle</span><span class="w"> </span><span class="n">chartTitle2D</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxisStyle</span><span class="w"> </span><span class="n">header2D</span><span class="o">.[</span><span class="mi">0</span><span class="o">]</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="w"> </span><span class="n">header2D</span><span class="o">.[</span><span class="mi">1</span><span class="o">]</span>
 </pre></div>
 
      </div>
@@ -776,35 +776,35 @@ else {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">chartCluster3D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
-<span class="w">    </span><span class="n">result3D</span><span class="o">.</span><span class="n">Clusterlist</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">mapi</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">        </span><span class="n">l</span><span class="w"></span>
-<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">x</span><span class="o">.[</span><span class="mi">0</span><span class="o">],</span><span class="n">x</span><span class="o">.[</span><span class="mi">1</span><span class="o">],</span><span class="n">x</span><span class="o">.[</span><span class="mi">2</span><span class="o">])</span><span class="w"></span>
-<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">distinct</span><span class="w"> </span><span class="c1">//faster visualization; no difference in plot but in point number</span><span class="w"></span>
-<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="k">fun</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Scatter3D</span><span class="w"> </span><span class="o">(</span><span class="n">x</span><span class="o">,</span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">Mode</span><span class="p">.</span><span class="n">Markers</span><span class="o">)</span><span class="w"></span>
-<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTraceInfo</span><span class="w"> </span><span class="o">(</span><span class="n">sprintf</span><span class="w"> </span><span class="s">"Cluster_%i"</span><span class="w"> </span><span class="n">i</span><span class="o">))</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">combine</span><span class="w"></span>
+<span class="w">    </span><span class="n">result3D</span><span class="o">.</span><span class="n">Clusterlist</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">mapi</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">        </span><span class="n">l</span>
+<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">x</span><span class="o">.[</span><span class="mi">0</span><span class="o">],</span><span class="n">x</span><span class="o">.[</span><span class="mi">1</span><span class="o">],</span><span class="n">x</span><span class="o">.[</span><span class="mi">2</span><span class="o">])</span>
+<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">distinct</span><span class="w"> </span><span class="c1">//faster visualization; no difference in plot but in point number</span>
+<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="k">fun</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Scatter3D</span><span class="w"> </span><span class="o">(</span><span class="n">x</span><span class="o">,</span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">Mode</span><span class="p">.</span><span class="n">Markers</span><span class="o">)</span>
+<span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTraceInfo</span><span class="w"> </span><span class="o">(</span><span class="n">sprintf</span><span class="w"> </span><span class="s">"Cluster_%i"</span><span class="w"> </span><span class="n">i</span><span class="o">))</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">combine</span>
 
-<span class="k">let</span><span class="w"> </span><span class="nv">chartNoise3D</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="n">result3D</span><span class="o">.</span><span class="n">Noisepoints</span><span class="w"></span>
+<span class="k">let</span><span class="w"> </span><span class="nv">chartNoise3D</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="n">result3D</span><span class="o">.</span><span class="n">Noisepoints</span>
 <span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">x</span><span class="o">.[</span><span class="mi">0</span><span class="o">],</span><span class="n">x</span><span class="o">.[</span><span class="mi">1</span><span class="o">],</span><span class="n">x</span><span class="o">.[</span><span class="mi">2</span><span class="o">])</span><span class="w">  </span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">distinct</span><span class="w"> </span><span class="c1">//faster visualization; no difference in plot but in point number</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="k">fun</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Scatter3D</span><span class="w"> </span><span class="o">(</span><span class="n">x</span><span class="o">,</span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">Mode</span><span class="p">.</span><span class="n">Markers</span><span class="o">)</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTraceInfo</span><span class="w"> </span><span class="s">"Noise"</span><span class="w"></span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">distinct</span><span class="w"> </span><span class="c1">//faster visualization; no difference in plot but in point number</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="k">fun</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Scatter3D</span><span class="w"> </span><span class="o">(</span><span class="n">x</span><span class="o">,</span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">Mode</span><span class="p">.</span><span class="n">Markers</span><span class="o">)</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTraceInfo</span><span class="w"> </span><span class="s">"Noise"</span>
 
 <span class="k">let</span><span class="w"> </span><span class="nv">chartname3D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
-<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">noiseCount</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">result3D</span><span class="o">.</span><span class="n">Noisepoints</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">length</span><span class="w"></span>
-<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">clusterCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">result3D</span><span class="o">.</span><span class="n">Clusterlist</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">length</span><span class="w"></span>
-<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">clPtsCount</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">result3D</span><span class="o">.</span><span class="n">Clusterlist</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">sumBy</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">length</span><span class="w"></span>
+<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">noiseCount</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">result3D</span><span class="o">.</span><span class="n">Noisepoints</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">length</span>
+<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">clusterCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">result3D</span><span class="o">.</span><span class="n">Clusterlist</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">length</span>
+<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">clPtsCount</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">result3D</span><span class="o">.</span><span class="n">Clusterlist</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">sumBy</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">length</span>
 <span class="w">    </span><span class="o">$</span><span class="s">"eps: %.1f{eps3D} minPts: %i{minPts} pts: %i{noiseCount + clPtsCount} cluster: %i{clusterCount} noisePts: %i{noiseCount}"</span><span class="w"> </span>
 <span class="w">   </span>
 
-<span class="o">[</span><span class="n">chartNoise3D</span><span class="o">;</span><span class="n">chartCluster3D</span><span class="o">]</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">combine</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTitle</span><span class="w"> </span><span class="n">chartname3D</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxisStyle</span><span class="w"> </span><span class="n">header3D</span><span class="o">.[</span><span class="mi">0</span><span class="o">]</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="w"> </span><span class="n">header3D</span><span class="o">.[</span><span class="mi">1</span><span class="o">]</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withZAxisStyle</span><span class="w"> </span><span class="n">header3D</span><span class="o">.[</span><span class="mi">2</span><span class="o">]</span><span class="w"></span>
+<span class="o">[</span><span class="n">chartNoise3D</span><span class="o">;</span><span class="n">chartCluster3D</span><span class="o">]</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">combine</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTitle</span><span class="w"> </span><span class="n">chartname3D</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxisStyle</span><span class="w"> </span><span class="n">header3D</span><span class="o">.[</span><span class="mi">0</span><span class="o">]</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="w"> </span><span class="n">header3D</span><span class="o">.[</span><span class="mi">1</span><span class="o">]</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withZAxisStyle</span><span class="w"> </span><span class="n">header3D</span><span class="o">.[</span><span class="mi">2</span><span class="o">]</span>
 </pre></div>
 
      </div>
@@ -865,8 +865,8 @@ else {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[31]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="c1">//for faster computation you can use the squaredEuclidean distance and set your eps to its square</span><span class="w"></span>
-<span class="k">let</span><span class="w"> </span><span class="nv">clusteredChart3D</span><span class="bp">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">DbScan</span><span class="p">.</span><span class="n">compute</span><span class="w"> </span><span class="nn">DistanceMetrics</span><span class="p">.</span><span class="nn">Array</span><span class="p">.</span><span class="n">euclideanNaNSquared</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="o">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">7</span><span class="o">**</span><span class="mi">2</span><span class="o">.)</span><span class="w"> </span><span class="n">data3D</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="c1">//for faster computation you can use the squaredEuclidean distance and set your eps to its square</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">clusteredChart3D</span><span class="bp">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">DbScan</span><span class="p">.</span><span class="n">compute</span><span class="w"> </span><span class="nn">DistanceMetrics</span><span class="p">.</span><span class="nn">Array</span><span class="p">.</span><span class="n">euclideanNaNSquared</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="o">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">7</span><span class="o">**</span><span class="mi">2</span><span class="o">.)</span><span class="w"> </span><span class="n">data3D</span>
 </pre></div>
 
      </div>

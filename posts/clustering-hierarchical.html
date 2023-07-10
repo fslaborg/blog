@@ -221,10 +221,10 @@ The clustering tree is often represented as dendrogram.</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Deedle.Interactive, 3.0.0"</span><span class="w"></span>
-<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: FSharp.Stats, 0.4.3"</span><span class="w"></span>
-<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Plotly.NET.Interactive, 4.0.0"</span><span class="w"></span>
-<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: FSharp.Data, 4.2.7"</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Deedle.Interactive, 3.0.0"</span>
+<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: FSharp.Stats, 0.4.3"</span>
+<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Plotly.NET.Interactive, 4.0.0"</span>
+<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: FSharp.Data, 4.2.7"</span>
 </pre></div>
 
      </div>
@@ -303,14 +303,14 @@ The clustering tree is often represented as dendrogram.</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Data</span><span class="w"></span>
-<span class="k">open</span><span class="w"> </span><span class="nn">Deedle</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Data</span>
+<span class="k">open</span><span class="w"> </span><span class="nn">Deedle</span>
 
-<span class="c1">// Retrieve data using the FSharp.Data package and read it as dataframe using the Deedle package</span><span class="w"></span>
-<span class="k">let</span><span class="w"> </span><span class="nv">rawData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Http</span><span class="p">.</span><span class="n">RequestString</span><span class="w"> </span><span class="s">@"https://raw.githubusercontent.com/fslaborg/datasets/main/data/iris.csv"</span><span class="w"></span>
-<span class="k">let</span><span class="w"> </span><span class="nv">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">ReadCsvString</span><span class="o">(</span><span class="n">rawData</span><span class="o">)</span><span class="w"></span>
+<span class="c1">// Retrieve data using the FSharp.Data package and read it as dataframe using the Deedle package</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">rawData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Http</span><span class="p">.</span><span class="n">RequestString</span><span class="w"> </span><span class="s">@"https://raw.githubusercontent.com/fslaborg/datasets/main/data/iris.csv"</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">ReadCsvString</span><span class="o">(</span><span class="n">rawData</span><span class="o">)</span>
 
-<span class="n">df</span><span class="w"></span>
+<span class="n">df</span>
 </pre></div>
 
      </div>
@@ -384,28 +384,28 @@ Since the species identifier occur several times (Iris-virginica, Iris-versicolo
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">Plotly.NET</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">Plotly.NET</span>
 
-<span class="k">let</span><span class="w"> </span><span class="nv">colNames</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s">"sepal_length"</span><span class="o">;</span><span class="s">"sepal_width"</span><span class="o">;</span><span class="s">"petal_length"</span><span class="o">;</span><span class="s">"petal_width"</span><span class="o">]</span><span class="w"></span>
+<span class="k">let</span><span class="w"> </span><span class="nv">colNames</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s">"sepal_length"</span><span class="o">;</span><span class="s">"sepal_width"</span><span class="o">;</span><span class="s">"petal_length"</span><span class="o">;</span><span class="s">"petal_width"</span><span class="o">]</span>
 
-<span class="c1">// isolate data as float [] []</span><span class="w"></span>
+<span class="c1">// isolate data as float [] []</span>
 <span class="k">let</span><span class="w"> </span><span class="nv">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
-<span class="w">    </span><span class="nn">Frame</span><span class="p">.</span><span class="n">dropCol</span><span class="w"> </span><span class="s">"species"</span><span class="w"> </span><span class="n">df</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">toJaggedArray</span><span class="w"></span>
+<span class="w">    </span><span class="nn">Frame</span><span class="p">.</span><span class="n">dropCol</span><span class="w"> </span><span class="s">"species"</span><span class="w"> </span><span class="n">df</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">toJaggedArray</span>
 <span class="w">    </span>
 
-<span class="c1">// isolate labels as seq&lt;string&gt;</span><span class="w"></span>
+<span class="c1">// isolate labels as seq&lt;string&gt;</span>
 <span class="k">let</span><span class="w"> </span><span class="nv">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
-<span class="w">    </span><span class="nn">Frame</span><span class="p">.</span><span class="n">getCol</span><span class="w"> </span><span class="s">"species"</span><span class="w"> </span><span class="n">df</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Series</span><span class="p">.</span><span class="n">values</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">mapi</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">sprintf</span><span class="w"> </span><span class="s">"%s_%i"</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="n">i</span><span class="o">)</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Array</span><span class="p">.</span><span class="n">ofSeq</span><span class="w"></span>
+<span class="w">    </span><span class="nn">Frame</span><span class="p">.</span><span class="n">getCol</span><span class="w"> </span><span class="s">"species"</span><span class="w"> </span><span class="n">df</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Series</span><span class="p">.</span><span class="n">values</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">mapi</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">sprintf</span><span class="w"> </span><span class="s">"%s_%i"</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="n">i</span><span class="o">)</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Array</span><span class="p">.</span><span class="n">ofSeq</span>
 
 
-<span class="nn">Chart</span><span class="p">.</span><span class="n">Heatmap</span><span class="o">(</span><span class="n">data</span><span class="o">,</span><span class="n">colNames</span><span class="o">=</span><span class="n">colNames</span><span class="o">,</span><span class="n">rowNames</span><span class="o">=</span><span class="n">labels</span><span class="o">)</span><span class="w"></span>
-<span class="c1">// required to fit the species identifier on the left side of the heatmap</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withMarginSize</span><span class="o">(</span><span class="n">Left</span><span class="o">=</span><span class="mi">100</span><span class="o">.)</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTitle</span><span class="w"> </span><span class="s">"raw iris data"</span><span class="w"></span>
+<span class="nn">Chart</span><span class="p">.</span><span class="n">Heatmap</span><span class="o">(</span><span class="n">data</span><span class="o">,</span><span class="n">colNames</span><span class="o">=</span><span class="n">colNames</span><span class="o">,</span><span class="n">rowNames</span><span class="o">=</span><span class="n">labels</span><span class="o">)</span>
+<span class="c1">// required to fit the species identifier on the left side of the heatmap</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withMarginSize</span><span class="o">(</span><span class="n">Left</span><span class="o">=</span><span class="mi">100</span><span class="o">.)</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTitle</span><span class="w"> </span><span class="s">"raw iris data"</span>
 </pre></div>
 
      </div>
@@ -483,21 +483,21 @@ else {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats.ML</span><span class="w"></span>
-<span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats.ML.Unsupervised</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats.ML</span>
+<span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats.ML.Unsupervised</span>
 
-<span class="k">let</span><span class="w"> </span><span class="nv">distanceMeasure</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">DistanceMetrics</span><span class="p">.</span><span class="n">euclideanNaNSquared</span><span class="w"></span>
+<span class="k">let</span><span class="w"> </span><span class="nv">distanceMeasure</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">DistanceMetrics</span><span class="p">.</span><span class="n">euclideanNaNSquared</span>
 
-<span class="k">let</span><span class="w"> </span><span class="nv">linker</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">HierarchicalClustering</span><span class="p">.</span><span class="nn">Linker</span><span class="p">.</span><span class="n">centroidLwLinker</span><span class="w"></span>
+<span class="k">let</span><span class="w"> </span><span class="nv">linker</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">HierarchicalClustering</span><span class="p">.</span><span class="nn">Linker</span><span class="p">.</span><span class="n">centroidLwLinker</span>
 
-<span class="c1">// calculates the clustering and reports a single root cluster (node), </span><span class="w"></span>
-<span class="c1">// that may recursively contains further nodes</span><span class="w"></span>
+<span class="c1">// calculates the clustering and reports a single root cluster (node), </span>
+<span class="c1">// that may recursively contains further nodes</span>
 <span class="k">let</span><span class="w"> </span><span class="nv">clusterResultH</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
-<span class="w">    </span><span class="nn">HierarchicalClustering</span><span class="p">.</span><span class="n">generate</span><span class="w"> </span><span class="n">distanceMeasure</span><span class="w"> </span><span class="n">linker</span><span class="w"> </span><span class="n">data</span><span class="w"></span>
+<span class="w">    </span><span class="nn">HierarchicalClustering</span><span class="p">.</span><span class="n">generate</span><span class="w"> </span><span class="n">distanceMeasure</span><span class="w"> </span><span class="n">linker</span><span class="w"> </span><span class="n">data</span>
 
-<span class="c1">// If a desired cluster number is specified, the following function cuts the cluster according</span><span class="w"></span>
-<span class="c1">// to the depth, that results in the respective number of clusters (here 3). Only leaves are reported.</span><span class="w"></span>
-<span class="k">let</span><span class="w"> </span><span class="nv">threeClusters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">HierarchicalClustering</span><span class="p">.</span><span class="n">cutHClust</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="n">clusterResultH</span><span class="w"></span>
+<span class="c1">// If a desired cluster number is specified, the following function cuts the cluster according</span>
+<span class="c1">// to the depth, that results in the respective number of clusters (here 3). Only leaves are reported.</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">threeClusters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">HierarchicalClustering</span><span class="p">.</span><span class="n">cutHClust</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="n">clusterResultH</span>
 </pre></div>
 
      </div>
@@ -526,15 +526,15 @@ point in the raw data. The index can be retrieved from leaves using Hierarchical
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="c1">// Detailed information for 3 clusters are given</span><span class="w"></span>
-<span class="k">let</span><span class="w"> </span><span class="nv">inspectThreeClusters</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="n">threeClusters</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="c1">// Detailed information for 3 clusters are given</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">inspectThreeClusters</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="n">threeClusters</span>
 <span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">List</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">cluster</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span>
-<span class="w">        </span><span class="n">cluster</span><span class="w"></span>
+<span class="w">        </span><span class="n">cluster</span>
 <span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">List</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">leaf</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span>
-<span class="w">            </span><span class="n">labels</span><span class="o">.[</span><span class="nn">HierarchicalClustering</span><span class="p">.</span><span class="n">getClusterId</span><span class="w"> </span><span class="n">leaf</span><span class="o">]</span><span class="w"></span>
-<span class="w">            </span><span class="o">)</span><span class="w"></span>
-<span class="w">        </span><span class="o">)</span><span class="w"></span>
+<span class="w">            </span><span class="n">labels</span><span class="o">.[</span><span class="nn">HierarchicalClustering</span><span class="p">.</span><span class="n">getClusterId</span><span class="w"> </span><span class="n">leaf</span><span class="o">]</span>
+<span class="w">            </span><span class="o">)</span>
+<span class="w">        </span><span class="o">)</span>
 </pre></div>
 
      </div>
@@ -550,12 +550,12 @@ point in the raw data. The index can be retrieved from leaves using Hierarchical
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="n">inspectThreeClusters</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="n">inspectThreeClusters</span>
 <span class="o">|&gt;</span><span class="w"> </span><span class="nn">List</span><span class="p">.</span><span class="n">mapi</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span>
 <span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">truncCluster</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="o">.[</span><span class="mi">0</span><span class="o">..</span><span class="mi">4</span><span class="o">]</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">String</span><span class="p">.</span><span class="n">concat</span><span class="w"> </span><span class="s">"; "</span><span class="w"> </span>
 <span class="w">    </span><span class="n">sprintf</span><span class="w"> </span><span class="s">"Cluster%i: [%s ...]"</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="n">truncCluster</span><span class="w"> </span>
-<span class="w">    </span><span class="o">)</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">String</span><span class="p">.</span><span class="n">concat</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="w"></span>
+<span class="w">    </span><span class="o">)</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">String</span><span class="p">.</span><span class="n">concat</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span>
 </pre></div>
 
      </div>
@@ -610,23 +610,23 @@ Cluster2: [virginica_72; virginica_135; virginica_14; virginica_7; virginica_73 
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="c1">// To recursevely flatten the cluster tree into leaves only, use flattenHClust.</span><span class="w"></span>
-<span class="c1">// A leaf list is reported, that does not contain any cluster membership, </span><span class="w"></span>
-<span class="c1">// but is sorted by the clustering result.</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="c1">// To recursevely flatten the cluster tree into leaves only, use flattenHClust.</span>
+<span class="c1">// A leaf list is reported, that does not contain any cluster membership, </span>
+<span class="c1">// but is sorted by the clustering result.</span>
 <span class="k">let</span><span class="w"> </span><span class="nv">hLeaves</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
-<span class="w">    </span><span class="n">clusterResultH</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">HierarchicalClustering</span><span class="p">.</span><span class="n">flattenHClust</span><span class="w"></span>
+<span class="w">    </span><span class="n">clusterResultH</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">HierarchicalClustering</span><span class="p">.</span><span class="n">flattenHClust</span>
 <span class="w">    </span>
-<span class="c1">// Takes the sorted cluster result and reports a tuple of label and data value.</span><span class="w"></span>
+<span class="c1">// Takes the sorted cluster result and reports a tuple of label and data value.</span>
 <span class="k">let</span><span class="w"> </span><span class="nv">dataSortedByClustering</span><span class="w"> </span><span class="o">=</span><span class="w">    </span>
-<span class="w">    </span><span class="n">hLeaves</span><span class="w"></span>
+<span class="w">    </span><span class="n">hLeaves</span>
 <span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">choose</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span>
-<span class="w">        </span><span class="k">let</span><span class="w"> </span><span class="nv">label</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">labels</span><span class="o">.[</span><span class="nn">HierarchicalClustering</span><span class="p">.</span><span class="n">getClusterId</span><span class="w"> </span><span class="n">c</span><span class="o">]</span><span class="w"></span>
-<span class="w">        </span><span class="k">let</span><span class="w"> </span><span class="nv">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">HierarchicalClustering</span><span class="p">.</span><span class="n">tryGetLeafValue</span><span class="w"> </span><span class="n">c</span><span class="w"></span>
-<span class="w">        </span><span class="k">match</span><span class="w"> </span><span class="n">values</span><span class="w"> </span><span class="k">with</span><span class="w"></span>
-<span class="w">        </span><span class="o">|</span><span class="w"> </span><span class="n">None</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">None</span><span class="w"></span>
-<span class="w">        </span><span class="o">|</span><span class="w"> </span><span class="n">Some</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Some</span><span class="w"> </span><span class="o">(</span><span class="n">label</span><span class="o">,</span><span class="n">x</span><span class="o">)</span><span class="w"></span>
-<span class="w">        </span><span class="o">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">let</span><span class="w"> </span><span class="nv">label</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">labels</span><span class="o">.[</span><span class="nn">HierarchicalClustering</span><span class="p">.</span><span class="n">getClusterId</span><span class="w"> </span><span class="n">c</span><span class="o">]</span>
+<span class="w">        </span><span class="k">let</span><span class="w"> </span><span class="nv">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">HierarchicalClustering</span><span class="p">.</span><span class="n">tryGetLeafValue</span><span class="w"> </span><span class="n">c</span>
+<span class="w">        </span><span class="k">match</span><span class="w"> </span><span class="n">values</span><span class="w"> </span><span class="k">with</span>
+<span class="w">        </span><span class="o">|</span><span class="w"> </span><span class="n">None</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">None</span>
+<span class="w">        </span><span class="o">|</span><span class="w"> </span><span class="n">Some</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Some</span><span class="w"> </span><span class="o">(</span><span class="n">label</span><span class="o">,</span><span class="n">x</span><span class="o">)</span>
+<span class="w">        </span><span class="o">)</span>
 </pre></div>
 
      </div>
@@ -654,15 +654,15 @@ Cluster2: [virginica_72; virginica_135; virginica_14; virginica_7; virginica_73 
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">FSharpAux</span><span class="w"></span>
+<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">FSharpAux</span>
 
-<span class="k">let</span><span class="w"> </span><span class="o">(</span><span class="n">hlable</span><span class="o">,</span><span class="n">hdata</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="n">dataSortedByClustering</span><span class="w"></span>
-<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">unzip</span><span class="w"></span>
-<span class="nn">Chart</span><span class="p">.</span><span class="n">Heatmap</span><span class="o">(</span><span class="n">hdata</span><span class="o">,</span><span class="n">colNames</span><span class="o">=</span><span class="n">colNames</span><span class="o">,</span><span class="n">rowNames</span><span class="o">=</span><span class="n">hlable</span><span class="o">)</span><span class="w"></span>
-<span class="c1">// required to fit the species identifier on the left side of the heatmap</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withMarginSize</span><span class="o">(</span><span class="n">Left</span><span class="o">=</span><span class="mi">100</span><span class="o">.)</span><span class="w"></span>
-<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTitle</span><span class="w"> </span><span class="s">"Clustered iris data (hierarchical clustering)"</span><span class="w"></span>
+<span class="k">let</span><span class="w"> </span><span class="o">(</span><span class="n">hlable</span><span class="o">,</span><span class="n">hdata</span><span class="o">)</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="n">dataSortedByClustering</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">unzip</span>
+<span class="nn">Chart</span><span class="p">.</span><span class="n">Heatmap</span><span class="o">(</span><span class="n">hdata</span><span class="o">,</span><span class="n">colNames</span><span class="o">=</span><span class="n">colNames</span><span class="o">,</span><span class="n">rowNames</span><span class="o">=</span><span class="n">hlable</span><span class="o">)</span>
+<span class="c1">// required to fit the species identifier on the left side of the heatmap</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withMarginSize</span><span class="o">(</span><span class="n">Left</span><span class="o">=</span><span class="mi">100</span><span class="o">.)</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTitle</span><span class="w"> </span><span class="s">"Clustered iris data (hierarchical clustering)"</span>
 </pre></div>
 
      </div>
