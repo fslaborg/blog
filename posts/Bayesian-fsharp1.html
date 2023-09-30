@@ -1,0 +1,765 @@
+<html>
+  <head>
+    <meta charSet="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>
+      Bayesian F# Series - Introduction
+    </title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans"/>
+    <script defer="true" src="https://kit.fontawesome.com/0d3e0ea7a6.js" crossOrigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fslab/fslab-styles"/>
+    <meta name="description" content="This series of article will explore Bayesian techniques and how to get started with Plotly.NET and FSharp.Stats."/>
+    <meta name="tags" content="fslab, FsLab, data science, datascience, data visualization, dataviz, F#, C#, .NET, dotnet"/>
+    <meta name="og:title" content="Bayesian F# Series - Introduction"/>
+    <meta name="og:description" content="This series of article will explore Bayesian techniques and how to get started with Plotly.NET and FSharp.Stats."/>
+    <meta name="og:image" content="https://fslab.org/blog/images/dbscan.png"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:site" content="@fslaborg"/>
+    <meta name="twitter:title" content="Bayesian F# Series - Introduction"/>
+    <meta name="twitter:description" content="This series of article will explore Bayesian techniques and how to get started with Plotly.NET and FSharp.Stats."/>
+    <meta name="twitter:image" content="https://fslab.org/blog/images/dbscan.png"/>
+    <script src="https://fslab.org/blog/js/navbar.js"></script>
+    <script src="https://fslab.org/blog/js/prism.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-timeline@3.0.5/dist/css/bulma-timeline.min.css"/>
+    <script>
+      MathJax = {tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}}
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-svg.js"></script>
+    <link rel="stylesheet" href="https://fslab.org/blog/style/notebook.css"/>
+    <link rel="stylesheet" href="https://fslab.org/blog/style/custom.css"/>
+  </head>
+  <body>
+    <div class="columns is-fullheight m-0">
+      <div class="column is-2 is-paddingless box m-0">
+        <aside class="menu p-4" id="graph-menu">
+          <div class="content">
+            <h3 class="title is-capitalized is-inline-block is-emphasized-darkmagenta mb-4">
+              Table of contents
+            </h3>
+            <ul>
+              <li>
+                <a href="#Introduction" class="is-aquamarine">
+                  Introduction
+                </a>
+              </li>
+              <li>
+                <a href="#Why-F%23" class="is-aquamarine">
+                  Why F%23
+                </a>
+              </li>
+              <li>
+                <a href="#Data-Science-at-Hack-and-Craft" class="is-aquamarine">
+                  Data Science at Hack and Craft
+                </a>
+              </li>
+              <li>
+                <a href="#Bayesian-thinking" class="is-aquamarine">
+                  Bayesian thinking
+                </a>
+              </li>
+              <li>
+                <a href="#A-Bayesian-approach-to-the-Monty-Hall-paradox" class="is-aquamarine">
+                  A Bayesian approach to the Monty Hall paradox
+                </a>
+              </li>
+              <li>
+                <a href="#First-application-of-Bayes-rule-in-F%23" class="is-aquamarine">
+                  First application of Bayes rule in F%23
+                </a>
+              </li>
+              <li>
+                <a href="#Wrap-up" class="is-aquamarine">
+                  Wrap up
+                </a>
+              </li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+      <div class="column is-10 is-paddingless pl-1 pr-6">
+        <nav class="navbar">
+          <div class="navbar-brand">
+            <a class="navbar-item" href="https://fslab.org">
+              <img src="https://fslab.org/blog/images/favicon.png" alt="Logo"/>
+            </a>
+            <a class="navbar-burger" data-target="navMenu" aria-label="menu" role="button" aria-expanded="false">
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+            </a>
+          </div>
+          <div id="navMenu" class="navbar-menu">
+            <div class="navbar-start">
+              <a class="navbar-item" href="https://fslab.org">
+                Home
+              </a>
+              <a class="navbar-item" href="https://fslab.org/packages.html">
+                Data science packages
+              </a>
+              <a class="navbar-item is-active-link-darkmagenta smooth-hover" href="https://fslab.org/blog/">
+                Blog
+              </a>
+              <a class="navbar-item" href="https://fslab.org/blog/graph-gallery.html">
+                Graph Gallery
+              </a>
+            </div>
+            <div class="navbar-end">
+              <a class="navbar-item is-magenta" href="https://twitter.com/fslaborg">
+                <span class="icon">
+                  <i class="fab fa-twitter"></i>
+                </span>
+              </a>
+              <a class="navbar-item is-magenta" href="https://github.com/fslaborg">
+                <span class="icon">
+                  <i class="fab fa-github"></i>
+                </span>
+              </a>
+            </div>
+          </div>
+        </nav>
+        <section class="hero is-small has-bg-darkmagenta">
+          <div class="hero-body">
+            <div class="container has-text-justified">
+              <div class="main-TextField">
+                <h1 class="title is-capitalized is-white is-inline-block is-emphasized-magenta mb-4">
+                  Bayesian F# Series - Introduction
+                </h1>
+                <div class="block">
+                  <h3 class="subtitle is-white is-block">
+                    Posted on 2023-9-29 by
+                    <a href="https://github.com/HarryMcCarney" class="is-aquamarine">
+                      Harry McCarney
+                    </a>
+                     in 
+                    <a href="https://fslab.org/blog/posts/categories/Datascience.html" class="is-aquamarine">
+                      Data Science
+                    </a>
+                  </h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <div class="content jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
+          
+
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h1 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">&#182;</a></h1><p>This is the first in a series of posts exploring how Bayesian Techniques can be implemented in F#. It will also provide simple examples of how to started using <a href="https://plotly.net/">Plotly.NET</a> and <a href="https://fslab.org/FSharp.Stats/">FSharp.stats</a>. The posts will closely follow Allen Downey's excellent book <a href="http://allendowney.github.io/ThinkBayes2/">Think Bayes</a>. Each post will cover one or two chapters from his book summarising the key ideas and porting the examples to F#. The first few posts will hopefully be quite accessible and the complexity will increase as we progress though the book.</p>
+<p>The goal is that any one with some knowledge of F# will be able to implement the Bayesian techniques covered in the real world.</p>
+<h1 id="Why-F%23">Why F#<a class="anchor-link" href="#Why-F%23">&#182;</a></h1><p>F# is an excellent language for Data Science. The rich static type system guides your thinking while you structure solutions to problems. It avoids the 'guess/refresh' approach sometimes found with loosely typed languages. Moreover, the extra precision of types that won't let you multiply strings, concatenate a boolean, or add an int to a float ensures your code is correct.</p>
+<p>Lastly, functional immutable programming is simply a better conceptual fit for most data science work. Object oriented languages are primarily about managing state, not transforming data. F#’s functional first approach encourages us to write simple deterministic functions which are easy to understand and compose into larger and larger operations with no loss of readability.</p>
+<h1 id="Data-Science-at-Hack-and-Craft">Data Science at Hack and Craft<a class="anchor-link" href="#Data-Science-at-Hack-and-Craft">&#182;</a></h1><p>At Hack and Craft we build simulations for logistics and manufacturing companies. 
+Typically they are interested in measuring the effects of proposed chances to their processes. We model these initiatives and run simulations to produce synthetic data. This data is then analysed to measure impact of the proposed changes.</p>
+<p>We find Bayesian approaches very applicable to this work and have gradually moved away from a more traditional 'frequentist' approach.</p>
+<h1 id="Bayesian-thinking">Bayesian thinking<a class="anchor-link" href="#Bayesian-thinking">&#182;</a></h1><p>Frequentist techniques use ratios between the frequencies of possible cases of an observed sequence of data to derive their probability.</p>
+<p>So the probability of a coin landing on heads is established by looking at a sequence of flips. Such as T, H, T, T, T, T, H, T, T, H, H, T. In this sequence there are 4 Heads and 8 Tails. SO the probability of Heads is 4/12 or 0.33. This conclusion feels wrong as we know that coins are normally evenly weighted and our conclusion that this is an uneven coin is based on a short sequence of data.</p>
+<p>In the real world H&amp;C's clients often have partial and noisy data. And they nearly alway have some preexisting beliefs which should guide our analysis.</p>
+<p>This is where Bayesian techniques can help. Instead of trying to calculate the probability of heads from the data, the Bayesian asks, given this data what the probability that this is a 50/50 coin. They can also ask what the probability that this is 33$ coin or a 66% coin.</p>
+<p>These three coins represent three different hypotheses which are equally likely before we see the sequence of flips but not equally likely afterwards. Given that only 4/12 flips return heads we can infer that its now more likely that we have 33% coins than a 66% coin.</p>
+<p>In this way our probability of having each coin can be updated using the observed data.</p>
+<p>The formula for calculating this is known as Bayes Theorem. Its a complex theorem but the core idea is quite intuitive. Data allows us to update the probabilities of our competing beliefs. These beliefs are held with varying levels of certainty before we make observations and afterwards we change those convictions. This series of article will explore a variety of increasingly and sometimes complex but always practical applications of this approach.</p>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h1 id="A-Bayesian-approach-to-the-Monty-Hall-paradox">A Bayesian approach to the Monty Hall paradox<a class="anchor-link" href="#A-Bayesian-approach-to-the-Monty-Hall-paradox">&#182;</a></h1><p>The Monty Hall Paradox is a well known probability puzzle which many people find intuitively challenging. It has divided opinion even among experts.  Bayesian thinking makes this puzzle much more tractable than traditional frequentist so its a an excellent place to start.</p>
+<p>The puzzle is as follows: Imagine a game show. The host is called Monty. There are three doors. Behind one of the doors is a car which the contestant is trying to win. A contestant is asked to to choose a door. Then Monty opens one of the other two doors which doesn't have the car behind it. This leaves two doors left and the car is behind one of them.  Monty then asks the contestant if they would like to stick with their original choice or switch to the other door. Most people will assume there is a 50/50 chance for both doors so there is nothing to be gain from switching. However, switching doors is a the better choice and raises the odds of winning to 2/3</p>
+<p>Its hard to explain this with frequentist theory but a Bayesisn phrasing of the puzzle makes it intuitively clear that the contestant should switch.</p>
+<p>But first for anyone skeptical about why the contestant should switch, which I was, heres empirical proof.  The code below simulates the game 10k times. 5k with a switch strategy and 5k with a non switching strategy. THe graph shows the switcher wins almost exactly 66.6% of the time, while the non-switcher's odds remain on 33.3%. Later we will show how we can derive the same results analytically using Bayes rule.</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-F#"><pre><span></span><span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Plotly.NET.Interactive, 4.0.0"</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div><div></div><div></div><div><strong>Installed Packages</strong><ul><li><span>Plotly.NET.Interactive, 4.0.0</span></li></ul></div></div>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
+<pre>Loading extensions from `C:\Users\harry\.nuget\packages\plotly.net.interactive\4.0.0\interactive-extensions\dotnet\Plotly.NET.Interactive.dll`</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">System</span>
+<span class="k">open</span><span class="w"> </span><span class="nn">Plotly.NET</span>
+
+<span class="c1">//Helpers</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">rnd</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">until</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Random</span><span class="bp">()</span><span class="o">.</span><span class="n">Next</span><span class="o">(</span><span class="n">from</span><span class="o">,</span><span class="w"> </span><span class="n">until</span><span class="o">)</span>
+
+<span class="k">let</span><span class="w"> </span><span class="nv">rec</span><span class="w"> </span><span class="n">rndExclude</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">until</span><span class="w"> </span><span class="o">(</span><span class="n">excl</span><span class="o">:</span><span class="w"> </span><span class="n">int</span><span class="w"> </span><span class="kt">list</span><span class="o">)</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rnd</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">until</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">excl</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">List</span><span class="p">.</span><span class="n">contains</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="n">rndExclude</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">until</span><span class="w"> </span><span class="n">excl</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">        </span><span class="n">r</span>
+
+<span class="c1">//Domain</span>
+<span class="k">type</span><span class="w"> </span><span class="nc">Player</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="n">Switcher</span>
+<span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="n">NonSwitcher</span>
+
+<span class="k">type</span><span class="w"> </span><span class="nc">Door</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="n">Door1</span>
+<span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="n">Door2</span>
+<span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="n">Door3</span>
+
+<span class="k">type</span><span class="w"> </span><span class="nc">Game</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="o">{</span><span class="w"> </span><span class="n">Player</span><span class="o">:</span><span class="w"> </span><span class="n">Player</span>
+<span class="w">      </span><span class="n">CarLocation</span><span class="o">:</span><span class="w"> </span><span class="n">Door</span>
+<span class="w">      </span><span class="n">PlayersFirstChoice</span><span class="o">:</span><span class="w"> </span><span class="n">Door</span><span class="w"> </span><span class="n">option</span>
+<span class="w">      </span><span class="n">MontyRevealed</span><span class="o">:</span><span class="w"> </span><span class="n">Door</span><span class="w"> </span><span class="n">option</span>
+<span class="w">      </span><span class="n">PlayersFinalChoice</span><span class="o">:</span><span class="w"> </span><span class="n">Door</span><span class="w"> </span><span class="n">option</span>
+<span class="w">      </span><span class="n">Winner</span><span class="o">:</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">option</span><span class="w"> </span><span class="o">}</span>
+
+<span class="c1">//Actions</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">getDoorNumber</span><span class="w"> </span><span class="n">door</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="k">match</span><span class="w"> </span><span class="n">door</span><span class="w"> </span><span class="k">with</span>
+<span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="n">Door1</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="n">Door2</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="n">Door3</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mi">2</span>
+
+<span class="k">let</span><span class="w"> </span><span class="nv">createGame</span><span class="w"> </span><span class="n">player</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Game</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rnd</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">3</span>
+
+<span class="w">    </span><span class="o">{</span><span class="w"> </span><span class="n">Player</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">player</span>
+<span class="w">      </span><span class="n">CarLocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">([</span><span class="w"> </span><span class="n">Door1</span><span class="o">;</span><span class="w"> </span><span class="n">Door2</span><span class="o">;</span><span class="w"> </span><span class="n">Door3</span><span class="w"> </span><span class="o">][</span><span class="n">r</span><span class="o">])</span>
+<span class="w">      </span><span class="n">PlayersFirstChoice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">None</span>
+<span class="w">      </span><span class="n">MontyRevealed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">None</span>
+<span class="w">      </span><span class="n">PlayersFinalChoice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">None</span>
+<span class="w">      </span><span class="n">Winner</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">None</span><span class="w"> </span><span class="o">}</span>
+
+<span class="k">let</span><span class="w"> </span><span class="nv">makeFirstChoice</span><span class="w"> </span><span class="o">(</span><span class="n">game</span><span class="o">:</span><span class="w"> </span><span class="n">Game</span><span class="o">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Game</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rnd</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">3</span>
+
+<span class="w">    </span><span class="o">{</span><span class="w"> </span><span class="n">game</span><span class="w"> </span><span class="k">with</span>
+<span class="w">        </span><span class="n">PlayersFirstChoice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Some</span><span class="o">([</span><span class="w"> </span><span class="n">Door1</span><span class="o">;</span><span class="w"> </span><span class="n">Door2</span><span class="o">;</span><span class="w"> </span><span class="n">Door3</span><span class="w"> </span><span class="o">][</span><span class="n">r</span><span class="o">])</span><span class="w"> </span><span class="o">}</span>
+
+<span class="k">let</span><span class="w"> </span><span class="nv">montyRevealsDoor</span><span class="w"> </span><span class="o">(</span><span class="n">game</span><span class="o">:</span><span class="w"> </span><span class="n">Game</span><span class="o">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Game</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">chosenDoor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getDoorNumber</span><span class="w"> </span><span class="n">game</span><span class="o">.</span><span class="n">PlayersFirstChoice</span><span class="o">.</span><span class="n">Value</span>
+<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">carDoor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getDoorNumber</span><span class="w"> </span><span class="n">game</span><span class="o">.</span><span class="n">CarLocation</span>
+<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rndExclude</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="n">chosenDoor</span><span class="o">;</span><span class="w"> </span><span class="n">carDoor</span><span class="w"> </span><span class="o">]</span>
+
+<span class="w">    </span><span class="o">{</span><span class="w"> </span><span class="n">game</span><span class="w"> </span><span class="k">with</span>
+<span class="w">        </span><span class="n">MontyRevealed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Some</span><span class="o">([</span><span class="w"> </span><span class="n">Door1</span><span class="o">;</span><span class="w"> </span><span class="n">Door2</span><span class="o">;</span><span class="w"> </span><span class="n">Door3</span><span class="w"> </span><span class="o">][</span><span class="n">r</span><span class="o">])</span><span class="w"> </span><span class="o">}</span>
+
+<span class="k">let</span><span class="w"> </span><span class="nv">decideToSwitch</span><span class="w"> </span><span class="n">game</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Game</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="k">match</span><span class="w"> </span><span class="n">game</span><span class="o">.</span><span class="n">Player</span><span class="w"> </span><span class="k">with</span>
+<span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="n">Switcher</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">        </span><span class="k">let</span><span class="w"> </span><span class="nv">montyRevealed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getDoorNumber</span><span class="w"> </span><span class="n">game</span><span class="o">.</span><span class="n">MontyRevealed</span><span class="o">.</span><span class="n">Value</span>
+<span class="w">        </span><span class="k">let</span><span class="w"> </span><span class="nv">playersFirstChoice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getDoorNumber</span><span class="w"> </span><span class="n">game</span><span class="o">.</span><span class="n">PlayersFirstChoice</span><span class="o">.</span><span class="n">Value</span>
+<span class="w">        </span><span class="k">let</span><span class="w"> </span><span class="nv">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rndExclude</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="n">montyRevealed</span><span class="o">;</span><span class="w"> </span><span class="n">playersFirstChoice</span><span class="w"> </span><span class="o">]</span>
+
+<span class="w">        </span><span class="o">{</span><span class="w"> </span><span class="n">game</span><span class="w"> </span><span class="k">with</span>
+<span class="w">            </span><span class="n">PlayersFinalChoice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Some</span><span class="o">([</span><span class="w"> </span><span class="n">Door1</span><span class="o">;</span><span class="w"> </span><span class="n">Door2</span><span class="o">;</span><span class="w"> </span><span class="n">Door3</span><span class="w"> </span><span class="o">][</span><span class="n">r</span><span class="o">])</span><span class="w"> </span><span class="o">}</span>
+<span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="n">NonSwitcher</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">        </span><span class="o">{</span><span class="w"> </span><span class="n">game</span><span class="w"> </span><span class="k">with</span>
+<span class="w">            </span><span class="n">PlayersFinalChoice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">game</span><span class="o">.</span><span class="n">PlayersFirstChoice</span><span class="w"> </span><span class="o">}</span>
+
+
+<span class="k">let</span><span class="w"> </span><span class="nv">isWinner</span><span class="w"> </span><span class="o">(</span><span class="n">game</span><span class="o">:</span><span class="w"> </span><span class="n">Game</span><span class="o">)</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="o">{</span><span class="w"> </span><span class="n">game</span><span class="w"> </span><span class="k">with</span>
+<span class="w">        </span><span class="n">Winner</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Some</span><span class="o">(</span><span class="n">game</span><span class="o">.</span><span class="n">CarLocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">game</span><span class="o">.</span><span class="n">PlayersFinalChoice</span><span class="o">.</span><span class="n">Value</span><span class="o">)</span><span class="w"> </span><span class="o">}</span>
+
+<span class="k">let</span><span class="w"> </span><span class="nv">play</span><span class="w"> </span><span class="n">player</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="n">createGame</span><span class="w"> </span><span class="n">player</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">makeFirstChoice</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">montyRevealsDoor</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">decideToSwitch</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">isWinner</span>
+
+<span class="k">let</span><span class="w"> </span><span class="nv">games</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10000</span>
+
+<span class="k">let</span><span class="w"> </span><span class="nv">results</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="o">[</span><span class="w"> </span><span class="mi">0</span><span class="o">..</span><span class="n">games</span><span class="w"> </span><span class="o">]</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">List</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="o">(</span><span class="n">i</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="o">)</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="n">Switcher</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="n">NonSwitcher</span><span class="o">)</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">List</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="n">play</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">List</span><span class="p">.</span><span class="n">filter</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">g</span><span class="o">.</span><span class="n">Winner</span><span class="o">.</span><span class="n">Value</span><span class="o">)</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">List</span><span class="p">.</span><span class="n">countBy</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">(</span><span class="n">g</span><span class="o">.</span><span class="n">Player</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Switcher</span><span class="o">))</span>
+
+<span class="k">let</span><span class="w"> </span><span class="nv">switchers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">List</span><span class="p">.</span><span class="n">find</span><span class="w"> </span><span class="n">fst</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">snd</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">nonSwitchers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">List</span><span class="p">.</span><span class="n">find</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="o">(</span><span class="n">s</span><span class="o">,</span><span class="w"> </span><span class="n">w</span><span class="o">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="o">)</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">snd</span>
+
+<span class="nn">Chart</span><span class="p">.</span><span class="n">Column</span><span class="o">(</span>
+<span class="w">    </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">switchers</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">(</span><span class="n">games</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="o">);</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">nonSwitchers</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">(</span><span class="n">games</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="o">)</span><span class="w"> </span><span class="o">],</span>
+<span class="w">    </span><span class="n">Keys</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s">"Switchers"</span><span class="o">;</span><span class="w"> </span><span class="s">"Non Switchers"</span><span class="w"> </span><span class="o">]</span>
+<span class="o">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div><div id="cb52aca2-b2bf-4d9d-86ea-8a76f749ba94"><!-- Plotly chart will be drawn inside this DIV --></div><script type="text/javascript">
+var renderPlotly_cb52aca2b2bf4d9d86ea8a76f749ba94 = function() {
+    var fsharpPlotlyRequire = requirejs.config({context:'fsharp-plotly',paths:{plotly:'https://cdn.plot.ly/plotly-2.18.1.min'}}) || require;
+    fsharpPlotlyRequire(['plotly'], function(Plotly) {
+        var data = [{"type":"bar","x":["Switchers","Non Switchers"],"y":[0.6676,0.331],"orientation":"v","marker":{"pattern":{}}}];
+        var layout = {"width":600,"height":600,"template":{"layout":{"title":{"x":0.05},"font":{"color":"rgba(42, 63, 95, 1.0)"},"paper_bgcolor":"rgba(255, 255, 255, 1.0)","plot_bgcolor":"rgba(229, 236, 246, 1.0)","autotypenumbers":"strict","colorscale":{"diverging":[[0.0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1.0,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"hovermode":"closest","hoverlabel":{"align":"left"},"coloraxis":{"colorbar":{"outlinewidth":0.0,"ticks":""}},"geo":{"showland":true,"landcolor":"rgba(229, 236, 246, 1.0)","showlakes":true,"lakecolor":"rgba(255, 255, 255, 1.0)","subunitcolor":"rgba(255, 255, 255, 1.0)","bgcolor":"rgba(255, 255, 255, 1.0)"},"mapbox":{"style":"light"},"polar":{"bgcolor":"rgba(229, 236, 246, 1.0)","radialaxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","ticks":""},"angularaxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","ticks":""}},"scene":{"xaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","gridwidth":2.0,"zerolinecolor":"rgba(255, 255, 255, 1.0)","backgroundcolor":"rgba(229, 236, 246, 1.0)","showbackground":true},"yaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","gridwidth":2.0,"zerolinecolor":"rgba(255, 255, 255, 1.0)","backgroundcolor":"rgba(229, 236, 246, 1.0)","showbackground":true},"zaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","gridwidth":2.0,"zerolinecolor":"rgba(255, 255, 255, 1.0)","backgroundcolor":"rgba(229, 236, 246, 1.0)","showbackground":true}},"ternary":{"aaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)"},"baxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)"},"caxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)"},"bgcolor":"rgba(229, 236, 246, 1.0)"},"xaxis":{"title":{"standoff":15},"ticks":"","automargin":"height+width+left+right+top+bottom","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","zerolinecolor":"rgba(255, 255, 255, 1.0)","zerolinewidth":2.0},"yaxis":{"title":{"standoff":15},"ticks":"","automargin":"height+width+left+right+top+bottom","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","zerolinecolor":"rgba(255, 255, 255, 1.0)","zerolinewidth":2.0},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"shapedefaults":{"line":{"color":"rgba(42, 63, 95, 1.0)"}},"colorway":["rgba(99, 110, 250, 1.0)","rgba(239, 85, 59, 1.0)","rgba(0, 204, 150, 1.0)","rgba(171, 99, 250, 1.0)","rgba(255, 161, 90, 1.0)","rgba(25, 211, 243, 1.0)","rgba(255, 102, 146, 1.0)","rgba(182, 232, 128, 1.0)","rgba(255, 151, 255, 1.0)","rgba(254, 203, 82, 1.0)"]},"data":{"bar":[{"marker":{"line":{"color":"rgba(229, 236, 246, 1.0)","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"error_x":{"color":"rgba(42, 63, 95, 1.0)"},"error_y":{"color":"rgba(42, 63, 95, 1.0)"}}],"barpolar":[{"marker":{"line":{"color":"rgba(229, 236, 246, 1.0)","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}}}],"carpet":[{"aaxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","endlinecolor":"rgba(42, 63, 95, 1.0)","minorgridcolor":"rgba(255, 255, 255, 1.0)","startlinecolor":"rgba(42, 63, 95, 1.0)"},"baxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","endlinecolor":"rgba(42, 63, 95, 1.0)","minorgridcolor":"rgba(255, 255, 255, 1.0)","startlinecolor":"rgba(42, 63, 95, 1.0)"}}],"choropleth":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contour":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"colorbar":{"outlinewidth":0.0,"ticks":""}}],"heatmap":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}}}],"histogram2d":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"colorbar":{"outlinewidth":0.0,"ticks":""}}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"pie":[{"automargin":true}],"scatter":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatter3d":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}},"line":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"surface":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"table":[{"cells":{"fill":{"color":"rgba(235, 240, 248, 1.0)"},"line":{"color":"rgba(255, 255, 255, 1.0)"}},"header":{"fill":{"color":"rgba(200, 212, 227, 1.0)"},"line":{"color":"rgba(255, 255, 255, 1.0)"}}}]}}};
+        var config = {"responsive":true};
+        Plotly.newPlot('cb52aca2-b2bf-4d9d-86ea-8a76f749ba94', data, layout, config);
+    });
+};
+if ((typeof(requirejs) !==  typeof(Function)) || (typeof(requirejs.config) !== typeof(Function))) {
+    var script = document.createElement("script");
+    script.setAttribute("src", "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js");
+    script.onload = function(){
+        renderPlotly_cb52aca2b2bf4d9d86ea8a76f749ba94();
+    };
+    document.getElementsByTagName("head")[0].appendChild(script);
+}
+else {
+    renderPlotly_cb52aca2b2bf4d9d86ea8a76f749ba94();
+}
+</script></div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>So how can we explain this using a Bayesian approach. As we saw with the coin example, we think of the car being behind each door as distinct  hypotheses. Hypothesis 1 is 'car is behind door 1', Hypothesis 2 is the 'car is behind door 2', Hypothesis 3 the 'car is behind door 3'. The probability of the car being behind each door at the start of the game is 0.33. And lets say we chose door 1 as our first choice.</p>
+<p>To summarise</p>
+<table>
+<thead><tr>
+<th>Hypothesis</th>
+<th>Probability</th>
+<th>First Choice</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>H1</td>
+<td>0.33</td>
+<td>X</td>
+</tr>
+<tr>
+<td>H2</td>
+<td>0.33</td>
+</tr>
+<tr>
+<td>H3</td>
+<td>0.33</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Monty has to open a door and he selects door 3. Now comes the key step in all applications of Bayes rule, we update the probabilities of the  competing Hypotheses based on the data. In this case the data is that Monty selected door 3. The likelihood that he would have selected door 3 is actually different for each hypothesis.</p>
+<p>For Hypothesis one, Monty wont open the door that we have chosen so he is left with a choice of doors 2 and 3. So, for H1, there is a 50/50 chance of him opening door 3. However, for H2 there is a 100% chance that Monty opens door 3. He wont open the door you have chosen, door 1, or the door that the car is behind, door 2 in this hypothesis, so he has to open door 3.  Lastly there is 0% chance of the car being behind door 3 as he opened this one and he wont open the door that the car is behind it.</p>
+<p>So, after Monty opens door three we have the following updated table.</p>
+<table>
+<thead><tr>
+<th>Hypothesis</th>
+<th>Probability</th>
+<th>First Choice</th>
+<th>Likelihood of opening door 3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>H1</td>
+<td>0.33</td>
+<td>X</td>
+<td>0.5</td>
+</tr>
+<tr>
+<td>H2</td>
+<td>0.33</td>
+<td></td>
+<td>1</td>
+</tr>
+<tr>
+<td>H3</td>
+<td>0.33</td>
+<td></td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h1 id="First-application-of-Bayes-rule-in-F%23">First application of Bayes rule in F#<a class="anchor-link" href="#First-application-of-Bayes-rule-in-F%23">&#182;</a></h1><p>Bayes rule tells us to simply multiply the initial probability known as the 'Prior' by the likelihood of the hypothesis given the new data. This gives a new probability known as the 'unormalised Posterior'. 
+We then normalise the Posteriors to give their relative chance.
+A rough F# implementation would be look as follows.</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">System</span>
+
+<span class="k">type</span><span class="w"> </span><span class="nc">Prior</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="o">{</span><span class="w"> </span><span class="n">Hypothesis</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span>
+<span class="w">      </span><span class="n">Prior</span><span class="o">:</span><span class="w"> </span><span class="kt">float</span>
+<span class="w">      </span><span class="n">Likelihood</span><span class="o">:</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">}</span>
+
+<span class="k">type</span><span class="w"> </span><span class="nc">Posterior</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="o">{</span><span class="w"> </span><span class="n">Hypothesis</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span>
+<span class="w">      </span><span class="n">Prior</span><span class="o">:</span><span class="w"> </span><span class="kt">float</span>
+<span class="w">      </span><span class="n">Likelihood</span><span class="o">:</span><span class="w"> </span><span class="kt">float</span>
+<span class="w">      </span><span class="n">Posterior</span><span class="o">:</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="o">}</span>
+
+<span class="k">let</span><span class="w"> </span><span class="nv">calcPosteriors</span><span class="w"> </span><span class="o">(</span><span class="n">priors</span><span class="o">:</span><span class="w"> </span><span class="n">Prior</span><span class="w"> </span><span class="kt">list</span><span class="o">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Posterior</span><span class="w"> </span><span class="kt">list</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">totalProbability</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">priors</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">List</span><span class="p">.</span><span class="n">sumBy</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">r</span><span class="o">.</span><span class="n">Prior</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">r</span><span class="o">.</span><span class="n">Likelihood</span><span class="o">)</span>
+
+<span class="w">    </span><span class="n">priors</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">List</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">        </span><span class="o">{</span><span class="w"> </span><span class="n">Hypothesis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">h</span><span class="o">.</span><span class="n">Hypothesis</span>
+<span class="w">          </span><span class="n">Prior</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">h</span><span class="o">.</span><span class="n">Prior</span>
+<span class="w">          </span><span class="n">Likelihood</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">h</span><span class="o">.</span><span class="n">Likelihood</span>
+<span class="w">          </span><span class="n">Posterior</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">((</span><span class="n">h</span><span class="o">.</span><span class="n">Prior</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">h</span><span class="o">.</span><span class="n">Likelihood</span><span class="o">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">totalProbability</span><span class="o">)</span><span class="w"> </span><span class="o">})</span>
+
+<span class="k">let</span><span class="w"> </span><span class="nv">montyPriors</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="o">[</span><span class="w"> </span>
+<span class="w">      </span><span class="o">{</span><span class="w"> </span><span class="n">Hypothesis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"H1"</span>
+<span class="w">        </span><span class="n">Prior</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">3333333333</span>
+<span class="w">        </span><span class="n">Likelihood</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">5</span><span class="w"> </span>
+<span class="w">      </span><span class="o">}</span>
+<span class="w">      </span><span class="o">{</span><span class="w"> </span><span class="n">Hypothesis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"H2"</span>
+<span class="w">        </span><span class="n">Prior</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">3333333333</span>
+<span class="w">        </span><span class="n">Likelihood</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">}</span>
+<span class="w">      </span><span class="o">{</span><span class="w"> </span><span class="n">Hypothesis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"H3"</span>
+<span class="w">        </span><span class="n">Prior</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">3333333333</span>
+<span class="w">        </span><span class="n">Likelihood</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span>
+<span class="w">      </span><span class="o">}</span><span class="w"> </span><span class="o">]</span>
+
+<span class="k">let</span><span class="w"> </span><span class="nv">montyPosteriors</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">montyPriors</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">calcPosteriors</span>
+<span class="w">  </span>
+<span class="k">let</span><span class="w"> </span><span class="nv">rds</span><span class="w"> </span><span class="o">(</span><span class="n">n</span><span class="o">:</span><span class="w"> </span><span class="kt">float</span><span class="o">)=</span>
+<span class="w">  </span><span class="nn">Math</span><span class="p">.</span><span class="n">Round</span><span class="w"> </span><span class="o">(</span><span class="n">n</span><span class="o">,</span><span class="mi">3</span><span class="o">)</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="kt">string</span>
+
+<span class="nn">Chart</span><span class="p">.</span><span class="n">Table</span><span class="o">(</span>
+<span class="w">      </span><span class="n">headerValues</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s">"&lt;b&gt;Hypothesis&lt;/b&gt;"</span><span class="o">;</span><span class="w"> </span><span class="s">"&lt;b&gt;Probability&lt;/b&gt;"</span><span class="o">;</span><span class="s">"&lt;b&gt;Likelihood of opening door 3&lt;/b&gt;"</span><span class="o">;</span><span class="w"> </span><span class="s">"&lt;b&gt;Posterior&lt;/b&gt;"</span><span class="o">],</span>
+<span class="w">      </span><span class="n">cellsValues</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="n">montyPosteriors</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">List</span><span class="p">.</span><span class="n">map</span><span class="o">(</span><span class="w"> </span><span class="k">fun</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">[</span><span class="n">p</span><span class="o">.</span><span class="n">Hypothesis</span><span class="o">;</span><span class="w"> </span><span class="n">rds</span><span class="w"> </span><span class="n">p</span><span class="o">.</span><span class="n">Prior</span><span class="o">;</span><span class="w"> </span><span class="n">rds</span><span class="w"> </span><span class="n">p</span><span class="o">.</span><span class="n">Likelihood</span><span class="o">;</span><span class="w"> </span><span class="n">rds</span><span class="w"> </span><span class="n">p</span><span class="o">.</span><span class="n">Posterior</span><span class="o">]))</span>
+<span class="w">  </span><span class="o">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div><div id="d470cf77-be93-4800-ac4d-2fa4661039bc"><!-- Plotly chart will be drawn inside this DIV --></div><script type="text/javascript">
+var renderPlotly_d470cf77be934800ac4d2fa4661039bc = function() {
+    var fsharpPlotlyRequire = requirejs.config({context:'fsharp-plotly',paths:{plotly:'https://cdn.plot.ly/plotly-2.18.1.min'}}) || require;
+    fsharpPlotlyRequire(['plotly'], function(Plotly) {
+        var data = [{"type":"table","cells":{"fill":{},"line":{},"values":[["H1","H2","H3"],["0.333","0.333","0.333"],["0.5","1","0"],["0.333","0.667","0"]]},"header":{"fill":{},"line":{},"values":["<b>Hypothesis</b>","<b>Probability</b>","<b>Likelihood of opening door 3</b>","<b>Posterior</b>"]}}];
+        var layout = {"width":600,"height":600,"template":{"layout":{"title":{"x":0.05},"font":{"color":"rgba(42, 63, 95, 1.0)"},"paper_bgcolor":"rgba(255, 255, 255, 1.0)","plot_bgcolor":"rgba(229, 236, 246, 1.0)","autotypenumbers":"strict","colorscale":{"diverging":[[0.0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1.0,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"hovermode":"closest","hoverlabel":{"align":"left"},"coloraxis":{"colorbar":{"outlinewidth":0.0,"ticks":""}},"geo":{"showland":true,"landcolor":"rgba(229, 236, 246, 1.0)","showlakes":true,"lakecolor":"rgba(255, 255, 255, 1.0)","subunitcolor":"rgba(255, 255, 255, 1.0)","bgcolor":"rgba(255, 255, 255, 1.0)"},"mapbox":{"style":"light"},"polar":{"bgcolor":"rgba(229, 236, 246, 1.0)","radialaxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","ticks":""},"angularaxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","ticks":""}},"scene":{"xaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","gridwidth":2.0,"zerolinecolor":"rgba(255, 255, 255, 1.0)","backgroundcolor":"rgba(229, 236, 246, 1.0)","showbackground":true},"yaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","gridwidth":2.0,"zerolinecolor":"rgba(255, 255, 255, 1.0)","backgroundcolor":"rgba(229, 236, 246, 1.0)","showbackground":true},"zaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","gridwidth":2.0,"zerolinecolor":"rgba(255, 255, 255, 1.0)","backgroundcolor":"rgba(229, 236, 246, 1.0)","showbackground":true}},"ternary":{"aaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)"},"baxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)"},"caxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)"},"bgcolor":"rgba(229, 236, 246, 1.0)"},"xaxis":{"title":{"standoff":15},"ticks":"","automargin":"height+width+left+right+top+bottom","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","zerolinecolor":"rgba(255, 255, 255, 1.0)","zerolinewidth":2.0},"yaxis":{"title":{"standoff":15},"ticks":"","automargin":"height+width+left+right+top+bottom","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","zerolinecolor":"rgba(255, 255, 255, 1.0)","zerolinewidth":2.0},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"shapedefaults":{"line":{"color":"rgba(42, 63, 95, 1.0)"}},"colorway":["rgba(99, 110, 250, 1.0)","rgba(239, 85, 59, 1.0)","rgba(0, 204, 150, 1.0)","rgba(171, 99, 250, 1.0)","rgba(255, 161, 90, 1.0)","rgba(25, 211, 243, 1.0)","rgba(255, 102, 146, 1.0)","rgba(182, 232, 128, 1.0)","rgba(255, 151, 255, 1.0)","rgba(254, 203, 82, 1.0)"]},"data":{"bar":[{"marker":{"line":{"color":"rgba(229, 236, 246, 1.0)","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"error_x":{"color":"rgba(42, 63, 95, 1.0)"},"error_y":{"color":"rgba(42, 63, 95, 1.0)"}}],"barpolar":[{"marker":{"line":{"color":"rgba(229, 236, 246, 1.0)","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}}}],"carpet":[{"aaxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","endlinecolor":"rgba(42, 63, 95, 1.0)","minorgridcolor":"rgba(255, 255, 255, 1.0)","startlinecolor":"rgba(42, 63, 95, 1.0)"},"baxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","endlinecolor":"rgba(42, 63, 95, 1.0)","minorgridcolor":"rgba(255, 255, 255, 1.0)","startlinecolor":"rgba(42, 63, 95, 1.0)"}}],"choropleth":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contour":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"colorbar":{"outlinewidth":0.0,"ticks":""}}],"heatmap":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}}}],"histogram2d":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"colorbar":{"outlinewidth":0.0,"ticks":""}}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"pie":[{"automargin":true}],"scatter":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatter3d":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}},"line":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"surface":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"table":[{"cells":{"fill":{"color":"rgba(235, 240, 248, 1.0)"},"line":{"color":"rgba(255, 255, 255, 1.0)"}},"header":{"fill":{"color":"rgba(200, 212, 227, 1.0)"},"line":{"color":"rgba(255, 255, 255, 1.0)"}}}]}}};
+        var config = {"responsive":true};
+        Plotly.newPlot('d470cf77-be93-4800-ac4d-2fa4661039bc', data, layout, config);
+    });
+};
+if ((typeof(requirejs) !==  typeof(Function)) || (typeof(requirejs.config) !== typeof(Function))) {
+    var script = document.createElement("script");
+    script.setAttribute("src", "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js");
+    script.onload = function(){
+        renderPlotly_d470cf77be934800ac4d2fa4661039bc();
+    };
+    document.getElementsByTagName("head")[0].appendChild(script);
+}
+else {
+    renderPlotly_d470cf77be934800ac4d2fa4661039bc();
+}
+</script></div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>As you can see the posterior result matches the results from empirical simulation.</p>
+<h1 id="Wrap-up">Wrap up<a class="anchor-link" href="#Wrap-up">&#182;</a></h1><p>Bayesian thinking gives us intuitive and powerful ways to approach probability problems. This article has followed the first couple of chapters of the <a href="http://allendowney.github.io/ThinkBayes2/">Think Bayes</a> book which is an excellent resource well worth reading in full.</p>
+<p>The next post in this series will look at how Bayes rule can be applied to more complex examples. We will also show how the <a href="https://github.com/fslaborg/FSharp.Stats/">fsharp.stats</a> library can help compose and solve these problems with remarkable efficiency.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+        </div>
+        <footer class="footer has-bg-darkmagenta">
+          <div class="container">
+            <div class="columns">
+              <div class="column is-4 m-4">
+                <div class="block">
+                  <h3 class="subtitle is-white">
+                    FsLab - the project incubation space for data science in F#
+                  </h3>
+                </div>
+                <div class="block">
+                  <p>
+                    FsLab is only possible due to the joined forces of F# open source contributors.
+                  </p>
+                </div>
+                <div class="block">
+                  <p>
+                    This website is created and maintained by individual FsLab open source contributors.
+                  </p>
+                </div>
+                <div class="block">
+                  <div class="icon-text is-white">
+                    <span class="icon">
+                      <i class="fas fa-code-branch"></i>
+                    </span>
+                    <span>
+                      <a class="footer-link" href="https://github.com/fslaborg/fslaborg.github.io">
+                        website source code
+                      </a>
+                    </span>
+                  </div>
+                  <div class="icon-text is-white">
+                    <span class="icon">
+                      <i class="far fa-handshake"></i>
+                    </span>
+                    <span>
+                      <a class="footer-link" href="https://github.com/orgs/fslaborg/people">
+                        fslab contributors
+                      </a>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="column is-4 m-4">
+                <div class="block">
+                  <h3 class="subtitle is-white">
+                    More
+                  </h3>
+                </div>
+                <div class="block">
+                  <div class="block">
+                    <div class="icon-text is-white">
+                      <span class="icon">
+                        <i class="fab fa-github"></i>
+                      </span>
+                      <span>
+                        <a class="footer-link" href="https://github.com/fslaborg?type=source">
+                          the fslab organisation on github
+                        </a>
+                      </span>
+                    </div>
+                    <div class="icon-text is-white">
+                      <span class="icon">
+                        <i class="fab fa-twitter"></i>
+                      </span>
+                      <span>
+                        <a class="footer-link" href="https://twitter.com/fslaborg">
+                          fslab on twitter
+                        </a>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="block">
+                    <div class="icon-text is-white">
+                      <span class="icon">
+                        <i class="fas fa-cubes"></i>
+                      </span>
+                      <span>
+                        <a class="footer-link" href="https://fslab.org/packages.html">
+                          endorsed packages
+                        </a>
+                      </span>
+                    </div>
+                    <div class="icon-text is-white">
+                      <span class="icon">
+                        <i class="fas fa-plus"></i>
+                      </span>
+                      <span>
+                        <a class="footer-link" href="https://github.com/fslaborg/fslaborg.github.io#add-a-project-to-the-packages-site">
+                          add a package to the list
+                        </a>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="block">
+                    <div class="icon-text is-white">
+                      <span class="icon">
+                        <i class="fas fa-graduation-cap"></i>
+                      </span>
+                      <span>
+                        <a class="footer-link" href="https://fslab.org/tutorials.html">
+                          tutorials and learning resources
+                        </a>
+                      </span>
+                    </div>
+                    <div class="icon-text is-white">
+                      <span class="icon">
+                        <i class="fas fa-plus"></i>
+                      </span>
+                      <span>
+                        <a class="footer-link" href="https://github.com/fslaborg/fslaborg.github.io#add-a-tutorial-guide-or-blogpost">
+                          add tutorial content
+                        </a>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="column is-4 m-4">
+                <div class="block">
+                  <h3 class="subtitle is-white">
+                    External resources
+                  </h3>
+                </div>
+                <div class="block">
+                  <ul>
+                    <li>
+                      <a href="https://github.com/fsprojects?type=source" class="footer-link">
+                        fsprojects - general F# project incubation space
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://fsharp.org/" class="footer-link">
+                        fsharp.org
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>
