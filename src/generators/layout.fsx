@@ -126,18 +126,15 @@ let postLayout (ctx : SiteContents) (metadata: SiteMetadata) (post_category:stri
 
                                             match post_updated_at with 
                                             | Some update_date ->
-                                                !! $"Last updated on {update_date.Year}-{update_date.Month}-{update_date.Day} "
+                                                h4 [Class "substitle is-white is-block"] [
+                                                    !! $"Last updated on {update_date.Year}-{update_date.Month}-{update_date.Day} "
+                                                    match post_updated_by, post_updated_by_link with 
+                                                    | (Some updated_author), (Some updated_author_link) -> 
+                                                        !! $"by "
+                                                        a [ Href updated_author_link; Class "is-aquamarine" ] [ !!updated_author ]
+                                                    | _, _ -> ()
+                                                ]
                                             | None -> ()
-
-                                            //     match post_updated_by with
-                                            //     | Some update_author ->
-                                            //         !! "by "
-
-                                            //         match post_updated_by_link with
-                                            //         | Some update_author_link ->
-                                            //             a [ Href update_author_link; Class "is-aquamarine" ] [ !!update_author_link ]
-                                            //         | None -> !! $"{update_author}"
-                                            //     | None -> () 
                                         ]
                                     ]
                                     yield! heroCnt
@@ -196,10 +193,9 @@ let graphGalleryPostLayout (ctx: SiteContents) (post_config: Graphgallerypostloa
         heroCnt
         bodyCnt
 
-let postPreview (preview_image_url: string option) (post_summary: string option) (post_url:string) (post_category_url:string) (post_category:string) (post_title:string) (post_date: System.DateTime) (post_author: string) (post_author_link: string) (post_updated_at: System.DateTime option) (post_updated_by: string option) (post_updated_by_link: string option) (tags:(string*string) list) =
+let postPreview (preview_image_url: string option) (post_summary: string option) (post_url:string) (post_category_url:string) (post_category:string) (post_title:string) (post_date: System.DateTime) (post_author: string) (post_author_link: string) (post_updated_at: System.DateTime option) (tags:(string*string) list) =
     let has_image = Option.isSome preview_image_url
     let has_summary = Option.isSome post_summary
-    let has_update = Option.isSome post_updated_at
 
     div [Class "card pt-2"] [ 
         if has_image then 
@@ -227,18 +223,10 @@ let postPreview (preview_image_url: string option) (post_summary: string option)
             !! "in "
             a [Href post_category_url; Class "is-aquamarine"] [!! (post_category)]
 
-            if has_update then
-                !! $"Last updated on {post_updated_at.Value.Year}-{post_updated_at.Value.Month}-{post_updated_at.Value.Day}"
-
-            //     match post_updated_by with
-            //     | Some update_author ->
-            //         !! "by "
-
-            //         match post_updated_by_link with
-            //         | Some update_author_link ->
-            //             a [ Href update_author_link; Class "is-aquamarine" ] [ !!update_author_link ]
-            //         | None -> !! $"{update_author}"
-            //     | None -> () 
+            match post_updated_at with 
+            | Some updated_date -> 
+                div [Class "content"] [!! $"Updated on {updated_date.Year}-{updated_date.Month}-{updated_date.Day}"]
+            | None -> ()
         ]
     ]
 
@@ -255,8 +243,6 @@ let standardPostPreview (post: Postloader.NotebookPost) =
         post.post_config.author
         post.post_config.author_link
         post.post_config.last_updated_at
-        post.post_config.last_updated_by
-        post.post_config.last_updated_by_link
         []
 
 let graphGalleryPostPreview (post: GraphGalleryPost) =
@@ -271,8 +257,6 @@ let graphGalleryPostPreview (post: GraphGalleryPost) =
         post.post_config.author
         post.post_config.author_link
         post.post_config.last_updated_at
-        post.post_config.last_updated_by
-        post.post_config.last_updated_by_link
         (post.file_names |> Array.toList |> List.map (fun (lang, path) -> lang, Globals.prefixUrl $"graph-gallery/{path}"))
 
 let render (ctx : SiteContents) cnt =
