@@ -163,7 +163,7 @@ let standardPostLayout (ctx: SiteContents) (post_config: Postloader.PostConfig) 
         post_config.date
         post_config.author
         post_config.author_link
-        post_config.last_updated_at
+        post_config.last_updated_on
         post_config.last_updated_by 
         post_config.last_updated_by_link
         toc
@@ -185,7 +185,7 @@ let graphGalleryPostLayout (ctx: SiteContents) (post_config: Graphgallerypostloa
         post_config.date
         post_config.author
         post_config.author_link
-        post_config.last_updated_at
+        post_config.last_updated_on
         post_config.last_updated_by 
         post_config.last_updated_by_link
         toc
@@ -242,7 +242,7 @@ let standardPostPreview (post: Postloader.NotebookPost) =
         post.post_config.date
         post.post_config.author
         post.post_config.author_link
-        post.post_config.last_updated_at
+        post.post_config.last_updated_on
         []
 
 let graphGalleryPostPreview (post: GraphGalleryPost) =
@@ -256,7 +256,7 @@ let graphGalleryPostPreview (post: GraphGalleryPost) =
         post.post_config.date
         post.post_config.author
         post.post_config.author_link
-        post.post_config.last_updated_at
+        post.post_config.last_updated_on
         (post.file_names |> Array.toList |> List.map (fun (lang, path) -> lang, Globals.prefixUrl $"graph-gallery/{path}"))
 
 let render (ctx : SiteContents) cnt =

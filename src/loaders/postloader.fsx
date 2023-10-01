@@ -39,11 +39,11 @@ type PostConfig = {
     date: System.DateTime
     preview_image: string option
     summary: string option
-    last_updated_at: System.DateTime option
+    last_updated_on: System.DateTime option
     last_updated_by: string option
     last_updated_by_link: string option
 } with
-    static member create(title, author, author_link, category, date, ?preview_image, ?summary, ?last_updated_at, ?last_updated_by, ?last_updated_by_link) =
+    static member create(title, author, author_link, category, date, ?preview_image, ?summary, ?last_updated_on, ?last_updated_by, ?last_updated_by_link) =
         {
             title = title
             author = author
@@ -52,7 +52,7 @@ type PostConfig = {
             date = date
             preview_image = preview_image
             summary = summary
-            last_updated_at = last_updated_at
+            last_updated_on = last_updated_on
             last_updated_by = last_updated_by
             last_updated_by_link = last_updated_by_link
         }
@@ -88,7 +88,7 @@ type PostConfig = {
         let preview_image = m |> Map.tryFind "preview_image" 
         let summary = m |> Map.tryFind "summary" 
 
-        let last_updated_at = m.TryFind "last_updated_at" |> Option.map parseDateString
+        let last_updated_on = m.TryFind "last_updated_on" |> Option.map parseDateString
         let last_updated_by = m.TryFind "last_updated_by"
         let last_updated_by_link = m.TryFind "last_updated_by_link"
 
@@ -100,7 +100,7 @@ type PostConfig = {
             date = date,
             ?preview_image = preview_image,
             ?summary = summary,
-            ?last_updated_at = last_updated_at,
+            ?last_updated_on = last_updated_on,
             ?last_updated_by = last_updated_by,
             ?last_updated_by_link = last_updated_by_link
         )
