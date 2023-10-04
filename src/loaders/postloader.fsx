@@ -39,8 +39,11 @@ type PostConfig = {
     date: System.DateTime
     preview_image: string option
     summary: string option
+    last_updated_on: System.DateTime option
+    last_updated_by: string option
+    last_updated_by_link: string option
 } with
-    static member create(title, author, author_link, category, date, ?preview_image, ?summary) =
+    static member create(title, author, author_link, category, date, ?preview_image, ?summary, ?last_updated_on, ?last_updated_by, ?last_updated_by_link) =
         {
             title = title
             author = author
@@ -49,10 +52,18 @@ type PostConfig = {
             date = date
             preview_image = preview_image
             summary = summary
+            last_updated_on = last_updated_on
+            last_updated_by = last_updated_by
+            last_updated_by_link = last_updated_by_link
         }
     static member ofMap (source:string) (m:Map<string,string>) =
 
         let mandatoryFieldMissing (fieldName: string) (source:string) (o:string Option) = if o.IsNone then failwith $"missing field {fieldName} in config from {source}" else o.Value
+        let parseDateString(dateString: string) = 
+            try 
+                System.DateTime.ParseExact(dateString,"yyyy-MM-dd",System.Globalization.CultureInfo.InvariantCulture)
+            with _ ->
+                failwith $"wrong date format in config from {source}, make sure to use YYY-MM-DD"
 
         let title = 
             m 
@@ -72,14 +83,14 @@ type PostConfig = {
             with _ ->
                 failwith $"wrong post category format in config from {source}"
         let date = 
-            let tmp = m.TryFind "date" |> mandatoryFieldMissing "date" source
-            try 
-                System.DateTime.ParseExact(tmp,"yyyy-MM-dd",System.Globalization.CultureInfo.InvariantCulture)
-            with _ ->
-                failwith $"wrong date format in config from {source}, make sure to use YYY-MM-DD"
+            m.TryFind "date" |> mandatoryFieldMissing "date" source |> parseDateString
 
         let preview_image = m |> Map.tryFind "preview_image" 
         let summary = m |> Map.tryFind "summary" 
+
+        let last_updated_on = m.TryFind "last_updated_on" |> Option.map parseDateString
+        let last_updated_by = m.TryFind "last_updated_by"
+        let last_updated_by_link = m.TryFind "last_updated_by_link"
 
         PostConfig.create(
             title = title,
@@ -88,7 +99,10 @@ type PostConfig = {
             category = category,
             date = date,
             ?preview_image = preview_image,
-            ?summary = summary
+            ?summary = summary,
+            ?last_updated_on = last_updated_on,
+            ?last_updated_by = last_updated_by,
+            ?last_updated_by_link = last_updated_by_link
         )
 type NotebookPost = {
     file_name: string

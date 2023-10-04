@@ -76,3 +76,16 @@ To add a graph post:
     - `perview_image` is an optional image that will be shown on post previews. ideally a 2-by-1 or 3-by-1 image with a width of 1200px. It is recommended to add for SEO.
 
 - create a `<language>.ipynb` file that contains your graph post. This notebook will be parsed and rendered to a html site. Ideally, you provide both `fsharp.ipynb` and `csharp.ipynb`, but F#-only is okay as well. **do not forget to save the notebook with cell output**, as the notebook will not be executed on site generation.
+
+### update a post
+
+- Update an existing blog or graph gallery post in line with the instructions above.
+- Add metadata about the update to the `post_config.md` or `graph_post_config.md` according to this structure:
+    ```
+    last_updated_on: <YYYY-MM-DD>
+    last_updated_by: <your name>
+    last_updated_by_link: <a link>
+    ```
+    - `last_updated_on` is the date of the last update in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+    - `last_updated_by` is an optional name of the contributing author
+    - `last_updated_by_link` is a optional link that will be associated with the contributing author name. Provide both `last_updated_by` and `last_updated_by_link` to display contributing author information. You can leave them out, for example, if you are updating your own post.
