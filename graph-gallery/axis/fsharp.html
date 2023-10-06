@@ -1,0 +1,666 @@
+<html>
+  <head>
+    <meta charSet="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>
+      Advanced axis styling using Plotly.NET
+    </title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans"/>
+    <script defer="true" src="https://kit.fontawesome.com/0d3e0ea7a6.js" crossOrigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fslab/fslab-styles"/>
+    <meta name="description" content="In this post I will showcase an advanced example how multiple Plotly.NET plots can be visualized when Chart.Grid is unsufficient"/>
+    <meta name="tags" content="fslab, FsLab, data science, datascience, data visualization, dataviz, F#, C#, .NET, dotnet"/>
+    <meta name="og:title" content="Advanced axis styling using Plotly.NET"/>
+    <meta name="og:description" content="In this post I will showcase an advanced example how multiple Plotly.NET plots can be visualized when Chart.Grid is unsufficient"/>
+    <meta name="og:image" content="https://fslab.org/blog/images/axisStyling.png"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:site" content="@fslaborg"/>
+    <meta name="twitter:title" content="Advanced axis styling using Plotly.NET"/>
+    <meta name="twitter:description" content="In this post I will showcase an advanced example how multiple Plotly.NET plots can be visualized when Chart.Grid is unsufficient"/>
+    <meta name="twitter:image" content="https://fslab.org/blog/images/axisStyling.png"/>
+    <script src="https://fslab.org/blog/js/navbar.js"></script>
+    <script src="https://fslab.org/blog/js/prism.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-timeline@3.0.5/dist/css/bulma-timeline.min.css"/>
+    <script>
+      MathJax = {tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}}
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-svg.js"></script>
+    <link rel="stylesheet" href="https://fslab.org/blog/style/notebook.css"/>
+    <link rel="stylesheet" href="https://fslab.org/blog/style/custom.css"/>
+  </head>
+  <body>
+    <div class="columns is-fullheight m-0">
+      <div class="column is-2 is-paddingless box m-0">
+        <aside class="menu p-4" id="graph-menu">
+          <div class="content">
+            <h3 class="title is-capitalized is-inline-block is-emphasized-darkmagenta mb-4">
+              Table of contents
+            </h3>
+            <ul>
+              <li>
+                <a href="#Advanced-axis-styling-using-Plotly.NET" class="is-aquamarine">
+                  Advanced axis styling using Plotly.NET
+                </a>
+              </li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+      <div class="column is-10 is-paddingless pl-1 pr-6">
+        <nav class="navbar">
+          <div class="navbar-brand">
+            <a class="navbar-item" href="https://fslab.org">
+              <img src="https://fslab.org/blog/images/favicon.png" alt="Logo"/>
+            </a>
+            <a class="navbar-burger" data-target="navMenu" aria-label="menu" role="button" aria-expanded="false">
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+            </a>
+          </div>
+          <div id="navMenu" class="navbar-menu">
+            <div class="navbar-start">
+              <a class="navbar-item" href="https://fslab.org">
+                Home
+              </a>
+              <a class="navbar-item" href="https://fslab.org/packages.html">
+                Data science packages
+              </a>
+              <a class="navbar-item" href="https://fslab.org/blog/">
+                Blog
+              </a>
+              <a class="navbar-item is-active-link-darkmagenta smooth-hover" href="https://fslab.org/blog/graph-gallery.html">
+                Graph Gallery
+              </a>
+            </div>
+            <div class="navbar-end">
+              <a class="navbar-item is-magenta" href="https://twitter.com/fslaborg">
+                <span class="icon">
+                  <i class="fab fa-twitter"></i>
+                </span>
+              </a>
+              <a class="navbar-item is-magenta" href="https://github.com/fslaborg">
+                <span class="icon">
+                  <i class="fab fa-github"></i>
+                </span>
+              </a>
+            </div>
+          </div>
+        </nav>
+        <section class="hero is-small has-bg-darkmagenta">
+          <div class="hero-body">
+            <div class="container has-text-justified">
+              <div class="main-TextField">
+                <h1 class="title is-capitalized is-white is-inline-block is-emphasized-magenta mb-4">
+                  Advanced axis styling using Plotly.NET
+                </h1>
+                <div class="block">
+                  <h3 class="subtitle is-white is-block">
+                    Posted on 2023-10-6 by
+                    <a href="https://github.com/bvenn" class="is-aquamarine">
+                      Benedikt Venn
+                    </a>
+                     in 
+                    <a href="https://fslab.org/blog/graph-gallery/categories/Basic.html" class="is-aquamarine">
+                      Basic Graphs
+                    </a>
+                  </h3>
+                </div>
+                <div class="container">
+                  <h1 class="subtitle is-size-4 is-white">
+                    select language:
+                  </h1>
+                  <div class="tags">
+                    <a class="tag is-language is-active is-large" href="https://fslab.org/blog/graph-gallery/axis/fsharp.html">
+                      fsharp
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <div class="content jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
+          
+
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h1 id="Advanced-axis-styling-using-Plotly.NET">Advanced axis styling using Plotly.NET<a class="anchor-link" href="#Advanced-axis-styling-using-Plotly.NET">&#182;</a></h1><p>This post assumes you are already familiar using Plotly.NET. If you want to manually define the position of individual plots and have special needs for axis stylings, keep on reading.</p>
+<p>Note: There may be other ways to obtain the result seen below</p>
+<p>First let us define three simple charts and combine them to a chart grid</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-F#"><pre><span></span><span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Plotly.NET.Interactive, 4.2.1"</span>
+
+<span class="k">open</span><span class="w"> </span><span class="nn">Plotly.NET</span>
+<span class="k">open</span><span class="w"> </span><span class="nn">Plotly.NET.StyleParam</span>
+<span class="k">open</span><span class="w"> </span><span class="nn">Plotly.NET.LayoutObjects</span>
+
+<span class="k">let</span><span class="w"> </span><span class="nv">chartA</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Point</span><span class="o">(</span><span class="n">xy</span><span class="o">=[</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">])</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">chartB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Point</span><span class="o">(</span><span class="n">xy</span><span class="o">=[</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">])</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">chartC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Line</span><span class="o">(</span><span class="n">xy</span><span class="o">=[</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">;</span><span class="mi">2</span><span class="o">,</span><span class="mi">3</span><span class="o">])</span>
+
+<span class="o">[</span>
+<span class="w">    </span><span class="n">chartA</span>
+<span class="w">    </span><span class="n">chartB</span>
+<span class="w">    </span><span class="n">chartC</span>
+<span class="o">]</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Grid</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span><span class="mi">2</span><span class="o">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div><div></div><div></div><div><strong>Installed Packages</strong><ul><li><span>Plotly.NET.Interactive, 4.2.1</span></li></ul></div></div>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
+<pre>Loading extensions from `C:\Users\bvenn\.nuget\packages\plotly.net.interactive\4.2.1\interactive-extensions\dotnet\Plotly.NET.Interactive.dll`</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div><div id="f378b6df-1e0d-4e92-ac95-033d5cf4ecc1"><!-- Plotly chart will be drawn inside this DIV --></div><script type="text/javascript">
+var renderPlotly_f378b6df1e0d4e92ac95033d5cf4ecc1 = function() {
+    var fsharpPlotlyRequire = requirejs.config({context:'fsharp-plotly',paths:{plotly:'https://cdn.plot.ly/plotly-2.21.0.min'}}) || require;
+    fsharpPlotlyRequire(['plotly'], function(Plotly) {
+        var data = [{"type":"scatter","mode":"markers","x":[1],"y":[2],"marker":{},"line":{},"xaxis":"x","yaxis":"y"},{"type":"scatter","mode":"markers","x":[1],"y":[2],"marker":{},"line":{},"xaxis":"x2","yaxis":"y2"},{"type":"scatter","mode":"lines","x":[1,2],"y":[2,3],"marker":{},"line":{},"xaxis":"x3","yaxis":"y3"}];
+        var layout = {"width":600,"height":600,"template":{"layout":{"title":{"x":0.05},"font":{"color":"rgba(42, 63, 95, 1.0)"},"paper_bgcolor":"rgba(255, 255, 255, 1.0)","plot_bgcolor":"rgba(229, 236, 246, 1.0)","autotypenumbers":"strict","colorscale":{"diverging":[[0.0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1.0,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"hovermode":"closest","hoverlabel":{"align":"left"},"coloraxis":{"colorbar":{"outlinewidth":0.0,"ticks":""}},"geo":{"showland":true,"landcolor":"rgba(229, 236, 246, 1.0)","showlakes":true,"lakecolor":"rgba(255, 255, 255, 1.0)","subunitcolor":"rgba(255, 255, 255, 1.0)","bgcolor":"rgba(255, 255, 255, 1.0)"},"mapbox":{"style":"light"},"polar":{"bgcolor":"rgba(229, 236, 246, 1.0)","radialaxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","ticks":""},"angularaxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","ticks":""}},"scene":{"xaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","gridwidth":2.0,"zerolinecolor":"rgba(255, 255, 255, 1.0)","backgroundcolor":"rgba(229, 236, 246, 1.0)","showbackground":true},"yaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","gridwidth":2.0,"zerolinecolor":"rgba(255, 255, 255, 1.0)","backgroundcolor":"rgba(229, 236, 246, 1.0)","showbackground":true},"zaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","gridwidth":2.0,"zerolinecolor":"rgba(255, 255, 255, 1.0)","backgroundcolor":"rgba(229, 236, 246, 1.0)","showbackground":true}},"ternary":{"aaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)"},"baxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)"},"caxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)"},"bgcolor":"rgba(229, 236, 246, 1.0)"},"xaxis":{"title":{"standoff":15},"ticks":"","automargin":"height+width+left+right+top+bottom","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","zerolinecolor":"rgba(255, 255, 255, 1.0)","zerolinewidth":2.0},"yaxis":{"title":{"standoff":15},"ticks":"","automargin":"height+width+left+right+top+bottom","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","zerolinecolor":"rgba(255, 255, 255, 1.0)","zerolinewidth":2.0},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"shapedefaults":{"line":{"color":"rgba(42, 63, 95, 1.0)"}},"colorway":["rgba(99, 110, 250, 1.0)","rgba(239, 85, 59, 1.0)","rgba(0, 204, 150, 1.0)","rgba(171, 99, 250, 1.0)","rgba(255, 161, 90, 1.0)","rgba(25, 211, 243, 1.0)","rgba(255, 102, 146, 1.0)","rgba(182, 232, 128, 1.0)","rgba(255, 151, 255, 1.0)","rgba(254, 203, 82, 1.0)"]},"data":{"bar":[{"marker":{"line":{"color":"rgba(229, 236, 246, 1.0)","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"error_x":{"color":"rgba(42, 63, 95, 1.0)"},"error_y":{"color":"rgba(42, 63, 95, 1.0)"}}],"barpolar":[{"marker":{"line":{"color":"rgba(229, 236, 246, 1.0)","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}}}],"carpet":[{"aaxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","endlinecolor":"rgba(42, 63, 95, 1.0)","minorgridcolor":"rgba(255, 255, 255, 1.0)","startlinecolor":"rgba(42, 63, 95, 1.0)"},"baxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","endlinecolor":"rgba(42, 63, 95, 1.0)","minorgridcolor":"rgba(255, 255, 255, 1.0)","startlinecolor":"rgba(42, 63, 95, 1.0)"}}],"choropleth":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contour":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"colorbar":{"outlinewidth":0.0,"ticks":""}}],"heatmap":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}}}],"histogram2d":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"colorbar":{"outlinewidth":0.0,"ticks":""}}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"pie":[{"automargin":true}],"scatter":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatter3d":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}},"line":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"surface":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"table":[{"cells":{"fill":{"color":"rgba(235, 240, 248, 1.0)"},"line":{"color":"rgba(255, 255, 255, 1.0)"}},"header":{"fill":{"color":"rgba(200, 212, 227, 1.0)"},"line":{"color":"rgba(255, 255, 255, 1.0)"}}}]}},"xaxis":{},"yaxis":{},"xaxis2":{},"yaxis2":{},"xaxis3":{},"yaxis3":{},"grid":{"rows":2,"columns":2,"pattern":"independent"}};
+        var config = {"responsive":true};
+        Plotly.newPlot('f378b6df-1e0d-4e92-ac95-033d5cf4ecc1', data, layout, config);
+    });
+};
+if ((typeof(requirejs) !==  typeof(Function)) || (typeof(requirejs.config) !== typeof(Function))) {
+    var script = document.createElement("script");
+    script.setAttribute("charset", "utf-8");
+    script.setAttribute("src", "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js");
+    script.onload = function(){
+        renderPlotly_f378b6df1e0d4e92ac95033d5cf4ecc1();
+    };
+    document.getElementsByTagName("head")[0].appendChild(script);
+}
+else {
+    renderPlotly_f378b6df1e0d4e92ac95033d5cf4ecc1();
+}
+</script></div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Now lets define the regions the plots should be drawn in. Therefore it is required to assign unique axis ids to each chart. The resulting chart does not change by simply defining these ids:</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">chartWithAxisIds</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="o">[</span>
+<span class="w">    </span><span class="n">chartA</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withAxisAnchor</span><span class="o">(</span><span class="n">X</span><span class="o">=</span><span class="mi">1</span><span class="o">,</span><span class="n">Y</span><span class="o">=</span><span class="mi">1</span><span class="o">)</span>
+<span class="w">    </span><span class="n">chartB</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withAxisAnchor</span><span class="o">(</span><span class="n">X</span><span class="o">=</span><span class="mi">2</span><span class="o">,</span><span class="n">Y</span><span class="o">=</span><span class="mi">2</span><span class="o">)</span>
+<span class="w">    </span><span class="n">chartC</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withAxisAnchor</span><span class="o">(</span><span class="n">X</span><span class="o">=</span><span class="mi">3</span><span class="o">,</span><span class="n">Y</span><span class="o">=</span><span class="mi">3</span><span class="o">)</span>
+<span class="w">    </span><span class="o">]</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Grid</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span><span class="mi">2</span><span class="o">)</span>
+
+<span class="n">chartWithAxisIds</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div><div id="aee6d3ef-9054-4335-9583-57dca75c4f35"><!-- Plotly chart will be drawn inside this DIV --></div><script type="text/javascript">
+var renderPlotly_aee6d3ef90544335958357dca75c4f35 = function() {
+    var fsharpPlotlyRequire = requirejs.config({context:'fsharp-plotly',paths:{plotly:'https://cdn.plot.ly/plotly-2.21.0.min'}}) || require;
+    fsharpPlotlyRequire(['plotly'], function(Plotly) {
+        var data = [{"type":"scatter","mode":"markers","x":[1],"y":[2],"marker":{},"line":{},"xaxis":"x","yaxis":"y"},{"type":"scatter","mode":"markers","x":[1],"y":[2],"marker":{},"line":{},"xaxis":"x2","yaxis":"y2"},{"type":"scatter","mode":"lines","x":[1,2],"y":[2,3],"marker":{},"line":{},"xaxis":"x3","yaxis":"y3"}];
+        var layout = {"width":600,"height":600,"template":{"layout":{"title":{"x":0.05},"font":{"color":"rgba(42, 63, 95, 1.0)"},"paper_bgcolor":"rgba(255, 255, 255, 1.0)","plot_bgcolor":"rgba(229, 236, 246, 1.0)","autotypenumbers":"strict","colorscale":{"diverging":[[0.0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1.0,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"hovermode":"closest","hoverlabel":{"align":"left"},"coloraxis":{"colorbar":{"outlinewidth":0.0,"ticks":""}},"geo":{"showland":true,"landcolor":"rgba(229, 236, 246, 1.0)","showlakes":true,"lakecolor":"rgba(255, 255, 255, 1.0)","subunitcolor":"rgba(255, 255, 255, 1.0)","bgcolor":"rgba(255, 255, 255, 1.0)"},"mapbox":{"style":"light"},"polar":{"bgcolor":"rgba(229, 236, 246, 1.0)","radialaxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","ticks":""},"angularaxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","ticks":""}},"scene":{"xaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","gridwidth":2.0,"zerolinecolor":"rgba(255, 255, 255, 1.0)","backgroundcolor":"rgba(229, 236, 246, 1.0)","showbackground":true},"yaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","gridwidth":2.0,"zerolinecolor":"rgba(255, 255, 255, 1.0)","backgroundcolor":"rgba(229, 236, 246, 1.0)","showbackground":true},"zaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","gridwidth":2.0,"zerolinecolor":"rgba(255, 255, 255, 1.0)","backgroundcolor":"rgba(229, 236, 246, 1.0)","showbackground":true}},"ternary":{"aaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)"},"baxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)"},"caxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)"},"bgcolor":"rgba(229, 236, 246, 1.0)"},"xaxis":{"title":{"standoff":15},"ticks":"","automargin":"height+width+left+right+top+bottom","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","zerolinecolor":"rgba(255, 255, 255, 1.0)","zerolinewidth":2.0},"yaxis":{"title":{"standoff":15},"ticks":"","automargin":"height+width+left+right+top+bottom","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","zerolinecolor":"rgba(255, 255, 255, 1.0)","zerolinewidth":2.0},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"shapedefaults":{"line":{"color":"rgba(42, 63, 95, 1.0)"}},"colorway":["rgba(99, 110, 250, 1.0)","rgba(239, 85, 59, 1.0)","rgba(0, 204, 150, 1.0)","rgba(171, 99, 250, 1.0)","rgba(255, 161, 90, 1.0)","rgba(25, 211, 243, 1.0)","rgba(255, 102, 146, 1.0)","rgba(182, 232, 128, 1.0)","rgba(255, 151, 255, 1.0)","rgba(254, 203, 82, 1.0)"]},"data":{"bar":[{"marker":{"line":{"color":"rgba(229, 236, 246, 1.0)","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"error_x":{"color":"rgba(42, 63, 95, 1.0)"},"error_y":{"color":"rgba(42, 63, 95, 1.0)"}}],"barpolar":[{"marker":{"line":{"color":"rgba(229, 236, 246, 1.0)","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}}}],"carpet":[{"aaxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","endlinecolor":"rgba(42, 63, 95, 1.0)","minorgridcolor":"rgba(255, 255, 255, 1.0)","startlinecolor":"rgba(42, 63, 95, 1.0)"},"baxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","endlinecolor":"rgba(42, 63, 95, 1.0)","minorgridcolor":"rgba(255, 255, 255, 1.0)","startlinecolor":"rgba(42, 63, 95, 1.0)"}}],"choropleth":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contour":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"colorbar":{"outlinewidth":0.0,"ticks":""}}],"heatmap":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}}}],"histogram2d":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"colorbar":{"outlinewidth":0.0,"ticks":""}}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"pie":[{"automargin":true}],"scatter":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatter3d":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}},"line":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"surface":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"table":[{"cells":{"fill":{"color":"rgba(235, 240, 248, 1.0)"},"line":{"color":"rgba(255, 255, 255, 1.0)"}},"header":{"fill":{"color":"rgba(200, 212, 227, 1.0)"},"line":{"color":"rgba(255, 255, 255, 1.0)"}}}]}},"xaxis":{},"yaxis":{},"xaxis2":{},"yaxis2":{},"xaxis3":{},"yaxis3":{},"grid":{"rows":2,"columns":2,"pattern":"independent"}};
+        var config = {"responsive":true};
+        Plotly.newPlot('aee6d3ef-9054-4335-9583-57dca75c4f35', data, layout, config);
+    });
+};
+if ((typeof(requirejs) !==  typeof(Function)) || (typeof(requirejs.config) !== typeof(Function))) {
+    var script = document.createElement("script");
+    script.setAttribute("charset", "utf-8");
+    script.setAttribute("src", "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js");
+    script.onload = function(){
+        renderPlotly_aee6d3ef90544335958357dca75c4f35();
+    };
+    document.getElementsByTagName("head")[0].appendChild(script);
+}
+else {
+    renderPlotly_aee6d3ef90544335958357dca75c4f35();
+}
+</script></div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>The defined axis identifiers can be used to set regions the charts are drawn in. Therefore, the ids are used to define the domain region of each axis.</p>
+<div class="highlight"><pre><span></span><span class="n">chartWithAxisIds</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxis</span><span class="o">(</span>
+<span class="w">    </span><span class="c1">// define the axis you want to style</span>
+<span class="w">    </span><span class="n">Id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">SubPlotId</span><span class="p">.</span><span class="n">XAxis</span><span class="w"> </span><span class="mi">1</span><span class="o">,</span><span class="w"> </span>
+<span class="w">    </span><span class="c1">// initialize a LinearAxis</span>
+<span class="w">    </span><span class="n">xAxis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
+<span class="w">        </span><span class="nn">LinearAxis</span><span class="p">.</span><span class="n">init</span><span class="o">(</span>
+<span class="w">            </span><span class="c1">// define the range the chart should be drawn in (percentage)</span>
+<span class="w">            </span><span class="c1">// plot 1 x axis ranges from 0% to 33% of the canvas </span>
+<span class="w">            </span><span class="n">Domain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Range</span><span class="p">.</span><span class="n">MinMax</span><span class="w"> </span><span class="o">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">00</span><span class="o">,</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">33</span><span class="o">)</span><span class="w"> </span>
+<span class="w">            </span><span class="o">)</span>
+<span class="w">    </span><span class="o">)</span>
+</pre></div>
+<p>The same procedure is performed for all x and y axis:</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">chartsWithDefinedRegions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
+<span class="w">    </span><span class="n">chartWithAxisIds</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxis</span><span class="o">(</span><span class="n">Id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">SubPlotId</span><span class="p">.</span><span class="n">XAxis</span><span class="w"> </span><span class="mi">1</span><span class="o">,</span><span class="w"> </span><span class="n">xAxis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">LinearAxis</span><span class="p">.</span><span class="n">init</span><span class="o">(</span><span class="n">Domain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Range</span><span class="p">.</span><span class="n">MinMax</span><span class="w"> </span><span class="o">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">00</span><span class="o">,</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">33</span><span class="o">)))</span><span class="w"> </span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxis</span><span class="o">(</span><span class="n">Id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">SubPlotId</span><span class="p">.</span><span class="n">YAxis</span><span class="w"> </span><span class="mi">1</span><span class="o">,</span><span class="w"> </span><span class="n">yAxis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">LinearAxis</span><span class="p">.</span><span class="n">init</span><span class="o">(</span><span class="n">Domain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Range</span><span class="p">.</span><span class="n">MinMax</span><span class="w"> </span><span class="o">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">00</span><span class="o">,</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">45</span><span class="o">)))</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxis</span><span class="o">(</span><span class="n">Id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">SubPlotId</span><span class="p">.</span><span class="n">XAxis</span><span class="w"> </span><span class="mi">2</span><span class="o">,</span><span class="w"> </span><span class="n">xAxis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">LinearAxis</span><span class="p">.</span><span class="n">init</span><span class="o">(</span><span class="n">Domain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Range</span><span class="p">.</span><span class="n">MinMax</span><span class="w"> </span><span class="o">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">00</span><span class="o">,</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">33</span><span class="o">)))</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxis</span><span class="o">(</span><span class="n">Id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">SubPlotId</span><span class="p">.</span><span class="n">YAxis</span><span class="w"> </span><span class="mi">2</span><span class="o">,</span><span class="w"> </span><span class="n">yAxis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">LinearAxis</span><span class="p">.</span><span class="n">init</span><span class="o">(</span><span class="n">Domain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Range</span><span class="p">.</span><span class="n">MinMax</span><span class="w"> </span><span class="o">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">55</span><span class="o">,</span><span class="w"> </span><span class="mi">1</span><span class="o">.</span><span class="mi">00</span><span class="o">)))</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxis</span><span class="o">(</span><span class="n">Id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">SubPlotId</span><span class="p">.</span><span class="n">XAxis</span><span class="w"> </span><span class="mi">3</span><span class="o">,</span><span class="w"> </span><span class="n">xAxis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">LinearAxis</span><span class="p">.</span><span class="n">init</span><span class="o">(</span><span class="n">Domain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Range</span><span class="p">.</span><span class="n">MinMax</span><span class="w"> </span><span class="o">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">40</span><span class="o">,</span><span class="w"> </span><span class="mi">1</span><span class="o">.</span><span class="mi">00</span><span class="o">)))</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxis</span><span class="o">(</span><span class="n">Id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">SubPlotId</span><span class="p">.</span><span class="n">YAxis</span><span class="w"> </span><span class="mi">3</span><span class="o">,</span><span class="w"> </span><span class="n">yAxis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">LinearAxis</span><span class="p">.</span><span class="n">init</span><span class="o">(</span><span class="n">Domain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Range</span><span class="p">.</span><span class="n">MinMax</span><span class="w"> </span><span class="o">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">10</span><span class="o">,</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">90</span><span class="o">)))</span>
+
+<span class="n">chartsWithDefinedRegions</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div><div id="94d5f01b-90a4-4f21-a206-4f9ee5f162a3"><!-- Plotly chart will be drawn inside this DIV --></div><script type="text/javascript">
+var renderPlotly_94d5f01b90a44f21a2064f9ee5f162a3 = function() {
+    var fsharpPlotlyRequire = requirejs.config({context:'fsharp-plotly',paths:{plotly:'https://cdn.plot.ly/plotly-2.21.0.min'}}) || require;
+    fsharpPlotlyRequire(['plotly'], function(Plotly) {
+        var data = [{"type":"scatter","mode":"markers","x":[1],"y":[2],"marker":{},"line":{},"xaxis":"x","yaxis":"y"},{"type":"scatter","mode":"markers","x":[1],"y":[2],"marker":{},"line":{},"xaxis":"x2","yaxis":"y2"},{"type":"scatter","mode":"lines","x":[1,2],"y":[2,3],"marker":{},"line":{},"xaxis":"x3","yaxis":"y3"}];
+        var layout = {"width":600,"height":600,"template":{"layout":{"title":{"x":0.05},"font":{"color":"rgba(42, 63, 95, 1.0)"},"paper_bgcolor":"rgba(255, 255, 255, 1.0)","plot_bgcolor":"rgba(229, 236, 246, 1.0)","autotypenumbers":"strict","colorscale":{"diverging":[[0.0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1.0,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"hovermode":"closest","hoverlabel":{"align":"left"},"coloraxis":{"colorbar":{"outlinewidth":0.0,"ticks":""}},"geo":{"showland":true,"landcolor":"rgba(229, 236, 246, 1.0)","showlakes":true,"lakecolor":"rgba(255, 255, 255, 1.0)","subunitcolor":"rgba(255, 255, 255, 1.0)","bgcolor":"rgba(255, 255, 255, 1.0)"},"mapbox":{"style":"light"},"polar":{"bgcolor":"rgba(229, 236, 246, 1.0)","radialaxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","ticks":""},"angularaxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","ticks":""}},"scene":{"xaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","gridwidth":2.0,"zerolinecolor":"rgba(255, 255, 255, 1.0)","backgroundcolor":"rgba(229, 236, 246, 1.0)","showbackground":true},"yaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","gridwidth":2.0,"zerolinecolor":"rgba(255, 255, 255, 1.0)","backgroundcolor":"rgba(229, 236, 246, 1.0)","showbackground":true},"zaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","gridwidth":2.0,"zerolinecolor":"rgba(255, 255, 255, 1.0)","backgroundcolor":"rgba(229, 236, 246, 1.0)","showbackground":true}},"ternary":{"aaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)"},"baxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)"},"caxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)"},"bgcolor":"rgba(229, 236, 246, 1.0)"},"xaxis":{"title":{"standoff":15},"ticks":"","automargin":"height+width+left+right+top+bottom","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","zerolinecolor":"rgba(255, 255, 255, 1.0)","zerolinewidth":2.0},"yaxis":{"title":{"standoff":15},"ticks":"","automargin":"height+width+left+right+top+bottom","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","zerolinecolor":"rgba(255, 255, 255, 1.0)","zerolinewidth":2.0},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"shapedefaults":{"line":{"color":"rgba(42, 63, 95, 1.0)"}},"colorway":["rgba(99, 110, 250, 1.0)","rgba(239, 85, 59, 1.0)","rgba(0, 204, 150, 1.0)","rgba(171, 99, 250, 1.0)","rgba(255, 161, 90, 1.0)","rgba(25, 211, 243, 1.0)","rgba(255, 102, 146, 1.0)","rgba(182, 232, 128, 1.0)","rgba(255, 151, 255, 1.0)","rgba(254, 203, 82, 1.0)"]},"data":{"bar":[{"marker":{"line":{"color":"rgba(229, 236, 246, 1.0)","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"error_x":{"color":"rgba(42, 63, 95, 1.0)"},"error_y":{"color":"rgba(42, 63, 95, 1.0)"}}],"barpolar":[{"marker":{"line":{"color":"rgba(229, 236, 246, 1.0)","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}}}],"carpet":[{"aaxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","endlinecolor":"rgba(42, 63, 95, 1.0)","minorgridcolor":"rgba(255, 255, 255, 1.0)","startlinecolor":"rgba(42, 63, 95, 1.0)"},"baxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","endlinecolor":"rgba(42, 63, 95, 1.0)","minorgridcolor":"rgba(255, 255, 255, 1.0)","startlinecolor":"rgba(42, 63, 95, 1.0)"}}],"choropleth":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contour":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"colorbar":{"outlinewidth":0.0,"ticks":""}}],"heatmap":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}}}],"histogram2d":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"colorbar":{"outlinewidth":0.0,"ticks":""}}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"pie":[{"automargin":true}],"scatter":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatter3d":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}},"line":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"surface":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"table":[{"cells":{"fill":{"color":"rgba(235, 240, 248, 1.0)"},"line":{"color":"rgba(255, 255, 255, 1.0)"}},"header":{"fill":{"color":"rgba(200, 212, 227, 1.0)"},"line":{"color":"rgba(255, 255, 255, 1.0)"}}}]}},"xaxis":{"domain":[0.0,0.33]},"yaxis":{"domain":[0.0,0.45]},"xaxis2":{"domain":[0.0,0.33]},"yaxis2":{"domain":[0.55,1.0]},"xaxis3":{"domain":[0.4,1.0]},"yaxis3":{"domain":[0.1,0.9]},"grid":{"rows":2,"columns":2,"pattern":"independent"}};
+        var config = {"responsive":true};
+        Plotly.newPlot('94d5f01b-90a4-4f21-a206-4f9ee5f162a3', data, layout, config);
+    });
+};
+if ((typeof(requirejs) !==  typeof(Function)) || (typeof(requirejs.config) !== typeof(Function))) {
+    var script = document.createElement("script");
+    script.setAttribute("charset", "utf-8");
+    script.setAttribute("src", "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js");
+    script.onload = function(){
+        renderPlotly_94d5f01b90a44f21a2064f9ee5f162a3();
+    };
+    document.getElementsByTagName("head")[0].appendChild(script);
+}
+else {
+    renderPlotly_94d5f01b90a44f21a2064f9ee5f162a3();
+}
+</script></div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Much more styling can be applied to the axis.</p>
+<ul>
+<li><code>TickVals = [1.; 1.29; 1.5; 2.; 3.]</code> defines the exact tick values (blue chart y axis)</li>
+<li><code>TickVals = []</code> no tick marks are visible (red chart x axis)</li>
+<li><code>TickFont = Font.init(Size=20,Family=FontFamily.Consolas)</code> sets the tick font to the specied style</li>
+<li><code>NTicks = 13</code> sets how many tick marks are visible (green chart x axis)</li>
+<li><code>RangeMode = RangeMode.ToZero</code> the axis should span the zero value (green chart y axis)</li>
+</ul>
+<p>Further style options can be seen at <a href="plotly.net">plotly.net</a>. The final chart generation looks like this:</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-F#"><pre><span></span><span class="o">[</span>
+<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Point</span><span class="o">(</span><span class="n">xy</span><span class="o">=[</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">])</span><span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withAxisAnchor</span><span class="o">(</span><span class="n">X</span><span class="o">=</span><span class="mi">1</span><span class="o">,</span><span class="n">Y</span><span class="o">=</span><span class="mi">1</span><span class="o">)</span>
+<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Point</span><span class="o">(</span><span class="n">xy</span><span class="o">=[</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">])</span><span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withAxisAnchor</span><span class="o">(</span><span class="n">X</span><span class="o">=</span><span class="mi">2</span><span class="o">,</span><span class="n">Y</span><span class="o">=</span><span class="mi">2</span><span class="o">)</span>
+<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Line</span><span class="o">(</span><span class="n">xy</span><span class="o">=[</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">;</span><span class="mi">2</span><span class="o">,</span><span class="mi">3</span><span class="o">])</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withAxisAnchor</span><span class="o">(</span><span class="n">X</span><span class="o">=</span><span class="mi">3</span><span class="o">,</span><span class="n">Y</span><span class="o">=</span><span class="mi">3</span><span class="o">)</span>
+<span class="o">]</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Grid</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span><span class="mi">2</span><span class="o">)</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxis</span><span class="o">(</span><span class="n">Id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">SubPlotId</span><span class="p">.</span><span class="n">XAxis</span><span class="w"> </span><span class="mi">1</span><span class="o">,</span><span class="w"> </span><span class="n">xAxis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">LinearAxis</span><span class="p">.</span><span class="n">init</span><span class="o">(</span><span class="n">Domain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Range</span><span class="p">.</span><span class="n">MinMax</span><span class="w"> </span><span class="o">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">00</span><span class="o">,</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">33</span><span class="o">),</span><span class="n">Title</span><span class="o">=</span><span class="nn">Title</span><span class="p">.</span><span class="n">init</span><span class="w"> </span><span class="s">"blue x axis"</span><span class="o">))</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxis</span><span class="o">(</span><span class="n">Id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">SubPlotId</span><span class="p">.</span><span class="n">YAxis</span><span class="w"> </span><span class="mi">1</span><span class="o">,</span><span class="w"> </span><span class="n">yAxis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">LinearAxis</span><span class="p">.</span><span class="n">init</span><span class="o">(</span><span class="n">Domain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Range</span><span class="p">.</span><span class="n">MinMax</span><span class="w"> </span><span class="o">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">00</span><span class="o">,</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">45</span><span class="o">),</span><span class="n">TickVals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="mi">1</span><span class="o">.;</span><span class="mi">1</span><span class="o">.</span><span class="mi">29</span><span class="o">;</span><span class="mi">1</span><span class="o">.</span><span class="mi">5</span><span class="o">;</span><span class="mi">2</span><span class="o">.;</span><span class="mi">3</span><span class="o">.]))</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxis</span><span class="o">(</span><span class="n">Id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">SubPlotId</span><span class="p">.</span><span class="n">XAxis</span><span class="w"> </span><span class="mi">2</span><span class="o">,</span><span class="w"> </span><span class="n">xAxis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">LinearAxis</span><span class="p">.</span><span class="n">init</span><span class="o">(</span><span class="n">Domain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Range</span><span class="p">.</span><span class="n">MinMax</span><span class="w"> </span><span class="o">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">00</span><span class="o">,</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">33</span><span class="o">),</span><span class="n">TickVals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">[]</span><span class="o">))</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxis</span><span class="o">(</span><span class="n">Id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">SubPlotId</span><span class="p">.</span><span class="n">YAxis</span><span class="w"> </span><span class="mi">2</span><span class="o">,</span><span class="w"> </span><span class="n">yAxis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">LinearAxis</span><span class="p">.</span><span class="n">init</span><span class="o">(</span><span class="n">Domain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Range</span><span class="p">.</span><span class="n">MinMax</span><span class="w"> </span><span class="o">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">55</span><span class="o">,</span><span class="w"> </span><span class="mi">1</span><span class="o">.</span><span class="mi">00</span><span class="o">),</span><span class="n">TickFont</span><span class="o">=</span><span class="nn">Font</span><span class="p">.</span><span class="n">init</span><span class="o">(</span><span class="n">Size</span><span class="o">=</span><span class="mi">20</span><span class="o">,</span><span class="n">Family</span><span class="o">=</span><span class="nn">FontFamily</span><span class="p">.</span><span class="n">Consolas</span><span class="o">)))</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxis</span><span class="o">(</span><span class="n">Id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">SubPlotId</span><span class="p">.</span><span class="n">XAxis</span><span class="w"> </span><span class="mi">3</span><span class="o">,</span><span class="w"> </span><span class="n">xAxis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">LinearAxis</span><span class="p">.</span><span class="n">init</span><span class="o">(</span><span class="n">Domain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Range</span><span class="p">.</span><span class="n">MinMax</span><span class="w"> </span><span class="o">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">40</span><span class="o">,</span><span class="w"> </span><span class="mi">1</span><span class="o">.</span><span class="mi">00</span><span class="o">),</span><span class="n">NTicks</span><span class="o">=</span><span class="mi">13</span><span class="o">))</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxis</span><span class="o">(</span><span class="n">Id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">SubPlotId</span><span class="p">.</span><span class="n">YAxis</span><span class="w"> </span><span class="mi">3</span><span class="o">,</span><span class="w"> </span><span class="n">yAxis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">LinearAxis</span><span class="p">.</span><span class="n">init</span><span class="o">(</span><span class="n">Domain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Range</span><span class="p">.</span><span class="n">MinMax</span><span class="w"> </span><span class="o">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">10</span><span class="o">,</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">90</span><span class="o">),</span><span class="n">RangeMode</span><span class="o">=</span><span class="nn">RangeMode</span><span class="p">.</span><span class="n">ToZero</span><span class="o">))</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withLegendStyle</span><span class="o">(</span><span class="n">Orientation</span><span class="o">=</span><span class="nn">Orientation</span><span class="p">.</span><span class="n">Horizontal</span><span class="o">)</span>
+<span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withLayoutStyle</span><span class="o">(</span><span class="n">Font</span><span class="o">=(</span><span class="nn">Font</span><span class="p">.</span><span class="n">init</span><span class="o">(</span><span class="n">Family</span><span class="o">=</span><span class="nn">FontFamily</span><span class="p">.</span><span class="n">Arial</span><span class="o">,</span><span class="n">Size</span><span class="o">=</span><span class="mi">14</span><span class="o">)))</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div><div id="621fbe53-0ace-4146-87de-9e82f77ff53d"><!-- Plotly chart will be drawn inside this DIV --></div><script type="text/javascript">
+var renderPlotly_621fbe530ace414687de9e82f77ff53d = function() {
+    var fsharpPlotlyRequire = requirejs.config({context:'fsharp-plotly',paths:{plotly:'https://cdn.plot.ly/plotly-2.21.0.min'}}) || require;
+    fsharpPlotlyRequire(['plotly'], function(Plotly) {
+        var data = [{"type":"scatter","mode":"markers","x":[1],"y":[2],"marker":{},"line":{},"xaxis":"x","yaxis":"y"},{"type":"scatter","mode":"markers","x":[1],"y":[2],"marker":{},"line":{},"xaxis":"x2","yaxis":"y2"},{"type":"scatter","mode":"lines","x":[1,2],"y":[2,3],"marker":{},"line":{},"xaxis":"x3","yaxis":"y3"}];
+        var layout = {"width":600,"height":600,"template":{"layout":{"title":{"x":0.05},"font":{"color":"rgba(42, 63, 95, 1.0)"},"paper_bgcolor":"rgba(255, 255, 255, 1.0)","plot_bgcolor":"rgba(229, 236, 246, 1.0)","autotypenumbers":"strict","colorscale":{"diverging":[[0.0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1.0,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"hovermode":"closest","hoverlabel":{"align":"left"},"coloraxis":{"colorbar":{"outlinewidth":0.0,"ticks":""}},"geo":{"showland":true,"landcolor":"rgba(229, 236, 246, 1.0)","showlakes":true,"lakecolor":"rgba(255, 255, 255, 1.0)","subunitcolor":"rgba(255, 255, 255, 1.0)","bgcolor":"rgba(255, 255, 255, 1.0)"},"mapbox":{"style":"light"},"polar":{"bgcolor":"rgba(229, 236, 246, 1.0)","radialaxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","ticks":""},"angularaxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","ticks":""}},"scene":{"xaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","gridwidth":2.0,"zerolinecolor":"rgba(255, 255, 255, 1.0)","backgroundcolor":"rgba(229, 236, 246, 1.0)","showbackground":true},"yaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","gridwidth":2.0,"zerolinecolor":"rgba(255, 255, 255, 1.0)","backgroundcolor":"rgba(229, 236, 246, 1.0)","showbackground":true},"zaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","gridwidth":2.0,"zerolinecolor":"rgba(255, 255, 255, 1.0)","backgroundcolor":"rgba(229, 236, 246, 1.0)","showbackground":true}},"ternary":{"aaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)"},"baxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)"},"caxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)"},"bgcolor":"rgba(229, 236, 246, 1.0)"},"xaxis":{"title":{"standoff":15},"ticks":"","automargin":"height+width+left+right+top+bottom","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","zerolinecolor":"rgba(255, 255, 255, 1.0)","zerolinewidth":2.0},"yaxis":{"title":{"standoff":15},"ticks":"","automargin":"height+width+left+right+top+bottom","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","zerolinecolor":"rgba(255, 255, 255, 1.0)","zerolinewidth":2.0},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"shapedefaults":{"line":{"color":"rgba(42, 63, 95, 1.0)"}},"colorway":["rgba(99, 110, 250, 1.0)","rgba(239, 85, 59, 1.0)","rgba(0, 204, 150, 1.0)","rgba(171, 99, 250, 1.0)","rgba(255, 161, 90, 1.0)","rgba(25, 211, 243, 1.0)","rgba(255, 102, 146, 1.0)","rgba(182, 232, 128, 1.0)","rgba(255, 151, 255, 1.0)","rgba(254, 203, 82, 1.0)"]},"data":{"bar":[{"marker":{"line":{"color":"rgba(229, 236, 246, 1.0)","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"error_x":{"color":"rgba(42, 63, 95, 1.0)"},"error_y":{"color":"rgba(42, 63, 95, 1.0)"}}],"barpolar":[{"marker":{"line":{"color":"rgba(229, 236, 246, 1.0)","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}}}],"carpet":[{"aaxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","endlinecolor":"rgba(42, 63, 95, 1.0)","minorgridcolor":"rgba(255, 255, 255, 1.0)","startlinecolor":"rgba(42, 63, 95, 1.0)"},"baxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","endlinecolor":"rgba(42, 63, 95, 1.0)","minorgridcolor":"rgba(255, 255, 255, 1.0)","startlinecolor":"rgba(42, 63, 95, 1.0)"}}],"choropleth":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contour":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"colorbar":{"outlinewidth":0.0,"ticks":""}}],"heatmap":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}}}],"histogram2d":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"colorbar":{"outlinewidth":0.0,"ticks":""}}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"pie":[{"automargin":true}],"scatter":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatter3d":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}},"line":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"surface":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"table":[{"cells":{"fill":{"color":"rgba(235, 240, 248, 1.0)"},"line":{"color":"rgba(255, 255, 255, 1.0)"}},"header":{"fill":{"color":"rgba(200, 212, 227, 1.0)"},"line":{"color":"rgba(255, 255, 255, 1.0)"}}}]}},"xaxis":{"title":{"text":"blue x axis"},"domain":[0.0,0.33]},"yaxis":{"tickvals":[1.0,1.29,1.5,2.0,3.0],"domain":[0.0,0.45]},"xaxis2":{"tickvals":[],"domain":[0.0,0.33]},"yaxis2":{"tickfont":{"family":"Consolas","size":20.0},"domain":[0.55,1.0]},"xaxis3":{"nticks":13,"domain":[0.4,1.0]},"yaxis3":{"rangemode":"tozero","domain":[0.1,0.9]},"grid":{"rows":2,"columns":2,"pattern":"independent"},"legend":{"orientation":"h"},"font":{"family":"Arial","size":14.0}};
+        var config = {"responsive":true};
+        Plotly.newPlot('621fbe53-0ace-4146-87de-9e82f77ff53d', data, layout, config);
+    });
+};
+if ((typeof(requirejs) !==  typeof(Function)) || (typeof(requirejs.config) !== typeof(Function))) {
+    var script = document.createElement("script");
+    script.setAttribute("charset", "utf-8");
+    script.setAttribute("src", "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js");
+    script.onload = function(){
+        renderPlotly_621fbe530ace414687de9e82f77ff53d();
+    };
+    document.getElementsByTagName("head")[0].appendChild(script);
+}
+else {
+    renderPlotly_621fbe530ace414687de9e82f77ff53d();
+}
+</script></div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+        </div>
+        <footer class="footer has-bg-darkmagenta">
+          <div class="container">
+            <div class="columns">
+              <div class="column is-4 m-4">
+                <div class="block">
+                  <h3 class="subtitle is-white">
+                    FsLab - the project incubation space for data science in F#
+                  </h3>
+                </div>
+                <div class="block">
+                  <p>
+                    FsLab is only possible due to the joined forces of F# open source contributors.
+                  </p>
+                </div>
+                <div class="block">
+                  <p>
+                    This website is created and maintained by individual FsLab open source contributors.
+                  </p>
+                </div>
+                <div class="block">
+                  <div class="icon-text is-white">
+                    <span class="icon">
+                      <i class="fas fa-code-branch"></i>
+                    </span>
+                    <span>
+                      <a class="footer-link" href="https://github.com/fslaborg/fslaborg.github.io">
+                        website source code
+                      </a>
+                    </span>
+                  </div>
+                  <div class="icon-text is-white">
+                    <span class="icon">
+                      <i class="far fa-handshake"></i>
+                    </span>
+                    <span>
+                      <a class="footer-link" href="https://github.com/orgs/fslaborg/people">
+                        fslab contributors
+                      </a>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="column is-4 m-4">
+                <div class="block">
+                  <h3 class="subtitle is-white">
+                    More
+                  </h3>
+                </div>
+                <div class="block">
+                  <div class="block">
+                    <div class="icon-text is-white">
+                      <span class="icon">
+                        <i class="fab fa-github"></i>
+                      </span>
+                      <span>
+                        <a class="footer-link" href="https://github.com/fslaborg?type=source">
+                          the fslab organisation on github
+                        </a>
+                      </span>
+                    </div>
+                    <div class="icon-text is-white">
+                      <span class="icon">
+                        <i class="fab fa-twitter"></i>
+                      </span>
+                      <span>
+                        <a class="footer-link" href="https://twitter.com/fslaborg">
+                          fslab on twitter
+                        </a>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="block">
+                    <div class="icon-text is-white">
+                      <span class="icon">
+                        <i class="fas fa-cubes"></i>
+                      </span>
+                      <span>
+                        <a class="footer-link" href="https://fslab.org/packages.html">
+                          endorsed packages
+                        </a>
+                      </span>
+                    </div>
+                    <div class="icon-text is-white">
+                      <span class="icon">
+                        <i class="fas fa-plus"></i>
+                      </span>
+                      <span>
+                        <a class="footer-link" href="https://github.com/fslaborg/fslaborg.github.io#add-a-project-to-the-packages-site">
+                          add a package to the list
+                        </a>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="block">
+                    <div class="icon-text is-white">
+                      <span class="icon">
+                        <i class="fas fa-graduation-cap"></i>
+                      </span>
+                      <span>
+                        <a class="footer-link" href="https://fslab.org/tutorials.html">
+                          tutorials and learning resources
+                        </a>
+                      </span>
+                    </div>
+                    <div class="icon-text is-white">
+                      <span class="icon">
+                        <i class="fas fa-plus"></i>
+                      </span>
+                      <span>
+                        <a class="footer-link" href="https://github.com/fslaborg/fslaborg.github.io#add-a-tutorial-guide-or-blogpost">
+                          add tutorial content
+                        </a>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="column is-4 m-4">
+                <div class="block">
+                  <h3 class="subtitle is-white">
+                    External resources
+                  </h3>
+                </div>
+                <div class="block">
+                  <ul>
+                    <li>
+                      <a href="https://github.com/fsprojects?type=source" class="footer-link">
+                        fsprojects - general F# project incubation space
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://fsharp.org/" class="footer-link">
+                        fsharp.org
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>
