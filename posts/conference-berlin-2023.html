@@ -1,0 +1,303 @@
+<html>
+  <head>
+    <meta charSet="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>
+      Data Science in F# 2023 is a wrap!
+    </title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans"/>
+    <script defer="true" src="https://kit.fontawesome.com/0d3e0ea7a6.js" crossOrigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fslab/fslab-styles"/>
+    <meta name="description" content="A recap of the 2023 Data Science in F# Conference in Berlin"/>
+    <meta name="tags" content="fslab, FsLab, data science, datascience, data visualization, dataviz, F#, C#, .NET, dotnet"/>
+    <meta name="og:title" content="Data Science in F# 2023 is a wrap!"/>
+    <meta name="og:description" content="A recap of the 2023 Data Science in F# Conference in Berlin"/>
+    <meta name="og:image" content="https://fslab.org/blog/images/conference-berlin-2023/conference-berlin-2023.png"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:site" content="@fslaborg"/>
+    <meta name="twitter:title" content="Data Science in F# 2023 is a wrap!"/>
+    <meta name="twitter:description" content="A recap of the 2023 Data Science in F# Conference in Berlin"/>
+    <meta name="twitter:image" content="https://fslab.org/blog/images/conference-berlin-2023/conference-berlin-2023.png"/>
+    <script src="https://fslab.org/blog/js/navbar.js"></script>
+    <script src="https://fslab.org/blog/js/prism.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-timeline@3.0.5/dist/css/bulma-timeline.min.css"/>
+    <script>
+      MathJax = {tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}}
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-svg.js"></script>
+    <link rel="stylesheet" href="https://fslab.org/blog/style/notebook.css"/>
+    <link rel="stylesheet" href="https://fslab.org/blog/style/custom.css"/>
+  </head>
+  <body>
+    <div class="columns is-fullheight m-0">
+      <div class="column is-2 is-paddingless box m-0">
+        <aside class="menu p-4" id="graph-menu">
+          <div class="content">
+            <h3 class="title is-capitalized is-inline-block is-emphasized-darkmagenta mb-4">
+              Table of contents
+            </h3>
+            <ul>
+              <li>
+                <a href="#Data-Science-in-F%23-2023-is-a-wrap!" class="is-aquamarine">
+                  Data Science in F%23 2023 is a wrap!
+                </a>
+              </li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+      <div class="column is-10 is-paddingless pl-1 pr-6">
+        <nav class="navbar">
+          <div class="navbar-brand">
+            <a class="navbar-item" href="https://fslab.org">
+              <img src="https://fslab.org/blog/images/favicon.png" alt="Logo"/>
+            </a>
+            <a class="navbar-burger" data-target="navMenu" aria-label="menu" role="button" aria-expanded="false">
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+            </a>
+          </div>
+          <div id="navMenu" class="navbar-menu">
+            <div class="navbar-start">
+              <a class="navbar-item" href="https://fslab.org">
+                Home
+              </a>
+              <a class="navbar-item" href="https://fslab.org/packages.html">
+                Data science packages
+              </a>
+              <a class="navbar-item is-active-link-darkmagenta smooth-hover" href="https://fslab.org/blog/">
+                Blog
+              </a>
+              <a class="navbar-item" href="https://fslab.org/blog/graph-gallery.html">
+                Graph Gallery
+              </a>
+            </div>
+            <div class="navbar-end">
+              <a class="navbar-item is-magenta" href="https://twitter.com/fslaborg">
+                <span class="icon">
+                  <i class="fab fa-twitter"></i>
+                </span>
+              </a>
+              <a class="navbar-item is-magenta" href="https://github.com/fslaborg">
+                <span class="icon">
+                  <i class="fab fa-github"></i>
+                </span>
+              </a>
+            </div>
+          </div>
+        </nav>
+        <section class="hero is-small has-bg-darkmagenta">
+          <div class="hero-body">
+            <div class="container has-text-justified">
+              <div class="main-TextField">
+                <h1 class="title is-capitalized is-white is-inline-block is-emphasized-magenta mb-4">
+                  Data Science in F# 2023 is a wrap!
+                </h1>
+                <div class="block">
+                  <h3 class="subtitle is-white is-block">
+                    Posted on 2023-11-1 by
+                    <a href="https://github.com/fslaborg" class="is-aquamarine">
+                      FsLab
+                    </a>
+                     in 
+                    <a href="https://fslab.org/blog/posts/categories/Announcements.html" class="is-aquamarine">
+                      Announcements
+                    </a>
+                  </h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <div class="content jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
+          
+
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h1 id="Data-Science-in-F%23-2023-is-a-wrap!">Data Science in F# 2023 is a wrap!<a class="anchor-link" href="#Data-Science-in-F%23-2023-is-a-wrap!">&#182;</a></h1><p>The first edition of <a href="https://datascienceinfsharp.com/">Data Science in F#</a> is 
+now behind us!</p>
+<p>Nearly 100 F# and data science enthusiasts gathered in Berlin for 3 days of 
+talks, workshops, lively discussions, and joyful coding and open-source hacking, 
+and we could not be happier about how the conference went!</p>
+<p><img src="https://fslab.org/blog/images/conference-berlin-2023/group-photo-data-science-in-fsharp.png" alt="Group photo"></p>
+<p>We were hoping that the conference would offer a chance for like-minded people 
+to meet and form a tighter community of F# and data science practitioners, and 
+ideally, ignite collaborations around the 
+<a href="https://github.com/fslaborg/">fsLab open source ecosystem</a>. There was plenty 
+of that happening during the open space and the Saturday hacktathon, which 
+sparked multiple 
+<a href="https://github.com/fslaborg/FSharp.Stats/commits/developer?since=2023-09-28&amp;until=2023-09-30">conversations and contributions</a>.</p>
+<p>So first, a heart-felt thank you to all of you who joined the conference. All the 
+attendees of course, but also all the <a href="https://datascienceinfsharp.com/agenda/">speakers</a>. 
+You made this conference an event we won't forget!</p>
+<p>Speaking of, if you missed the conference, or simply want to watch a talk again, 
+we have good news for you! Most of the talks were recorded, and we will be 
+making them available online, once they have been put in shape.</p>
+<p>We will also be collecting links to the slides and code presented 
+<a href="https://github.com/fslaborg/conference-resources/">here on GitHub</a>. So stay 
+tuned, and follow us on <a href="https://twitter.com/fslaborg">Twitter/X</a>!</p>
+<p>Finally, a huge thanks to the sponsors who made it possible to put together the 
+conference, <a href="https://hackandcraft.com/">Hack &amp; Craft</a> and the <a href="https://rptu.de/en/">University Kaiserslautern Landau RPTU</a>.</p>
+<p>Again, thank you to everyone who attended and made this event possible, and... 
+see you all at the next one :)</p>
+<p>The Data Science in F# Team,<br>
+<a href="https://github.com/bvenn">Benedikt</a>, <a href="http://www.linkedin.com/in/beth-walker-456a451ba">Beth</a>, <a href="https://github.com/HarryMcCarney">Harry</a>, <a href="https://github.com/kMutagene">Kevin</a>, <a href="https://github.com/mathias-brandewinder">Mathias</a> &amp; <a href="https://github.com/muehlhaus">Timo</a>.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+        </div>
+        <footer class="footer has-bg-darkmagenta">
+          <div class="container">
+            <div class="columns">
+              <div class="column is-4 m-4">
+                <div class="block">
+                  <h3 class="subtitle is-white">
+                    FsLab - the project incubation space for data science in F#
+                  </h3>
+                </div>
+                <div class="block">
+                  <p>
+                    FsLab is only possible due to the joined forces of F# open source contributors.
+                  </p>
+                </div>
+                <div class="block">
+                  <p>
+                    This website is created and maintained by individual FsLab open source contributors.
+                  </p>
+                </div>
+                <div class="block">
+                  <div class="icon-text is-white">
+                    <span class="icon">
+                      <i class="fas fa-code-branch"></i>
+                    </span>
+                    <span>
+                      <a class="footer-link" href="https://github.com/fslaborg/fslaborg.github.io">
+                        website source code
+                      </a>
+                    </span>
+                  </div>
+                  <div class="icon-text is-white">
+                    <span class="icon">
+                      <i class="far fa-handshake"></i>
+                    </span>
+                    <span>
+                      <a class="footer-link" href="https://github.com/orgs/fslaborg/people">
+                        fslab contributors
+                      </a>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="column is-4 m-4">
+                <div class="block">
+                  <h3 class="subtitle is-white">
+                    More
+                  </h3>
+                </div>
+                <div class="block">
+                  <div class="block">
+                    <div class="icon-text is-white">
+                      <span class="icon">
+                        <i class="fab fa-github"></i>
+                      </span>
+                      <span>
+                        <a class="footer-link" href="https://github.com/fslaborg?type=source">
+                          the fslab organisation on github
+                        </a>
+                      </span>
+                    </div>
+                    <div class="icon-text is-white">
+                      <span class="icon">
+                        <i class="fab fa-twitter"></i>
+                      </span>
+                      <span>
+                        <a class="footer-link" href="https://twitter.com/fslaborg">
+                          fslab on twitter
+                        </a>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="block">
+                    <div class="icon-text is-white">
+                      <span class="icon">
+                        <i class="fas fa-cubes"></i>
+                      </span>
+                      <span>
+                        <a class="footer-link" href="https://fslab.org/packages.html">
+                          endorsed packages
+                        </a>
+                      </span>
+                    </div>
+                    <div class="icon-text is-white">
+                      <span class="icon">
+                        <i class="fas fa-plus"></i>
+                      </span>
+                      <span>
+                        <a class="footer-link" href="https://github.com/fslaborg/fslaborg.github.io#add-a-project-to-the-packages-site">
+                          add a package to the list
+                        </a>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="block">
+                    <div class="icon-text is-white">
+                      <span class="icon">
+                        <i class="fas fa-graduation-cap"></i>
+                      </span>
+                      <span>
+                        <a class="footer-link" href="https://fslab.org/tutorials.html">
+                          tutorials and learning resources
+                        </a>
+                      </span>
+                    </div>
+                    <div class="icon-text is-white">
+                      <span class="icon">
+                        <i class="fas fa-plus"></i>
+                      </span>
+                      <span>
+                        <a class="footer-link" href="https://github.com/fslaborg/fslaborg.github.io#add-a-tutorial-guide-or-blogpost">
+                          add tutorial content
+                        </a>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="column is-4 m-4">
+                <div class="block">
+                  <h3 class="subtitle is-white">
+                    External resources
+                  </h3>
+                </div>
+                <div class="block">
+                  <ul>
+                    <li>
+                      <a href="https://github.com/fsprojects?type=source" class="footer-link">
+                        fsprojects - general F# project incubation space
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://fsharp.org/" class="footer-link">
+                        fsharp.org
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>
