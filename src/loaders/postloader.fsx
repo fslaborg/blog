@@ -8,6 +8,7 @@ type PostCategory =
 | Fsharp
 | Datascience
 | Advanced
+| Announcements
 | Other of string
 
     static member ofString (s:string) =
@@ -15,6 +16,7 @@ type PostCategory =
         | "fsharp" -> Fsharp
         | "datascience" -> Datascience
         | "advanced" -> Advanced
+        | "announcements" -> Announcements
         | _ -> Other s
 
     static member toString (pc: PostCategory) =
@@ -22,13 +24,15 @@ type PostCategory =
         | Fsharp      -> "FSharp"
         | Datascience -> "Data Science"
         | Advanced    -> "Advanced"
+        | Announcements -> "Announcements"
         | Other o     -> o
-
+ 
     static member getDescription (pc: PostCategory) =
         match pc with
         | Fsharp      -> "Basic content related to the F# programming language."
         | Datascience -> "Data science using the FsLab stack"
         | Advanced    -> "Advanced topics"
+        | Announcements -> "Announcements from the FsLab team"
         | Other o     -> o
 
 type PostConfig = {
