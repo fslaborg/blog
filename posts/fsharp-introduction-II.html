@@ -38,8 +38,8 @@
             </h3>
             <ul>
               <li>
-                <a href="#F%23-Introduction-II:-Scripting-in-F" class="is-aquamarine">
-                  F%23 Introduction II: Scripting in F
+                <a href="#F%23-Introduction-II:-Scripting-in-F%23" class="is-aquamarine">
+                  F%23 Introduction II: Scripting in F%23
                 </a>
               </li>
               <li>
@@ -137,141 +137,125 @@
         </section>
         <div class="content jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
           
-
+<main>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="F%23-Introduction-II:-Scripting-in-F">F# Introduction II: Scripting in F<a class="anchor-link" href="#F%23-Introduction-II:-Scripting-in-F">&#182;</a></h1><h2 id="Creating-a-.fsx-file">Creating a .fsx file<a class="anchor-link" href="#Creating-a-.fsx-file">&#182;</a></h2><h3 id="Visual-Studio">Visual Studio<a class="anchor-link" href="#Visual-Studio">&#182;</a></h3><ul>
-<li>Open Visual Studio and navigate to the "File" tab, where you select to create a new file.</li>
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h1 id="F%23-Introduction-II:-Scripting-in-F%23">F# Introduction II: Scripting in F#<a class="anchor-link" href="#F%23-Introduction-II:-Scripting-in-F%23">¶</a></h1><h2 id="Creating-a-.fsx-file">Creating a .fsx file<a class="anchor-link" href="#Creating-a-.fsx-file">¶</a></h2><h3 id="Visual-Studio">Visual Studio<a class="anchor-link" href="#Visual-Studio">¶</a></h3><ul>
+<li><p>Open Visual Studio and navigate to the "File" tab, where you select to create a new file.</p>
+</li>
 <li><p>Select the "F# Script File" option.</p>
-<p><img src="{{root}}images/FsxVS.png" alt=""></p>
+<p><img alt="" src="%7B%7Broot%7D%7Dimages/FsxVS.png"/></p>
 </li>
 <li><p>You now have a working script file. You can write code and execute it by selecting it and pressing <code>Alt + Enter</code>.</p>
 </li>
 </ul>
-<h3 id="Visual-Studio-Code">Visual Studio Code<a class="anchor-link" href="#Visual-Studio-Code">&#182;</a></h3><ul>
-<li>Open Visual Studio Code and navigate to the "File" tab, where you select to create a new file.</li>
+<h3 id="Visual-Studio-Code">Visual Studio Code<a class="anchor-link" href="#Visual-Studio-Code">¶</a></h3><ul>
+<li><p>Open Visual Studio Code and navigate to the "File" tab, where you select to create a new file.</p>
+</li>
 <li><p>You will then be prompted to select a language. Choose F# there.</p>
-<p><img src="{{root}}images/FsxVSCode.png" alt=""></p>
+<p><img alt="" src="%7B%7Broot%7D%7Dimages/FsxVSCode.png"/></p>
 </li>
 <li><p>You now have a working script file. You can write code and execute it by selecting it and pressing <code>Alt + Enter</code>.</p>
 </li>
-<li>When you are done with your file save it as .fsx.</li>
+<li><p>When you are done with your file save it as .fsx.</p>
+</li>
 </ul>
-<h2 id="Referencing-packages">Referencing packages<a class="anchor-link" href="#Referencing-packages">&#182;</a></h2><ul>
+<h2 id="Referencing-packages">Referencing packages<a class="anchor-link" href="#Referencing-packages">¶</a></h2><ul>
 <li>Packages on nuget can be referenced using '#r "nuget: PackageName"':</li>
 </ul>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: FSharp.Stats"</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: FSharp.Stats"</span>
 <span class="c1">// References a sepcific package version</span>
 <span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Plotly.NET, 4.0.0"</span>
 <span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Plotly.NET.Interactive, 4.0.0"</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div><div></div><div></div><div><strong>Installed Packages</strong><ul><li><span>FSharp.Stats, 0.4.11</span></li><li><span>Plotly.NET, 4.0.0</span></li><li><span>Plotly.NET.Interactive, 4.0.0</span></li></ul></div></div>
 </div>
-
 </div>
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-
-<div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Loading extensions from `C:\Users\schne\.nuget\packages\plotly.net.interactive\4.0.0\interactive-extensions\dotnet\Plotly.NET.Interactive.dll`</pre>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Alternatively, .dll files can be referenced directly with the following syntax:</p>
-<div class="highlight"><pre><span></span><span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">@&quot;Your\Path\To\Package\PackageName.dll&quot;</span>
+<div class="highlight"><pre><span></span><span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">@"Your\Path\To\Package\PackageName.dll"</span>
 </pre></div>
-
 </div>
 </div>
 </div>
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Working-with-notebooks">Working with notebooks<a class="anchor-link" href="#Working-with-notebooks">&#182;</a></h2><ul>
-<li>Visual Studio Code supports working with notebooks</li>
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Working-with-notebooks">Working with notebooks<a class="anchor-link" href="#Working-with-notebooks">¶</a></h2><ul>
+<li><p>Visual Studio Code supports working with notebooks</p>
+</li>
 <li><p>To work with notebooks, you need to install the <a href="https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.dotnet-interactive-vscode">.NET Interactive Notebooks</a> extension.</p>
-<p><img src="{{root}}images/NotebooksExt.png" alt=""></p>
+<p><img alt="" src="%7B%7Broot%7D%7Dimages/NotebooksExt.png"/></p>
 </li>
 <li><p>A new Notebook can be opened by pressing <code>Ctrl + Shift + P</code> and selecting ".NET Interactive: Create new blank notebook".</p>
 </li>
-<li>You will then be prompted to create it either as .dib or .ipynb.</li>
-<li>When asked for the language, choose F#</li>
-<li>Notebooks contain Text- and Codeblocks:</li>
+<li><p>You will then be prompted to create it either as .dib or .ipynb.</p>
+</li>
+<li><p>When asked for the language, choose F#</p>
+</li>
+<li><p>Notebooks contain Text- and Codeblocks:</p>
+</li>
 <li><p>Adding a new Text- or Codeblock can be done by hovering at the upper or lower border of an existing block or upper part of the notebook and pressing <code>+Code</code> or <code>+Markdown</code></p>
-<p><img src="{{root}}images/NBBlock.png" alt=""></p>
+<p><img alt="" src="%7B%7Broot%7D%7Dimages/NBBlock.png"/></p>
 </li>
 <li><p>Working with Textblocks:
   You can edit a Textblock by doubleklicking on it. Inside a Textblock you can write plain text or style it with <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a>.
   Once you are finished you can press the <code>Esc</code> button.</p>
 </li>
-<li>Working with Codeblocks:
+<li><p>Working with Codeblocks:
   You can start editing any Codeblock by clicking in it. In there you can start writing your own code or edit existing code. Once you are done you can execute the Codeblock by pressing <code>Ctrl + Alt + Enter</code>.
-  If you want to execute all codeblocks at once, you can press on the two arrows in the upper left corner of the notebook.</li>
+  If you want to execute all codeblocks at once, you can press on the two arrows in the upper left corner of the notebook.</p>
+</li>
 </ul>
-
 </div>
 </div>
 </div>
 </div>
+</main>
 
         </div>
         <footer class="footer has-bg-darkmagenta">

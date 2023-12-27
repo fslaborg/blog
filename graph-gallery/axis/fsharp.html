@@ -124,29 +124,28 @@
         </section>
         <div class="content jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
           
-
+<main>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="Advanced-axis-styling-using-Plotly.NET">Advanced axis styling using Plotly.NET<a class="anchor-link" href="#Advanced-axis-styling-using-Plotly.NET">&#182;</a></h1><p>This post assumes you are already familiar using Plotly.NET. If you want to manually define the position of individual plots and have special needs for axis stylings, keep on reading.</p>
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h1 id="Advanced-axis-styling-using-Plotly.NET">Advanced axis styling using Plotly.NET<a class="anchor-link" href="#Advanced-axis-styling-using-Plotly.NET">¶</a></h1><p>This post assumes you are already familiar using Plotly.NET. If you want to manually define the position of individual plots and have special needs for axis stylings, keep on reading.</p>
 <p>Note: There may be other ways to obtain the result seen below</p>
 <p>First let us define three simple charts and combine them to a chart grid</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Plotly.NET.Interactive, 4.2.1"</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Plotly.NET.Interactive, 4.2.1"</span>
 
 <span class="k">open</span><span class="w"> </span><span class="nn">Plotly.NET</span>
 <span class="k">open</span><span class="w"> </span><span class="nn">Plotly.NET.StyleParam</span>
@@ -163,54 +162,29 @@
 <span class="o">]</span>
 <span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Grid</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span><span class="mi">2</span><span class="o">)</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div><div></div><div></div><div><strong>Installed Packages</strong><ul><li><span>Plotly.NET.Interactive, 4.2.1</span></li></ul></div></div>
 </div>
-
 </div>
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-
-<div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Loading extensions from `C:\Users\bvenn\.nuget\packages\plotly.net.interactive\4.2.1\interactive-extensions\dotnet\Plotly.NET.Interactive.dll`</pre>
 </div>
-
 </div>
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div><div id="f378b6df-1e0d-4e92-ac95-033d5cf4ecc1"><!-- Plotly chart will be drawn inside this DIV --></div><script type="text/javascript">
 var renderPlotly_f378b6df1e0d4e92ac95033d5cf4ecc1 = function() {
     var fsharpPlotlyRequire = requirejs.config({context:'fsharp-plotly',paths:{plotly:'https://cdn.plot.ly/plotly-2.21.0.min'}}) || require;
@@ -235,34 +209,29 @@ else {
 }
 </script></div>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Now lets define the regions the plots should be drawn in. Therefore it is required to assign unique axis ids to each chart. The resulting chart does not change by simply defining these ids:</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">chartWithAxisIds</span><span class="w"> </span><span class="o">=</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">chartWithAxisIds</span><span class="w"> </span><span class="o">=</span>
 <span class="w">    </span><span class="o">[</span>
 <span class="w">    </span><span class="n">chartA</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withAxisAnchor</span><span class="o">(</span><span class="n">X</span><span class="o">=</span><span class="mi">1</span><span class="o">,</span><span class="n">Y</span><span class="o">=</span><span class="mi">1</span><span class="o">)</span>
 <span class="w">    </span><span class="n">chartB</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withAxisAnchor</span><span class="o">(</span><span class="n">X</span><span class="o">=</span><span class="mi">2</span><span class="o">,</span><span class="n">Y</span><span class="o">=</span><span class="mi">2</span><span class="o">)</span>
@@ -272,27 +241,17 @@ else {
 
 <span class="n">chartWithAxisIds</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div><div id="aee6d3ef-9054-4335-9583-57dca75c4f35"><!-- Plotly chart will be drawn inside this DIV --></div><script type="text/javascript">
 var renderPlotly_aee6d3ef90544335958357dca75c4f35 = function() {
     var fsharpPlotlyRequire = requirejs.config({context:'fsharp-plotly',paths:{plotly:'https://cdn.plot.ly/plotly-2.21.0.min'}}) || require;
@@ -317,20 +276,16 @@ else {
 }
 </script></div>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>The defined axis identifiers can be used to set regions the charts are drawn in. Therefore, the ids are used to define the domain region of each axis.</p>
 <div class="highlight"><pre><span></span><span class="n">chartWithAxisIds</span>
 <span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxis</span><span class="o">(</span>
@@ -346,19 +301,18 @@ else {
 <span class="w">    </span><span class="o">)</span>
 </pre></div>
 <p>The same procedure is performed for all x and y axis:</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">chartsWithDefinedRegions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">chartsWithDefinedRegions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
 <span class="w">    </span><span class="n">chartWithAxisIds</span>
 <span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxis</span><span class="o">(</span><span class="n">Id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">SubPlotId</span><span class="p">.</span><span class="n">XAxis</span><span class="w"> </span><span class="mi">1</span><span class="o">,</span><span class="w"> </span><span class="n">xAxis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">LinearAxis</span><span class="p">.</span><span class="n">init</span><span class="o">(</span><span class="n">Domain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Range</span><span class="p">.</span><span class="n">MinMax</span><span class="w"> </span><span class="o">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">00</span><span class="o">,</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">33</span><span class="o">)))</span><span class="w"> </span>
 <span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxis</span><span class="o">(</span><span class="n">Id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">SubPlotId</span><span class="p">.</span><span class="n">YAxis</span><span class="w"> </span><span class="mi">1</span><span class="o">,</span><span class="w"> </span><span class="n">yAxis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">LinearAxis</span><span class="p">.</span><span class="n">init</span><span class="o">(</span><span class="n">Domain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Range</span><span class="p">.</span><span class="n">MinMax</span><span class="w"> </span><span class="o">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">00</span><span class="o">,</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">45</span><span class="o">)))</span>
@@ -369,27 +323,17 @@ else {
 
 <span class="n">chartsWithDefinedRegions</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div><div id="94d5f01b-90a4-4f21-a206-4f9ee5f162a3"><!-- Plotly chart will be drawn inside this DIV --></div><script type="text/javascript">
 var renderPlotly_94d5f01b90a44f21a2064f9ee5f162a3 = function() {
     var fsharpPlotlyRequire = requirejs.config({context:'fsharp-plotly',paths:{plotly:'https://cdn.plot.ly/plotly-2.21.0.min'}}) || require;
@@ -414,20 +358,16 @@ else {
 }
 </script></div>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Much more styling can be applied to the axis.</p>
 <ul>
 <li><code>TickVals = [1.; 1.29; 1.5; 2.; 3.]</code> defines the exact tick values (blue chart y axis)</li>
@@ -437,19 +377,18 @@ else {
 <li><code>RangeMode = RangeMode.ToZero</code> the axis should span the zero value (green chart y axis)</li>
 </ul>
 <p>Further style options can be seen at <a href="plotly.net">plotly.net</a>. The final chart generation looks like this:</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="o">[</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="o">[</span>
 <span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Point</span><span class="o">(</span><span class="n">xy</span><span class="o">=[</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">])</span><span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withAxisAnchor</span><span class="o">(</span><span class="n">X</span><span class="o">=</span><span class="mi">1</span><span class="o">,</span><span class="n">Y</span><span class="o">=</span><span class="mi">1</span><span class="o">)</span>
 <span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Point</span><span class="o">(</span><span class="n">xy</span><span class="o">=[</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">])</span><span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withAxisAnchor</span><span class="o">(</span><span class="n">X</span><span class="o">=</span><span class="mi">2</span><span class="o">,</span><span class="n">Y</span><span class="o">=</span><span class="mi">2</span><span class="o">)</span>
 <span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Line</span><span class="o">(</span><span class="n">xy</span><span class="o">=[</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">;</span><span class="mi">2</span><span class="o">,</span><span class="mi">3</span><span class="o">])</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withAxisAnchor</span><span class="o">(</span><span class="n">X</span><span class="o">=</span><span class="mi">3</span><span class="o">,</span><span class="n">Y</span><span class="o">=</span><span class="mi">3</span><span class="o">)</span>
@@ -464,27 +403,17 @@ else {
 <span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withLegendStyle</span><span class="o">(</span><span class="n">Orientation</span><span class="o">=</span><span class="nn">Orientation</span><span class="p">.</span><span class="n">Horizontal</span><span class="o">)</span>
 <span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withLayoutStyle</span><span class="o">(</span><span class="n">Font</span><span class="o">=(</span><span class="nn">Font</span><span class="p">.</span><span class="n">init</span><span class="o">(</span><span class="n">Family</span><span class="o">=</span><span class="nn">FontFamily</span><span class="p">.</span><span class="n">Arial</span><span class="o">,</span><span class="n">Size</span><span class="o">=</span><span class="mi">14</span><span class="o">)))</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div><div id="621fbe53-0ace-4146-87de-9e82f77ff53d"><!-- Plotly chart will be drawn inside this DIV --></div><script type="text/javascript">
 var renderPlotly_621fbe530ace414687de9e82f77ff53d = function() {
     var fsharpPlotlyRequire = requirejs.config({context:'fsharp-plotly',paths:{plotly:'https://cdn.plot.ly/plotly-2.21.0.min'}}) || require;
@@ -509,14 +438,11 @@ else {
 }
 </script></div>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
+</main>
 
         </div>
         <footer class="footer has-bg-darkmagenta">

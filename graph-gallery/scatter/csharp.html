@@ -163,11 +163,11 @@
                     select language:
                   </h1>
                   <div class="tags">
-                    <a class="tag is-language is-large" href="https://fslab.org/blog/graph-gallery/scatter/fsharp.html">
-                      fsharp
-                    </a>
                     <a class="tag is-language is-active is-large" href="https://fslab.org/blog/graph-gallery/scatter/csharp.html">
                       csharp
+                    </a>
+                    <a class="tag is-language is-large" href="https://fslab.org/blog/graph-gallery/scatter/fsharp.html">
+                      fsharp
                     </a>
                   </div>
                 </div>
@@ -177,141 +177,115 @@
         </section>
         <div class="content jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
           
-
+<main>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="Scatter-plots-with-Plotly.NET">Scatter plots with Plotly.NET<a class="anchor-link" href="#Scatter-plots-with-Plotly.NET">&#182;</a></h1><h2 id="Graph-description">Graph description<a class="anchor-link" href="#Graph-description">&#182;</a></h2><blockquote><p>A scatter plot (also called a scatterplot, scatter graph, scatter chart, scattergram, or scatter diagram) is a type of plot or mathematical diagram using Cartesian coordinates to display values for typically two variables for a set of data
-_<a href="https://en.wikipedia.org/wiki/Scatter_plot">wikipedia</a>_</p>
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h1 id="Scatter-plots-with-Plotly.NET">Scatter plots with Plotly.NET<a class="anchor-link" href="#Scatter-plots-with-Plotly.NET">¶</a></h1><h2 id="Graph-description">Graph description<a class="anchor-link" href="#Graph-description">¶</a></h2><blockquote>
+<p>A scatter plot (also called a scatterplot, scatter graph, scatter chart, scattergram, or scatter diagram) is a type of plot or mathematical diagram using Cartesian coordinates to display values for typically two variables for a set of data</p>
 </blockquote>
+<p><em><a href="https://en.wikipedia.org/wiki/Scatter_plot">wikipedia</a></em></p>
 <p>Scatter plots are one of the fundamental graphs in my day-to-day work. In their most basic form, they plot two variables on a 2D plane as points. The two coordinates on that plane are often referred to as pairs of <em>(X,Y)</em> coordinates, and the position scales are called <em>X and Y axes</em>.</p>
-
 </div>
 </div>
 </div>
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Graph-data">Graph data<a class="anchor-link" href="#Graph-data">&#182;</a></h2><p>let's create two sets of data for the <em>X</em> and <em>Y</em> Coordinates of our points respectively.</p>
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Graph-data">Graph data<a class="anchor-link" href="#Graph-data">¶</a></h2><p>let's create two sets of data for the <em>X</em> and <em>Y</em> Coordinates of our points respectively.</p>
 <p>the values in <code>x</code> are linearily spaced between 0 and $2*\pi$, while the y coordinates will have the corresponding <a href="https://en.wikipedia.org/wiki/Sine_and_cosine">sine</a> values ($sin(x)$)</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-C#"><pre><span></span><span class="kt">var</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Enumerable</span><span class="p">.</span><span class="n">Range</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">63</span><span class="p">).</span><span class="n">Select</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">0.1</span><span class="p">);</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-C#"><pre><span></span><span class="kt">var</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Enumerable</span><span class="p">.</span><span class="n">Range</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">63</span><span class="p">).</span><span class="n">Select</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">0.1</span><span class="p">);</span>
 <span class="kt">var</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">.</span><span class="n">Select</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Math</span><span class="p">.</span><span class="n">Sin</span><span class="p">(</span><span class="n">x</span><span class="p">));</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Reference-Plotly.NET">Reference Plotly.NET<a class="anchor-link" href="#Reference-Plotly.NET">&#182;</a></h2>
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Reference-Plotly.NET">Reference Plotly.NET<a class="anchor-link" href="#Reference-Plotly.NET">¶</a></h2>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-C#"><pre><span></span><span class="err">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Plotly.NET, 3.0.0"</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-C#"><pre><span></span><span class="err">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Plotly.NET, 3.0.0"</span>
 <span class="err">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Plotly.NET.Interactive, 3.0.0"</span>
 <span class="err">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Plotly.NET.CSharp"</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div><div></div><div></div><div><strong>Installed Packages</strong><ul><li><span>Plotly.NET, 3.0.0</span></li><li><span>Plotly.NET.CSharp, 0.8.0</span></li><li><span>Plotly.NET.Interactive, 3.0.0</span></li></ul></div></div>
 </div>
-
 </div>
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-
-<div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Loading extensions from `C:\Users\schne\.nuget\packages\plotly.net.interactive\3.0.0\interactive-extensions\dotnet\Plotly.NET.Interactive.dll`</pre>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="A-simple-scatter-plot">A simple scatter plot<a class="anchor-link" href="#A-simple-scatter-plot">&#182;</a></h2><p>Plotly.NET offers many high-level abstractions for graphs with its <code>Chart</code> API.</p>
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="A-simple-scatter-plot">A simple scatter plot<a class="anchor-link" href="#A-simple-scatter-plot">¶</a></h2><p>Plotly.NET offers many high-level abstractions for graphs with its <code>Chart</code> API.</p>
 <p><code>Chart.Scatter</code> creates a scatter plot. it needs at least <code>x</code> and <code>y</code> arguments, and a <code>mode</code> argument that defines how the coordinates are visualized.</p>
 <p>For our first example, let's use <code>Mode.Markers</code> here to create simple points:</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-C#"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="nn">Plotly.NET.CSharp</span><span class="p">;</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-C#"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="nn">Plotly.NET.CSharp</span><span class="p">;</span>
 
 <span class="n">Chart</span><span class="p">.</span><span class="n">Scatter</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span><span class="kt">double</span><span class="p">,</span><span class="kt">string</span><span class="o">&gt;</span><span class="p">(</span>
 <span class="w">    </span><span class="n">x</span><span class="p">:</span><span class="w"> </span><span class="n">x</span><span class="p">,</span>
@@ -319,30 +293,19 @@ _<a href="https://en.wikipedia.org/wiki/Scatter_plot">wikipedia</a>_</p>
 <span class="w">    </span><span class="n">mode</span><span class="p">:</span><span class="w"> </span><span class="n">Plotly</span><span class="p">.</span><span class="n">NET</span><span class="p">.</span><span class="n">StyleParam</span><span class="p">.</span><span class="n">Mode</span><span class="p">.</span><span class="n">Markers</span>
 <span class="p">)</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
-
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div>
-    <div id="809a5443-3dfb-470a-806c-36c0489b5666"><!-- Plotly chart will be drawn inside this DIV --></div>
+<div id="809a5443-3dfb-470a-806c-36c0489b5666"><!-- Plotly chart will be drawn inside this DIV --></div>
 <script type="text/javascript">
 
             var renderPlotly_809a54433dfb470a806c36c0489b5666 = function() {
@@ -367,39 +330,30 @@ _<a href="https://en.wikipedia.org/wiki/Scatter_plot">wikipedia</a>_</p>
                 renderPlotly_809a54433dfb470a806c36c0489b5666();
             }
 </script>
-
-    
-</div    
-
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Using-Chart.Point-and-some-basic-layout-styling">Using Chart.Point and some basic layout styling<a class="anchor-link" href="#Using-Chart.Point-and-some-basic-layout-styling">&#182;</a></h2><p><code>Chart.Point</code> is just <code>Chart.Scatter</code> with <code>mode</code> set to <code>markers</code>. If we just want to plot points, it is the method of choice. Additionally, let's use some chart styling functions to add titles to the axes:</p>
-
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Using-Chart.Point-and-some-basic-layout-styling">Using Chart.Point and some basic layout styling<a class="anchor-link" href="#Using-Chart.Point-and-some-basic-layout-styling">¶</a></h2><p><code>Chart.Point</code> is just <code>Chart.Scatter</code> with <code>mode</code> set to <code>markers</code>. If we just want to plot points, it is the method of choice. Additionally, let's use some chart styling functions to add titles to the axes:</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-C#"><pre><span></span><span class="n">Chart</span><span class="p">.</span><span class="n">Point</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="o">&gt;</span><span class="p">(</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-C#"><pre><span></span><span class="n">Chart</span><span class="p">.</span><span class="n">Point</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="o">&gt;</span><span class="p">(</span>
 <span class="w">    </span><span class="n">x</span><span class="p">:</span><span class="w"> </span><span class="n">x</span><span class="p">,</span>
 <span class="w">    </span><span class="n">y</span><span class="p">:</span><span class="w"> </span><span class="n">y</span><span class="p">,</span>
 <span class="w">    </span><span class="n">Name</span><span class="p">:</span><span class="w"> </span><span class="s">"y = sin(x)"</span><span class="p">,</span>
@@ -408,30 +362,19 @@ _<a href="https://en.wikipedia.org/wiki/Scatter_plot">wikipedia</a>_</p>
 <span class="w">    </span><span class="p">.</span><span class="n">WithXAxisStyle</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="kt">string</span><span class="p">,</span><span class="kt">string</span><span class="o">&gt;</span><span class="p">(</span><span class="n">TitleText</span><span class="p">:</span><span class="w"> </span><span class="s">"x"</span><span class="p">)</span>
 <span class="w">    </span><span class="p">.</span><span class="n">WithYAxisStyle</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="kt">string</span><span class="p">,</span><span class="kt">string</span><span class="o">&gt;</span><span class="p">(</span><span class="n">TitleText</span><span class="p">:</span><span class="w"> </span><span class="s">"y"</span><span class="p">)</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
-
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div>
-    <div id="294255c4-093c-4cef-81fb-56f2db60394f"><!-- Plotly chart will be drawn inside this DIV --></div>
+<div id="294255c4-093c-4cef-81fb-56f2db60394f"><!-- Plotly chart will be drawn inside this DIV --></div>
 <script type="text/javascript">
 
             var renderPlotly_294255c4093c4cef81fb56f2db60394f = function() {
@@ -456,70 +399,50 @@ _<a href="https://en.wikipedia.org/wiki/Scatter_plot">wikipedia</a>_</p>
                 renderPlotly_294255c4093c4cef81fb56f2db60394f();
             }
 </script>
-
-    
-</div    
-
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Connecting-data-with-lines">Connecting data with lines<a class="anchor-link" href="#Connecting-data-with-lines">&#182;</a></h2><p>When the order of our points has a meaning (for example, our <code>x</code> could be <code>time</code>, and <code>y</code> could be an observation we make in dependence of time), it can make sense to connect them via lines.</p>
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Connecting-data-with-lines">Connecting data with lines<a class="anchor-link" href="#Connecting-data-with-lines">¶</a></h2><p>When the order of our points has a meaning (for example, our <code>x</code> could be <code>time</code>, and <code>y</code> could be an observation we make in dependence of time), it can make sense to connect them via lines.</p>
 <p>We could use <code>Mode.Lines</code> with <code>Chart.Scatter</code>, but there is also <code>Chart.Line</code> which does just that:</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[5]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-C#"><pre><span></span><span class="n">Chart</span><span class="p">.</span><span class="n">Line</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="o">&gt;</span><span class="p">(</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-C#"><pre><span></span><span class="n">Chart</span><span class="p">.</span><span class="n">Line</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="o">&gt;</span><span class="p">(</span>
 <span class="w">    </span><span class="n">x</span><span class="p">:</span><span class="w"> </span><span class="n">x</span><span class="p">,</span>
 <span class="w">    </span><span class="n">y</span><span class="p">:</span><span class="w"> </span><span class="n">y</span>
 <span class="p">)</span>
 <span class="w">    </span><span class="p">.</span><span class="n">WithXAxisStyle</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="o">&gt;</span><span class="p">(</span><span class="n">TitleText</span><span class="p">:</span><span class="w"> </span><span class="s">"time [s]"</span><span class="p">)</span>
 <span class="w">    </span><span class="p">.</span><span class="n">WithYAxisStyle</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="o">&gt;</span><span class="p">(</span><span class="n">TitleText</span><span class="p">:</span><span class="w"> </span><span class="s">"some observation value"</span><span class="p">)</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
-
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div>
-    <div id="5697c7c4-837a-4821-a5cc-7c682ee73174"><!-- Plotly chart will be drawn inside this DIV --></div>
+<div id="5697c7c4-837a-4821-a5cc-7c682ee73174"><!-- Plotly chart will be drawn inside this DIV --></div>
 <script type="text/javascript">
 
             var renderPlotly_5697c7c4837a4821a5cc7c682ee73174 = function() {
@@ -544,42 +467,33 @@ _<a href="https://en.wikipedia.org/wiki/Scatter_plot">wikipedia</a>_</p>
                 renderPlotly_5697c7c4837a4821a5cc7c682ee73174();
             }
 </script>
-
-    
-</div    
-
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="When-not-to-use-lines">When not to use lines<a class="anchor-link" href="#When-not-to-use-lines">&#182;</a></h2><p>As pointed out above, connecting our data points via lines only makes sense if there is some inherent meaning to the connection, such as indicating observations occurring in sequence.</p>
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="When-not-to-use-lines">When not to use lines<a class="anchor-link" href="#When-not-to-use-lines">¶</a></h2><p>As pointed out above, connecting our data points via lines only makes sense if there is some inherent meaning to the connection, such as indicating observations occurring in sequence.</p>
 <p>Scatter plots can also be used to investigate the distribution of data points across two dimensions (often leading to a 'point cloud').</p>
 <p>If we connect the points on such a plot where we have no inherent meaning to the succession of values, it does not make too much sense.</p>
 <p>Let's take a look at this side-by-side, using <code>Chart.Grid</code> for a multi-chart layout:</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-C#"><pre><span></span><span class="kt">var</span><span class="w"> </span><span class="n">rnd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Random</span><span class="p">(</span><span class="m">69</span><span class="p">);</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-C#"><pre><span></span><span class="kt">var</span><span class="w"> </span><span class="n">rnd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Random</span><span class="p">(</span><span class="m">69</span><span class="p">);</span>
 <span class="kt">var</span><span class="w"> </span><span class="n">rnd_x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Enumerable</span><span class="p">.</span><span class="n">Range</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">200</span><span class="p">).</span><span class="n">Select</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=&gt;</span><span class="n">rnd</span><span class="p">.</span><span class="n">NextDouble</span><span class="p">());</span>
 <span class="kt">var</span><span class="w"> </span><span class="n">rnd_y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Enumerable</span><span class="p">.</span><span class="n">Range</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">200</span><span class="p">).</span><span class="n">Select</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=&gt;</span><span class="n">rnd</span><span class="p">.</span><span class="n">NextDouble</span><span class="p">());</span>
 
@@ -606,30 +520,19 @@ _<a href="https://en.wikipedia.org/wiki/Scatter_plot">wikipedia</a>_</p>
 <span class="p">)</span>
 <span class="w">    </span><span class="p">.</span><span class="n">WithSize</span><span class="p">(</span><span class="n">Width</span><span class="p">:</span><span class="w"> </span><span class="m">1000</span><span class="p">,</span><span class="w"> </span><span class="n">Height</span><span class="p">:</span><span class="w"> </span><span class="m">600</span><span class="p">)</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
-
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div>
-    <div id="7ae9fa28-3b6b-43e2-acec-0d4fa4c17569"><!-- Plotly chart will be drawn inside this DIV --></div>
+<div id="7ae9fa28-3b6b-43e2-acec-0d4fa4c17569"><!-- Plotly chart will be drawn inside this DIV --></div>
 <script type="text/javascript">
 
             var renderPlotly_7ae9fa283b6b43e2acec0d4fa4c17569 = function() {
@@ -654,43 +557,34 @@ _<a href="https://en.wikipedia.org/wiki/Scatter_plot">wikipedia</a>_</p>
                 renderPlotly_7ae9fa283b6b43e2acec0d4fa4c17569();
             }
 </script>
-
-    
-</div    
-
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Bubble-charts---introducing-a-third-dimension-to-scatter-plots">Bubble charts - introducing a third dimension to scatter plots<a class="anchor-link" href="#Bubble-charts---introducing-a-third-dimension-to-scatter-plots">&#182;</a></h2><p>In the previous examples, all points are of the same size, and the size does not have any assiocated dimension.</p>
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Bubble-charts---introducing-a-third-dimension-to-scatter-plots">Bubble charts - introducing a third dimension to scatter plots<a class="anchor-link" href="#Bubble-charts---introducing-a-third-dimension-to-scatter-plots">¶</a></h2><p>In the previous examples, all points are of the same size, and the size does not have any assiocated dimension.</p>
 <p><strong>Bubble</strong> charts change that by associating a third variable to the point size.</p>
 <p>Imagine the following scenario:</p>
 <p>We have two imaginary countries - <code>ALand</code> and <code>BLand</code>, which we want to compare across their <code>population</code> and <a href="https://en.wikipedia.org/wiki/Gross_domestic_product"><code>GDP</code></a> over time.</p>
 <p>using <code>Chart.Bubble</code>, we can add the one dimension (here, i choose <code>GDP</code>) to the point size:</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-C#"><pre><span></span><span class="c1">// A Land</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-C#"><pre><span></span><span class="c1">// A Land</span>
 <span class="kt">var</span><span class="w"> </span><span class="n">gdp_a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="p">{</span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="m">25</span><span class="p">,</span><span class="w"> </span><span class="m">35</span><span class="p">,</span><span class="w"> </span><span class="m">40</span><span class="p">,</span><span class="w"> </span><span class="m">50</span><span class="p">};</span>
 <span class="kt">var</span><span class="w"> </span><span class="n">population_a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="p">{</span><span class="m">500</span><span class="p">,</span><span class="w"> </span><span class="m">530</span><span class="p">,</span><span class="w"> </span><span class="m">520</span><span class="p">,</span><span class="w"> </span><span class="m">500</span><span class="p">,</span><span class="w"> </span><span class="m">510</span><span class="p">};</span>
 
@@ -724,30 +618,19 @@ _<a href="https://en.wikipedia.org/wiki/Scatter_plot">wikipedia</a>_</p>
 <span class="w">    </span><span class="p">.</span><span class="n">WithXAxisStyle</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="o">&gt;</span><span class="p">(</span><span class="n">TitleText</span><span class="p">:</span><span class="w"> </span><span class="s">"Time [y]"</span><span class="p">)</span>
 <span class="w">    </span><span class="p">.</span><span class="n">WithYAxisStyle</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="o">&gt;</span><span class="p">(</span><span class="n">TitleText</span><span class="p">:</span><span class="w"> </span><span class="s">"Population [Million]"</span><span class="p">)</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
-
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div>
-    <div id="9c140276-4250-4840-b291-25f6b46831c7"><!-- Plotly chart will be drawn inside this DIV --></div>
+<div id="9c140276-4250-4840-b291-25f6b46831c7"><!-- Plotly chart will be drawn inside this DIV --></div>
 <script type="text/javascript">
 
             var renderPlotly_9c14027642504840b29125f6b46831c7 = function() {
@@ -772,25 +655,17 @@ _<a href="https://en.wikipedia.org/wiki/Scatter_plot">wikipedia</a>_</p>
                 renderPlotly_9c14027642504840b29125f6b46831c7();
             }
 </script>
-
-    
-</div    
-
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p><strong>What can we see here?</strong></p>
 <ul>
 <li><code>ALand</code> has a pretty stagnant population size (y value), while its GDP (bubble size) is increasing with time, meaning the wealth of individuals is rising over time.</li>
@@ -798,19 +673,18 @@ _<a href="https://en.wikipedia.org/wiki/Scatter_plot">wikipedia</a>_</p>
 </ul>
 <p>Since we have a <code>time</code> axis, we can also connect the bubbles via lines to further emphasize the time evolution.</p>
 <p>As <code>Chart.Bubble</code> has no arguments for that, we can fall back on using <code>Chart.Scatter</code> like this:</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-C#"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="nn">Plotly.NET.TraceObjects</span><span class="p">;</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-C#"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="nn">Plotly.NET.TraceObjects</span><span class="p">;</span>
 
 <span class="n">Chart</span><span class="p">.</span><span class="n">Combine</span><span class="p">(</span>
 <span class="w">    </span><span class="n">gCharts</span><span class="p">:</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Plotly</span><span class="p">.</span><span class="n">NET</span><span class="p">.</span><span class="n">GenericChart</span><span class="p">.</span><span class="n">GenericChart</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="p">{</span>
@@ -838,30 +712,19 @@ _<a href="https://en.wikipedia.org/wiki/Scatter_plot">wikipedia</a>_</p>
 <span class="w">    </span><span class="p">.</span><span class="n">WithXAxisStyle</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="o">&gt;</span><span class="p">(</span><span class="n">TitleText</span><span class="p">:</span><span class="w"> </span><span class="s">"Time [y]"</span><span class="p">)</span>
 <span class="w">    </span><span class="p">.</span><span class="n">WithYAxisStyle</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="o">&gt;</span><span class="p">(</span><span class="n">TitleText</span><span class="p">:</span><span class="w"> </span><span class="s">"Population [Million]"</span><span class="p">)</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
-
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div>
-    <div id="e9a6e626-26a3-4e11-ba85-823e3a9655f4"><!-- Plotly chart will be drawn inside this DIV --></div>
+<div id="e9a6e626-26a3-4e11-ba85-823e3a9655f4"><!-- Plotly chart will be drawn inside this DIV --></div>
 <script type="text/javascript">
 
             var renderPlotly_e9a6e62626a34e11ba85823e3a9655f4 = function() {
@@ -886,26 +749,18 @@ _<a href="https://en.wikipedia.org/wiki/Scatter_plot">wikipedia</a>_</p>
                 renderPlotly_e9a6e62626a34e11ba85823e3a9655f4();
             }
 </script>
-
-    
-</div    
-
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Closing-remarks">Closing remarks<a class="anchor-link" href="#Closing-remarks">&#182;</a></h2><ul>
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Closing-remarks">Closing remarks<a class="anchor-link" href="#Closing-remarks">¶</a></h2><ul>
 <li><p>In general, Scatter plots are used to visualize the relationship of 2 variables on a 2D plane. Examples include:</p>
 <ul>
 <li>a timed sequence of observations, with then <code>x</code> dimension being <code>time</code> and the <code>y</code> dimension being any other variable which is observed over time.</li>
@@ -924,24 +779,23 @@ _<a href="https://en.wikipedia.org/wiki/Scatter_plot">wikipedia</a>_</p>
 </ul>
 </li>
 </ul>
-
 </div>
 </div>
 </div>
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="More-Plotly.NET">More Plotly.NET<a class="anchor-link" href="#More-Plotly.NET">&#182;</a></h2><p>Plotly.NET is a feature-rich graphing library for .NET programming languages.</p>
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="More-Plotly.NET">More Plotly.NET<a class="anchor-link" href="#More-Plotly.NET">¶</a></h2><p>Plotly.NET is a feature-rich graphing library for .NET programming languages.</p>
 <p>Check out the <a href="https://github.com/plotly/Plotly.NET">source repository on github</a> and <a href="https://plotly.net">in-depth F# docs</a> !</p>
-
 </div>
 </div>
 </div>
 </div>
+</div></div></div></div></div></div></main>
 
         </div>
         <footer class="footer has-bg-darkmagenta">

@@ -1,0 +1,488 @@
+<html>
+  <head>
+    <meta charSet="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>
+      State of FsLab 2023 (#FsAdvent)
+    </title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans"/>
+    <script defer="true" src="https://kit.fontawesome.com/0d3e0ea7a6.js" crossOrigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fslab/fslab-styles"/>
+    <meta name="description" content="A recap of the year 2023 for FsLab"/>
+    <meta name="tags" content="fslab, FsLab, data science, datascience, data visualization, dataviz, F#, C#, .NET, dotnet"/>
+    <meta name="og:title" content="State of FsLab 2023 (#FsAdvent)"/>
+    <meta name="og:description" content="A recap of the year 2023 for FsLab"/>
+    <meta name="og:image" content="https://fslab.org/blog/images/state-2023.png"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:site" content="@fslaborg"/>
+    <meta name="twitter:title" content="State of FsLab 2023 (#FsAdvent)"/>
+    <meta name="twitter:description" content="A recap of the year 2023 for FsLab"/>
+    <meta name="twitter:image" content="https://fslab.org/blog/images/state-2023.png"/>
+    <script src="https://fslab.org/blog/js/navbar.js"></script>
+    <script src="https://fslab.org/blog/js/prism.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-timeline@3.0.5/dist/css/bulma-timeline.min.css"/>
+    <script>
+      MathJax = {tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}}
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-svg.js"></script>
+    <link rel="stylesheet" href="https://fslab.org/blog/style/notebook.css"/>
+    <link rel="stylesheet" href="https://fslab.org/blog/style/custom.css"/>
+  </head>
+  <body>
+    <div class="columns is-fullheight m-0">
+      <div class="column is-2 is-paddingless box m-0">
+        <aside class="menu p-4" id="graph-menu">
+          <div class="content">
+            <h3 class="title is-capitalized is-inline-block is-emphasized-darkmagenta mb-4">
+              Table of contents
+            </h3>
+            <ul>
+              <li>
+                <a href="#State-of-FsLab-2023" class="is-aquamarine">
+                  State of FsLab 2023
+                </a>
+              </li>
+              <li>
+                <a href="#History" class="is-aquamarine">
+                  History
+                </a>
+              </li>
+              <li>
+                <a href="#First-iteration" class="is-aquamarine">
+                  First iteration
+                </a>
+              </li>
+              <li>
+                <a href="#Update-discussions" class="is-aquamarine">
+                  Update discussions
+                </a>
+              </li>
+              <li>
+                <a href="#Two-Pushes" class="is-aquamarine">
+                  Two Pushes
+                </a>
+              </li>
+              <li>
+                <a href="#FsLab-as-F%23's-tidyverse" class="is-aquamarine">
+                  FsLab as F%23's tidyverse
+                </a>
+              </li>
+              <li>
+                <a href="#Sustainability" class="is-aquamarine">
+                  Sustainability
+                </a>
+              </li>
+              <li>
+                <a href="#The-steering-committee" class="is-aquamarine">
+                  The steering committee
+                </a>
+              </li>
+              <li>
+                <a href="#Harry-McCarney" class="is-aquamarine">
+                  Harry McCarney
+                </a>
+              </li>
+              <li>
+                <a href="#Mathias-Brandewinder" class="is-aquamarine">
+                  Mathias Brandewinder
+                </a>
+              </li>
+              <li>
+                <a href="#Timo-M%C3%BChlhaus" class="is-aquamarine">
+                  Timo M%C3%BChlhaus
+                </a>
+              </li>
+              <li>
+                <a href="#Benedikt-Venn" class="is-aquamarine">
+                  Benedikt Venn
+                </a>
+              </li>
+              <li>
+                <a href="#Kevin-Schneider" class="is-aquamarine">
+                  Kevin Schneider
+                </a>
+              </li>
+              <li>
+                <a href="#Data-Science-in-F%23-Conference" class="is-aquamarine">
+                  Data Science in F%23 Conference
+                </a>
+              </li>
+              <li>
+                <a href="#Conclusion-and-Outlook" class="is-aquamarine">
+                  Conclusion and Outlook
+                </a>
+              </li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+      <div class="column is-10 is-paddingless pl-1 pr-6">
+        <nav class="navbar">
+          <div class="navbar-brand">
+            <a class="navbar-item" href="https://fslab.org">
+              <img src="https://fslab.org/blog/images/favicon.png" alt="Logo"/>
+            </a>
+            <a class="navbar-burger" data-target="navMenu" aria-label="menu" role="button" aria-expanded="false">
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+            </a>
+          </div>
+          <div id="navMenu" class="navbar-menu">
+            <div class="navbar-start">
+              <a class="navbar-item" href="https://fslab.org">
+                Home
+              </a>
+              <a class="navbar-item" href="https://fslab.org/packages.html">
+                Data science packages
+              </a>
+              <a class="navbar-item is-active-link-darkmagenta smooth-hover" href="https://fslab.org/blog/">
+                Blog
+              </a>
+              <a class="navbar-item" href="https://fslab.org/blog/graph-gallery.html">
+                Graph Gallery
+              </a>
+            </div>
+            <div class="navbar-end">
+              <a class="navbar-item is-magenta" href="https://twitter.com/fslaborg">
+                <span class="icon">
+                  <i class="fab fa-twitter"></i>
+                </span>
+              </a>
+              <a class="navbar-item is-magenta" href="https://github.com/fslaborg">
+                <span class="icon">
+                  <i class="fab fa-github"></i>
+                </span>
+              </a>
+            </div>
+          </div>
+        </nav>
+        <section class="hero is-small has-bg-darkmagenta">
+          <div class="hero-body">
+            <div class="container has-text-justified">
+              <div class="main-TextField">
+                <h1 class="title is-capitalized is-white is-inline-block is-emphasized-magenta mb-4">
+                  State of FsLab 2023 (#FsAdvent)
+                </h1>
+                <div class="block">
+                  <h3 class="subtitle is-white is-block">
+                    Posted on 2023-12-28 by
+                    <a href="https://github.com/kMutagene" class="is-aquamarine">
+                      Kevin Schneider
+                    </a>
+                     in 
+                    <a href="https://fslab.org/blog/posts/categories/Announcements.html" class="is-aquamarine">
+                      Announcements
+                    </a>
+                  </h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <div class="content jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
+          
+<main>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h1 id="State-of-FsLab-2023">State of FsLab 2023<a class="anchor-link" href="#State-of-FsLab-2023">¶</a></h1><p><em>By <a href="https://github.com/kMutagene">Kevin Schneider</a> on behalf of the FsLab steering committee</em></p>
+<p>This blog post is part of <a href="https://sergeytihon.com/2023/10/28/f-advent-calendar-in-english-2023/">F# Advent Calendar in English</a> organized by Sergey Tihon, a decade-long tradition and cornerstone of the F# community.</p>
+<p>For FsLab, the last three years were focused on fundamental reorganization, which I would like to recap, as well as provide an outlook on what is to come in 2024.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="History">History<a class="anchor-link" href="#History">¶</a></h2><p>First, a short look back to contextualize what a 're-organization' means for FsLab.</p>
+<h3 id="First-iteration">First iteration<a class="anchor-link" href="#First-iteration">¶</a></h3><p>Initially (around 2015), FsLab was created as a set of .NET data science libraries and tools by prominent F# community figures (see a full list, for example, <a href="https://web.archive.org/web/20160310192729/http://fslab.org/">here</a>). Together with a Visual Studio extension and literate programming, it was possible to create documents that behaved similarly to interactive Jupyter notebooks. Some extremely valuable contributions to the F# data science ecosystem originate here.</p>
+<p>The number of libraries combined with the custom tools needed to make this work proved to be too much for the community to maintain once the initial batch of maintainers moved on to other projects. This led to the significant individual libraries (e.g., FSharp.Data) being maintained, but the glue between them being left behind.</p>
+<h3 id="Update-discussions">Update discussions<a class="anchor-link" href="#Update-discussions">¶</a></h3><p>Don Syme kicked off a <a href="https://github.com/fslaborg/zzarchive-FsLab/issues/137">long discussion thread</a> on how to update FsLab in 2018, where Timo, Benedikt, and I joined in 2020 and eventually <a href="https://github.com/fslaborg/zzarchive-FsLab/issues/137#issuecomment-742060792">offered to take over the github organization</a>. We were at that time using individual FsLab libraries from the original FsLab together with our own libraries in our research and teaching.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Two-Pushes">Two Pushes<a class="anchor-link" href="#Two-Pushes">¶</a></h2><p>The last three years basically consisted of two pushes for FsLab:</p>
+<ul>
+<li>Setting up new foundations in 2021/2022:<ul>
+<li><strong>FsLab as a center of gravity for F# data science</strong> - I gave a talk about this at the <a href="https://www.youtube.com/watch?v=7hg759ErQZ8&amp;list=PLdo4fOcmZ0oV2uhlVIItfXxuRXsv-gXD5&amp;index=4">dotNETConf: Focus on F#</a></li>
+<li>Set up of an <a href="https://opencollective.com/fslab">Open Collective</a> to have a place where people can donate money for FsLab</li>
+</ul>
+</li>
+<li>Building a cohesive vision on these foundations<ul>
+<li>Coming together as a <a href="#The-steering-committee">Steering Committee</a> of like-minded individuals with members from the F# community, academia, and industry</li>
+<li>Getting feedback from the F# community for all facets of FsLab at the <a href="#data-science-in-f-conference">Data Science in F# Conference</a></li>
+<li>Community engagement - special thanks to Beth @Hack and Craft, who organized the conference on site and took care that you can now watch some of the <a href="https://www.youtube.com/@FsLabYouTube">talks on YouTube</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="FsLab-as-F%23's-tidyverse">FsLab as F#'s tidyverse<a class="anchor-link" href="#FsLab-as-F%23's-tidyverse">¶</a></h2><p>The vision for FsLab was always to kind of be the <code>tidyverse</code> of F#. This continued under new management, but until recently, we had no clear vision on how to get there. This changed dramatically this year on both organizational and technical sides:</p>
+<ul>
+<li><a href="#The-steering-committee">We formed a Steering Committee to make decisions for FsLab</a></li>
+<li>We were able to benefit from overall improvements in the .NET ecosystem that made everything incrementally more stable, and especially the release <a href="https://github.com/dotnet/interactive">dotnet interactive</a>, the official .NET kernel for Jupyter notebooks.</li>
+</ul>
+<p>Our main focus includes selecting and maintaining the core libraries of this F# data science stack, and making sure that they work well together. In contrast to the early days of FsLab, we do not need to build and maintain the tooling glue anymore, as this is now provided by the .NET ecosystem. This means that we can focus on the libraries themselves, and on making sure that their APIs are consistent and easy to use together.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Sustainability">Sustainability<a class="anchor-link" href="#Sustainability">¶</a></h2><p>@<a href="https://github.com/zyzhu">zyzhu</a> correctly <a href="https://github.com/fslaborg/zzarchive-FsLab/issues/137#issuecomment-735866220">identified back in 2020</a>:</p>
+<blockquote>
+<p>The visions discussed above sound wonderful. However, to be realistic, these visions need a proper business plan and sponsorship for long-term sustainability.</p>
+</blockquote>
+<p>We thought a lot about how to make FsLab more sustainable. It is obvious that a few people picking up the GitHub organization are vulnerable to the exact same problems that FsLab faced before.</p>
+<p>Therefore, in addition to the usual donation-based funding, we also thought about how to approach sustainability from a maintenance perspective.</p>
+<p>Financial contributions for open-source software from businesses are often use-case specific. I was, for example, approached multiple times by companies that wanted help with specific visualization tasks. I tried to generalize this as an issue sponsorship to our <a href="https://opencollective.com/fslab">Open Collective</a>, which is a one-time donation. <a href="https://plotly.com">Plotly</a>, for example, sponsored a huge part of <a href="https://github.com/plotly/Plotly.NET/releases/tag/2.0.0">Plotly.NET's 2.0 release</a> with $5,000 in 2021 this way. The other option is to have a more general, recurring sponsorship. <a href="https://hackandcraft.com/">Hack and Craft</a> for example, contributes monthly since November 2022, while also investing work hours into maintenance and community engagement.</p>
+<p>There is less financial pressure in an academic setting, at least in the sense that OSS contributions may be tied to paid work hours or expected gains. This means that FsLab can grow organically as both a resource for new students and a place to contribute cutting-edge research from seasoned (data) scientists. A tight integration of academic members should lead to a steady influx of both users and contributors, which can also benefit financially from this via Open Collective. Timo is doing a lot of work on this front - integrating the FsLab stack into the course curriculum while making sure that many projects can eventually end up as contributions to them. We can see this in practice already, as the maintainers of several core FsLab libraries are part of <a href="https://csbiology.github.io/">our department at RPTU Kaiserslautern</a>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="The-steering-committee">The steering committee<a class="anchor-link" href="#The-steering-committee">¶</a></h2><p>We first got together as a steering committee for FsLab in 2023 in the context of planning the <a href="https://fslab.org/blog/posts/conference-berlin-2023.html">Data science in F# conference</a>. The goal of the steering committee is to have a more streamlined way of making decisions for FsLab. We are currently in the process of formalizing this, but the current members are:</p>
+<h3 id="Harry-McCarney">Harry McCarney<a class="anchor-link" href="#Harry-McCarney">¶</a></h3><p><img alt="No description has been provided for this image" src="https://datascienceinfsharp.com/images/page/home/speakers/Harry_McCarney.jpg" style="width: 128px"/></p>
+<p>Harry is the founder and CEO of Hack and Craft. He has been writing software for over 20 years and is passionate about the creative application of Data Science to important real world problems. At H&amp;C he oversees development of Data Science solutions in F# for critical industries including manufacturing and logistics.</p>
+<h3 id="Mathias-Brandewinder">Mathias Brandewinder<a class="anchor-link" href="#Mathias-Brandewinder">¶</a></h3><p><img alt="No description has been provided for this image" src="https://clear-lines.com/images/mathias-brandewinder.jpg" style="width: 128px"/></p>
+<p>Mathias is an active member of the F# community, and has been writing F# code for the past 10 years or so, with a focus on optimization, simulation and machine learning.</p>
+<h3 id="Timo-M%C3%BChlhaus">Timo Mühlhaus<a class="anchor-link" href="#Timo-M%C3%BChlhaus">¶</a></h3><p><img alt="No description has been provided for this image" src="https://csbiology.github.io/content/images/team/timo.png" style="width: 128px"/></p>
+<p>Timo is a Professor of Computational Systems Biology at University of Kaiserslautern (Germany). His research interests include: algorithms and systems for data analysis in computational proteomics, dynamic system analytics and network modelling to understand biological system responses to environmental changes.</p>
+<h3 id="Benedikt-Venn">Benedikt Venn<a class="anchor-link" href="#Benedikt-Venn">¶</a></h3><p><img alt="No description has been provided for this image" src="https://csbiology.github.io/content/images/team/venn.png" style="width: 128px"/></p>
+<p>Benedikt is a PhD researcher in the CSBiology group. He's primarily interested in modeling short time series data from biological high throughput methods and maintains <a href="https://fslab.org/FSharp.Stats/">FSharp.Stats</a>, the data analytics and statistical testing library within fslab.</p>
+<h3 id="Kevin-Schneider">Kevin Schneider<a class="anchor-link" href="#Kevin-Schneider">¶</a></h3><p><img alt="No description has been provided for this image" src="https://csbiology.github.io/content/images/team/schneider.jpg" style="width: 128px"/></p>
+<p>Kevin is also part of the CSBiology as a PhD researcher. His main academic focus is on extracting biological knowledge networks from large datasets, deploying a diverse toolbox - from classical metadata and text crawling tools over network science to AI (e.g., metadata curation with LLMs). He is also the maintainer of <a href="plotly.net">Plotly.NET</a>, the integral data visualization library in the fslab stack.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Data-Science-in-F%23-Conference">Data Science in F# Conference<a class="anchor-link" href="#Data-Science-in-F%23-Conference">¶</a></h2><p>Our biggest milestone for FsLab this year was the joint organization of the <a href="https://fslab.org/blog/posts/conference-berlin-2023.html">Data Science in F# Conference</a> in Berlin. We received great feedback, and my personal highlight was the hackathon on the last day, during which I spent time mingling and being amazed by all the different kinds of approaches, ideas, and other interesting side-projects that people had.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Conclusion-and-Outlook">Conclusion and Outlook<a class="anchor-link" href="#Conclusion-and-Outlook">¶</a></h2><p>In short, I think we are on track to keeping the original vision of FsLab alive and putting it on a solid foundation. I am also very happy with how the conference turned out - if you spend too much time on the internet, everything will look bleak and hopeless. But if you actually meet people in person, you will see that there is a lot of energy and enthusiasm for data science in F#.</p>
+<p>Here is a short list of things that we want to do in 2024:</p>
+<ul>
+<li>Make things more formal<ul>
+<li>A statute</li>
+<li>Transparent recurring steering committee meetings</li>
+<li>Community calls</li>
+</ul>
+</li>
+<li>Find ways of actually using the money in the collective<ul>
+<li>Mark issues identified as important with bounties</li>
+<li>Pay for conference tickets to spread the word at general data science conferences?</li>
+</ul>
+</li>
+<li>More blog posts<ul>
+<li>Maybe even sponsor content?</li>
+</ul>
+</li>
+<li>Website rework<ul>
+<li>Sponsor section</li>
+<li>Roadmap section</li>
+</ul>
+</li>
+<li>Hopefully another conference!</li>
+</ul>
+<p>We from FsLab hope you end on a high note and wish you a happy new year!</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+        </div>
+        <footer class="footer has-bg-darkmagenta">
+          <div class="container">
+            <div class="columns">
+              <div class="column is-4 m-4">
+                <div class="block">
+                  <h3 class="subtitle is-white">
+                    FsLab - the project incubation space for data science in F#
+                  </h3>
+                </div>
+                <div class="block">
+                  <p>
+                    FsLab is only possible due to the joined forces of F# open source contributors.
+                  </p>
+                </div>
+                <div class="block">
+                  <p>
+                    This website is created and maintained by individual FsLab open source contributors.
+                  </p>
+                </div>
+                <div class="block">
+                  <div class="icon-text is-white">
+                    <span class="icon">
+                      <i class="fas fa-code-branch"></i>
+                    </span>
+                    <span>
+                      <a class="footer-link" href="https://github.com/fslaborg/fslaborg.github.io">
+                        website source code
+                      </a>
+                    </span>
+                  </div>
+                  <div class="icon-text is-white">
+                    <span class="icon">
+                      <i class="far fa-handshake"></i>
+                    </span>
+                    <span>
+                      <a class="footer-link" href="https://github.com/orgs/fslaborg/people">
+                        fslab contributors
+                      </a>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="column is-4 m-4">
+                <div class="block">
+                  <h3 class="subtitle is-white">
+                    More
+                  </h3>
+                </div>
+                <div class="block">
+                  <div class="block">
+                    <div class="icon-text is-white">
+                      <span class="icon">
+                        <i class="fab fa-github"></i>
+                      </span>
+                      <span>
+                        <a class="footer-link" href="https://github.com/fslaborg?type=source">
+                          the fslab organisation on github
+                        </a>
+                      </span>
+                    </div>
+                    <div class="icon-text is-white">
+                      <span class="icon">
+                        <i class="fab fa-twitter"></i>
+                      </span>
+                      <span>
+                        <a class="footer-link" href="https://twitter.com/fslaborg">
+                          fslab on twitter
+                        </a>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="block">
+                    <div class="icon-text is-white">
+                      <span class="icon">
+                        <i class="fas fa-cubes"></i>
+                      </span>
+                      <span>
+                        <a class="footer-link" href="https://fslab.org/packages.html">
+                          endorsed packages
+                        </a>
+                      </span>
+                    </div>
+                    <div class="icon-text is-white">
+                      <span class="icon">
+                        <i class="fas fa-plus"></i>
+                      </span>
+                      <span>
+                        <a class="footer-link" href="https://github.com/fslaborg/fslaborg.github.io#add-a-project-to-the-packages-site">
+                          add a package to the list
+                        </a>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="block">
+                    <div class="icon-text is-white">
+                      <span class="icon">
+                        <i class="fas fa-graduation-cap"></i>
+                      </span>
+                      <span>
+                        <a class="footer-link" href="https://fslab.org/tutorials.html">
+                          tutorials and learning resources
+                        </a>
+                      </span>
+                    </div>
+                    <div class="icon-text is-white">
+                      <span class="icon">
+                        <i class="fas fa-plus"></i>
+                      </span>
+                      <span>
+                        <a class="footer-link" href="https://github.com/fslaborg/fslaborg.github.io#add-a-tutorial-guide-or-blogpost">
+                          add tutorial content
+                        </a>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="column is-4 m-4">
+                <div class="block">
+                  <h3 class="subtitle is-white">
+                    External resources
+                  </h3>
+                </div>
+                <div class="block">
+                  <ul>
+                    <li>
+                      <a href="https://github.com/fsprojects?type=source" class="footer-link">
+                        fsprojects - general F# project incubation space
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://fsharp.org/" class="footer-link">
+                        fsharp.org
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>

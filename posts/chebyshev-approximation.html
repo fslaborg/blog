@@ -159,59 +159,55 @@
         </section>
         <div class="content jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
           
-
+<main>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="Chebyshev-function-approximation-using-FSharp.Stats">Chebyshev function approximation using FSharp.Stats<a class="anchor-link" href="#Chebyshev-function-approximation-using-FSharp.Stats">&#182;</a></h1><p><em>Summary: This blogpost introduces the concept of function approximation by using knots spaced according to Chebyshev.</em></p>
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h1 id="Chebyshev-function-approximation-using-FSharp.Stats">Chebyshev function approximation using FSharp.Stats<a class="anchor-link" href="#Chebyshev-function-approximation-using-FSharp.Stats">¶</a></h1><p><em>Summary: This blogpost introduces the concept of function approximation by using knots spaced according to Chebyshev.</em></p>
 <p>This post is inspired by <a href="https://www.mscroggs.co.uk/blog/57">M. Scroggs blog post</a> and shows how to perform function approximation in F#.</p>
 <p>Lets start by generating data in a two dimensional space. The aim is to interpolate the data using a single polynomial. Why in certain cases this is a sensible thing to do will be discussed later. We'll need <a href="https://github.com/fslaborg/FSharp.Stats">FSharp.Stats</a> for all the data handling and <a href="https://github.com/plotly/Plotly.NET">Plotly.NET</a> for visualization.</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Plotly.NET.Interactive, 4.2.1"</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Plotly.NET.Interactive, 4.2.1"</span>
 <span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: FSharp.Stats, 0.5.0"</span>
 <span class="c1">//#r "nuget: FSharp.Stats, 0.5.1"</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Defining-data">Defining data<a class="anchor-link" href="#Defining-data">&#182;</a></h2><p>We define a short data sample, that should be interpolated using polynomials, and visualize it using a scatter plot.</p>
-
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Defining-data">Defining data<a class="anchor-link" href="#Defining-data">¶</a></h2><p>We define a short data sample, that should be interpolated using polynomials, and visualize it using a scatter plot.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">Plotly.NET</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">Plotly.NET</span>
 <span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats</span>
 <span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats.Interpolation</span>
 
@@ -221,27 +217,17 @@
 <span class="nn">Chart</span><span class="p">.</span><span class="n">Point</span><span class="o">(</span><span class="n">xs</span><span class="o">,</span><span class="n">ys</span><span class="o">,</span><span class="n">Name</span><span class="o">=</span><span class="s">"raw"</span><span class="o">)</span>
 <span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTemplate</span><span class="w"> </span><span class="nn">ChartTemplates</span><span class="p">.</span><span class="n">lightMirrored</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div><div id="5e628749-20b9-4788-890f-7f5f4f255fe7"><!-- Plotly chart will be drawn inside this DIV --></div><script type="text/javascript">
 var renderPlotly_5e62874920b94788890f7f5f4f255fe7 = function() {
     var fsharpPlotlyRequire = requirejs.config({context:'fsharp-plotly',paths:{plotly:'https://cdn.plot.ly/plotly-2.21.0.min'}}) || require;
@@ -266,34 +252,29 @@ else {
 }
 </script></div>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="The-problem">The problem<a class="anchor-link" href="#The-problem">&#182;</a></h2><p>Your task is to approximate a function that interpolate these data points to get predictions of the regions between the knots. The simplest and most common way to solve this problem is to just connect the points by straight line segments. This linear segments can be predicted using linear splines from FSharp.Stats.Interpolation:</p>
-
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="The-problem">The problem<a class="anchor-link" href="#The-problem">¶</a></h2><p>Your task is to approximate a function that interpolate these data points to get predictions of the regions between the knots. The simplest and most common way to solve this problem is to just connect the points by straight line segments. This linear segments can be predicted using linear splines from FSharp.Stats.Interpolation:</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="c1">// Get linear spline coefficients that completely describe the curve.</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="c1">// Get linear spline coefficients that completely describe the curve.</span>
 <span class="c1">// In the case of linear splines, these coefficients consist of the x values, their intercepts and segment slopes</span>
 <span class="k">let</span><span class="w"> </span><span class="nv">linearCoefficients</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Interpolation</span><span class="p">.</span><span class="n">interpolate</span><span class="o">(</span><span class="n">xs</span><span class="o">,</span><span class="n">ys</span><span class="o">,</span><span class="nn">InterpolationMethod</span><span class="p">.</span><span class="n">LinearSpline</span><span class="o">)</span>
 
@@ -310,27 +291,17 @@ else {
 <span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">combine</span>
 <span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTemplate</span><span class="w"> </span><span class="nn">ChartTemplates</span><span class="p">.</span><span class="n">lightMirrored</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div><div id="029957a7-ff52-4885-b66f-a24d3d8e306c"><!-- Plotly chart will be drawn inside this DIV --></div><script type="text/javascript">
 var renderPlotly_029957a7ff524885b66fa24d3d8e306c = function() {
     var fsharpPlotlyRequire = requirejs.config({context:'fsharp-plotly',paths:{plotly:'https://cdn.plot.ly/plotly-2.21.0.min'}}) || require;
@@ -355,63 +326,48 @@ else {
 }
 </script></div>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>The drawback of this strategy is the discontinuouity of the function. At each knot, the function value is defined, but its slope and curvature isn't. Additionally the segments are not influenced by neighbouring segments. While integration is possible in principle, there is no single function that enables its calculation. You have to sum up the individual segment areas individually.</p>
-<h2 id="Polynomials-to-the-rescue">Polynomials to the rescue<a class="anchor-link" href="#Polynomials-to-the-rescue">&#182;</a></h2><p>A solution is to use interpolationg polynomials. Polynomials are easy to define and differentiation as well as integration is straight forward. Any data can be interpolated by a single function with a degree of #points-1. With the example data the polynomial has the form of:
+<h2 id="Polynomials-to-the-rescue">Polynomials to the rescue<a class="anchor-link" href="#Polynomials-to-the-rescue">¶</a></h2><p>A solution is to use interpolationg polynomials. Polynomials are easy to define and differentiation as well as integration is straight forward. Any data can be interpolated by a single function with a degree of #points-1. With the example data the polynomial has the form of:
 $$f(x) = ax^{15} + bx^{14} + cx^{13} + ... + dx^2 + ex + g$$</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">coef</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Interpolation</span><span class="p">.</span><span class="n">interpolate</span><span class="o">(</span><span class="n">xs</span><span class="o">,</span><span class="n">ys</span><span class="o">,</span><span class="nn">InterpolationMethod</span><span class="p">.</span><span class="n">Polynomial</span><span class="o">)</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">coef</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Interpolation</span><span class="p">.</span><span class="n">interpolate</span><span class="o">(</span><span class="n">xs</span><span class="o">,</span><span class="n">ys</span><span class="o">,</span><span class="nn">InterpolationMethod</span><span class="p">.</span><span class="n">Polynomial</span><span class="o">)</span>
 
 <span class="k">match</span><span class="w"> </span><span class="n">coef</span><span class="w"> </span><span class="k">with</span><span class="w"> </span>
 <span class="o">|</span><span class="w"> </span><span class="nn">InterpolationCoefficients</span><span class="p">.</span><span class="n">PolynomialCoef</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">x</span><span class="o">.</span><span class="n">C0_CX</span><span class="o">.</span><span class="n">Length</span>
 
 <span class="c1">//coef.GetPolynomialCoef() //available from 0.5.1</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div class="dni-plaintext"><pre>16</pre></div><style>
 .dni-code-hint {
     font-style: italic;
@@ -445,34 +401,29 @@ table th {
 }
 </style>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>As proved in the cell above, there are n coefficients defining a polynomial of degree n-1. To check the resulting polynomial curve, the function is plotted with a small step size to investigate the regions between the knots in detail</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[5]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="c1">// by using Interpolation.predict(coef) x you can predict any point on the curve</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="c1">// by using Interpolation.predict(coef) x you can predict any point on the curve</span>
 <span class="k">let</span><span class="w"> </span><span class="nv">interpolationChart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
 <span class="w">    </span><span class="o">[</span><span class="mi">0</span><span class="o">.</span><span class="w"> </span><span class="o">..</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">005</span><span class="w"> </span><span class="o">..</span><span class="w"> </span><span class="mi">3</span><span class="o">.]</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">List</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">x</span><span class="o">,</span><span class="nn">Interpolation</span><span class="p">.</span><span class="n">predict</span><span class="o">(</span><span class="n">coef</span><span class="o">)</span><span class="w"> </span><span class="n">x</span><span class="o">)</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Line</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTraceInfo</span><span class="w"> </span><span class="s">"interpol_polynomial"</span>
 
@@ -484,27 +435,17 @@ table th {
 <span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">combine</span>
 <span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTemplate</span><span class="w"> </span><span class="nn">ChartTemplates</span><span class="p">.</span><span class="n">lightMirrored</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div><div id="1b7b6851-95be-43fd-bc0c-f20b84c29220"><!-- Plotly chart will be drawn inside this DIV --></div><script type="text/javascript">
 var renderPlotly_1b7b685195be43fdbc0cf20b84c29220 = function() {
     var fsharpPlotlyRequire = requirejs.config({context:'fsharp-plotly',paths:{plotly:'https://cdn.plot.ly/plotly-2.21.0.min'}}) || require;
@@ -529,57 +470,42 @@ else {
 }
 </script></div>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Runge's-phenomenon">Runge's phenomenon<a class="anchor-link" href="#Runge's-phenomenon">&#182;</a></h3><p>As seen above the resulting interpolating function is worse than the connecting straights. A common problem of polynomial interpolation is Runge's phenomenon, also called Runge's spikes. The only constraints the function must satisfy is to pass through the knots. Obviously between the knots the prediction is quite bad, because it wasn't optimised to be smooth (as in e.g. cubic spline interpolation).</p>
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Runge's-phenomenon">Runge's phenomenon<a class="anchor-link" href="#Runge's-phenomenon">¶</a></h3><p>As seen above the resulting interpolating function is worse than the connecting straights. A common problem of polynomial interpolation is Runge's phenomenon, also called Runge's spikes. The only constraints the function must satisfy is to pass through the knots. Obviously between the knots the prediction is quite bad, because it wasn't optimised to be smooth (as in e.g. cubic spline interpolation).</p>
 <p>This overfitting gets more extreme the nearer it is to the outmost segments. Thereby the interpolation function is rendered useless for predicting internal points or calculating slopes/integrals. Imagine you should calculate the integral of the range [0,0.2], which obviously should be approximately 1.05 (xRange=0.2, yRange=5.25), but definetely greater than 0.</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="nn">Interpolation</span><span class="p">.</span><span class="n">getIntegralBetween</span><span class="o">(</span><span class="n">coef</span><span class="o">,</span><span class="mi">0</span><span class="o">.,</span><span class="mi">0</span><span class="o">.</span><span class="mi">2</span><span class="o">)</span><span class="w"> </span><span class="c1">// available from version 0.5.1</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="nn">Interpolation</span><span class="p">.</span><span class="n">getIntegralBetween</span><span class="o">(</span><span class="n">coef</span><span class="o">,</span><span class="mi">0</span><span class="o">.,</span><span class="mi">0</span><span class="o">.</span><span class="mi">2</span><span class="o">)</span><span class="w"> </span><span class="c1">// available from version 0.5.1</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div class="dni-plaintext"><pre>-10.429018827227397</pre></div><style>
 .dni-code-hint {
     font-style: italic;
@@ -613,40 +539,36 @@ table th {
 }
 </style>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Because of the spikes, the integral is totally unintuitive and its likely, that the result is wrong. It would be detrimental if this function approximation is used to investigate signal properties.</p>
 <p>A clever way of reducing the occurence of these wiggles is to use an x value spacing accrding to Chebyshev. Thereby the x values are not sorted equally spaced like it is common for such interpolation tasks. Instead, they are expanded in the signal center and compressed to the outward knots. This is achieved by streching the x values to a semicircle and from there projecting the x values back to a linear axis. In the picture seen below (<a href="https://www.mscroggs.co.uk/img/full/chebdef.png">from M.Scroggs</a>), x values are equally spaced onto a semicircle and subsequently back projected to the linear x axis. Thereby the desired spacing is achieved.</p>
-<p><img title="Chebyshev spacing" alt="Alt text" src="https://www.mscroggs.co.uk/img/full/chebdef.png"></p>
+<img alt="Alt text" src="https://www.mscroggs.co.uk/img/full/chebdef.png" title="Chebyshev spacing"/>
 <p>Mathematically the transformation it is defined within the interval [a,b] as:</p>
 <center>
-<img title="Chebyshev spacing" alt="Alt text" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2fc8fc879e273783e08491c6957b6b3b842a1b99">
-</center><p>In FSharp.Stats this can be done as follows. The spacing of the x values is visualized as scatter plot.</p>
-
+<img alt="Alt text" src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2fc8fc879e273783e08491c6957b6b3b842a1b99" title="Chebyshev spacing"/>
+</center>
+<p>In FSharp.Stats this can be done as follows. The spacing of the x values is visualized as scatter plot.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="c1">// new x values are determined in the x axis range of the data. These should reduce overshooting behaviour.</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="c1">// new x values are determined in the x axis range of the data. These should reduce overshooting behaviour.</span>
 <span class="c1">// since the original data consisted of 16 points, 16 nodes are initialized within the original interval</span>
 <span class="k">let</span><span class="w"> </span><span class="nv">xs_cheby</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
 <span class="w">    </span><span class="nn">Interpolation</span><span class="p">.</span><span class="nn">Approximation</span><span class="p">.</span><span class="n">chebyshevNodes</span><span class="w"> </span><span class="o">(</span><span class="nn">Interval</span><span class="p">.</span><span class="n">CreateClosed</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;(</span><span class="mi">0</span><span class="o">.,</span><span class="mi">3</span><span class="o">.))</span><span class="w"> </span><span class="mi">16</span>
@@ -658,27 +580,17 @@ table th {
 <span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">combine</span>
 <span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTemplate</span><span class="w"> </span><span class="nn">ChartTemplates</span><span class="p">.</span><span class="n">lightMirrored</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div><div id="696fe113-cbbc-46b7-88fa-c3bec7723ab3"><!-- Plotly chart will be drawn inside this DIV --></div><script type="text/javascript">
 var renderPlotly_696fe113cbbc46b788fac3bec7723ab3 = function() {
     var fsharpPlotlyRequire = requirejs.config({context:'fsharp-plotly',paths:{plotly:'https://cdn.plot.ly/plotly-2.21.0.min'}}) || require;
@@ -703,34 +615,29 @@ else {
 }
 </script></div>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Of course the corresponding y values are missing. Here linear spline are used to predict the new function values at the chebyshev knots (Note: Alternatively, you could predict them by using cubic interpolating splines).</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="c1">// to get the corresponding y values to the xs_cheby a linear spline is generated that approximates the new y values</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="c1">// to get the corresponding y values to the xs_cheby a linear spline is generated that approximates the new y values</span>
 <span class="k">let</span><span class="w"> </span><span class="nv">ys_cheby</span><span class="w"> </span><span class="o">=</span>
 <span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">ls</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Interpolation</span><span class="p">.</span><span class="nn">LinearSpline</span><span class="p">.</span><span class="n">interpolate</span><span class="w"> </span><span class="n">xs</span><span class="w"> </span><span class="n">ys</span>
 <span class="w">    </span><span class="n">xs_cheby</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Vector</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="o">(</span><span class="nn">Interpolation</span><span class="p">.</span><span class="nn">LinearSpline</span><span class="p">.</span><span class="n">predict</span><span class="w"> </span><span class="n">ls</span><span class="o">)</span>
@@ -741,27 +648,17 @@ else {
 <span class="o">]</span>
 <span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">combine</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div><div id="6178ff85-2d3f-4c8c-ab52-6b09b43dfcbf"><!-- Plotly chart will be drawn inside this DIV --></div><script type="text/javascript">
 var renderPlotly_6178ff852d3f4c8cab526b09b43dfcbf = function() {
     var fsharpPlotlyRequire = requirejs.config({context:'fsharp-plotly',paths:{plotly:'https://cdn.plot.ly/plotly-2.21.0.min'}}) || require;
@@ -786,34 +683,29 @@ else {
 }
 </script></div>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>With the new data, a simple polynomial interpolation is performed as before. Of course these procedures can be achieved directly by calling <code>Interpolation.Approximation.approxWithPolynomialFromValues</code>.</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="c1">// again polynomial interpolation coefficients are determined, but here with the x and y data that correspond to the chebyshev spacing</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="c1">// again polynomial interpolation coefficients are determined, but here with the x and y data that correspond to the chebyshev spacing</span>
 <span class="k">let</span><span class="w"> </span><span class="nv">coeffs_cheby</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Interpolation</span><span class="p">.</span><span class="nn">Polynomial</span><span class="p">.</span><span class="n">interpolate</span><span class="w"> </span><span class="n">xs_cheby</span><span class="w"> </span><span class="n">ys_cheby</span>
 
 
@@ -823,28 +715,18 @@ else {
 
 <span class="n">polynomialCoefficients</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
-<details open="open" class="dni-treeview"><summary><span class="dni-code-hint"><code>{ C0_CX =\n   vector [|5.019201925; -0.7533214741; 88.83097648; -931.9524978; 5021.556986;\n            -16205.09493; 34581.04672; -51920.40174; 56337.21571; -44418.89323;\n            25289.04892; -10235.17511; 2861.178305; -523.8910412; 56.45234065;\n            -2.711273142|] }</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>C0_CX</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>InternalValues</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Values</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>OpsData</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>Some(FSharp.Stats.Instances+FloatNumerics@116)</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>Value</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>FSharp.Stats.Instances+FloatNumerics@116</code></span></summary><div><table><thead><tr></tr></thead><tbody></tbody></table></div></details></td></tr></tbody></table></div></details></td></tr><tr><td>Length</td><td><div class="dni-plaintext"><pre>16</pre></div></td></tr><tr><td>NumRows</td><td><div class="dni-plaintext"><pre>16</pre></div></td></tr><tr><td>ElementOps</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>FSharp.Stats.Instances+FloatNumerics@116</code></span></summary><div><table><thead><tr></tr></thead><tbody></tbody></table></div></details></td></tr><tr><td>DebugDisplay</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>vector [5.019201925;-0.7533214741;88.83097648;-931.9524978;5021.556986;-16205.09493;34581.04672;-51920.40174;56337.21571;-44418.89323;25289.04892;-10235.17511;2861.178305;-523.8910412;56.45234065;-2.711273142]</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>Capacity</td><td><div class="dni-plaintext"><pre>209</pre></div></td></tr><tr><td>MaxCapacity</td><td><div class="dni-plaintext"><pre>2147483647</pre></div></td></tr><tr><td>Length</td><td><div class="dni-plaintext"><pre>209</pre></div></td></tr></tbody></table></div></details></td></tr><tr><td>StructuredDisplayAsArray</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Details</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Transpose</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>InternalValues</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Values</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>OpsData</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>Some(FSharp.Stats.Instances+FloatNumerics@116)</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>Value</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>FSharp.Stats.Instances+FloatNumerics@116</code></span></summary><div><table><thead><tr></tr></thead><tbody></tbody></table></div></details></td></tr></tbody></table></div></details></td></tr><tr><td>Length</td><td><div class="dni-plaintext"><pre>16</pre></div></td></tr><tr><td>NumCols</td><td><div class="dni-plaintext"><pre>16</pre></div></td></tr><tr><td>ElementOps</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>FSharp.Stats.Instances+FloatNumerics@116</code></span></summary><div><table><thead><tr></tr></thead><tbody></tbody></table></div></details></td></tr><tr><td>DebugDisplay</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>rowvec [5.019201925;-0.7533214741;88.83097648;-931.9524978;5021.556986;-16205.09493;34581.04672;-51920.40174;56337.21571;-44418.89323;25289.04892;-10235.17511;2861.178305;-523.8910412;56.45234065;-2.711273142]</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>Capacity</td><td><div class="dni-plaintext"><pre>209</pre></div></td></tr><tr><td>MaxCapacity</td><td><div class="dni-plaintext"><pre>2147483647</pre></div></td></tr><tr><td>Length</td><td><div class="dni-plaintext"><pre>209</pre></div></td></tr></tbody></table></div></details></td></tr><tr><td>StructuredDisplayAsArray</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Details</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Transpose</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>InternalValues</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Values</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>OpsData</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>Some(FSharp.Stats.Instances+FloatNumerics@116)</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>Value</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>FSharp.Stats.Instances+FloatNumerics@116</code></span></summary><div><table><thead><tr></tr></thead><tbody></tbody></table></div></details></td></tr></tbody></table></div></details></td></tr><tr><td>Length</td><td><div class="dni-plaintext"><pre>16</pre></div></td></tr><tr><td>NumRows</td><td><div class="dni-plaintext"><pre>16</pre></div></td></tr><tr><td>ElementOps</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>FSharp.Stats.Instances+FloatNumerics@116</code></span></summary><div><table><thead><tr></tr></thead><tbody></tbody></table></div></details></td></tr><tr><td>DebugDisplay</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>vector [5.019201925;-0.7533214741;88.83097648;-931.9524978;5021.556986;-16205.09493;34581.04672;-51920.40174;56337.21571;-44418.89323;25289.04892;-10235.17511;2861.178305;-523.8910412;56.45234065;-2.711273142]</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>Capacity</td><td><div class="dni-plaintext"><pre>209</pre></div></td></tr><tr><td>MaxCapacity</td><td><div class="dni-plaintext"><pre>2147483647</pre></div></td></tr><tr><td>Length</td><td><div class="dni-plaintext"><pre>209</pre></div></td></tr></tbody></table></div></details></td></tr><tr><td>StructuredDisplayAsArray</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Details</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Transpose</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>InternalValues</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Values</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>OpsData</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>Some(FSharp.Stats.Instances+FloatNumerics@116)</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>Value</td><td>FSharp.Stats.Instances+FloatNumerics@116</td></tr></tbody></table></div></details></td></tr><tr><td>Length</td><td><div class="dni-plaintext"><pre>16</pre></div></td></tr><tr><td>NumCols</td><td><div class="dni-plaintext"><pre>16</pre></div></td></tr><tr><td>ElementOps</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>FSharp.Stats.Instances+FloatNumerics@116</code></span></summary><div><table><thead><tr></tr></thead><tbody></tbody></table></div></details></td></tr><tr><td>DebugDisplay</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>rowvec [5.019201925;-0.7533214741;88.83097648;-931.9524978;5021.556986;-16205.09493;34581.04672;-51920.40174;56337.21571;-44418.89323;25289.04892;-10235.17511;2861.178305;-523.8910412;56.45234065;-2.711273142]</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>Capacity</td><td>209</td></tr><tr><td>MaxCapacity</td><td>2147483647</td></tr><tr><td>Length</td><td>209</td></tr></tbody></table></div></details></td></tr><tr><td>StructuredDisplayAsArray</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Details</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Transpose</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>InternalValues</td><td>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</td></tr><tr><td>Values</td><td>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</td></tr><tr><td>OpsData</td><td>Some(FSharp.Stats.Instances+FloatNumerics@116)</td></tr><tr><td>Length</td><td>16</td></tr><tr><td>NumRows</td><td>16</td></tr><tr><td>ElementOps</td><td>FSharp.Stats.Instances+FloatNumerics@116</td></tr><tr><td>DebugDisplay</td><td>vector [5.019201925;-0.7533214741;88.83097648;-931.9524978;5021.556986;-16205.09493;34581.04672;-51920.40174;56337.21571;-44418.89323;25289.04892;-10235.17511;2861.178305;-523.8910412;56.45234065;-2.711273142]</td></tr><tr><td>StructuredDisplayAsArray</td><td>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</td></tr><tr><td>Details</td><td>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</td></tr><tr><td>Transpose</td><td>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</td></tr><tr><td><i>(values)</i></td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr></tbody></table></div></details></td></tr><tr><td><i>(values)</i></td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr></tbody></table></div></details></td></tr><tr><td><i>(values)</i></td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr></tbody></table></div></details></td></tr><tr><td><i>(values)</i></td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr></tbody></table></div></details></td></tr><tr><td><i>(values)</i></td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr></tbody></table></div></details></td></tr><tr><td>Predict</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>FSharp.Stats.InterpolationModule+Polynomial+get_Predict@51</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>this</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>{ C0_CX =\n   vector [|5.019201925; -0.7533214741; 88.83097648; -931.9524978; 5021.556986;\n            -16205.09493; 34581.04672; -51920.40174; 56337.21571; -44418.89323;\n            25289.04892; -10235.17511; 2861.178305; -523.8910412; 56.45234065;\n            -2.711273142|] }</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>C0_CX</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>InternalValues</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Values</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>OpsData</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>Some(FSharp.Stats.Instances+FloatNumerics@116)</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>Value</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>FSharp.Stats.Instances+FloatNumerics@116</code></span></summary><div><table><thead><tr></tr></thead><tbody></tbody></table></div></details></td></tr></tbody></table></div></details></td></tr><tr><td>Length</td><td><div class="dni-plaintext"><pre>16</pre></div></td></tr><tr><td>NumRows</td><td><div class="dni-plaintext"><pre>16</pre></div></td></tr><tr><td>ElementOps</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>FSharp.Stats.Instances+FloatNumerics@116</code></span></summary><div><table><thead><tr></tr></thead><tbody></tbody></table></div></details></td></tr><tr><td>DebugDisplay</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>vector [5.019201925;-0.7533214741;88.83097648;-931.9524978;5021.556986;-16205.09493;34581.04672;-51920.40174;56337.21571;-44418.89323;25289.04892;-10235.17511;2861.178305;-523.8910412;56.45234065;-2.711273142]</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>Capacity</td><td><div class="dni-plaintext"><pre>209</pre></div></td></tr><tr><td>MaxCapacity</td><td><div class="dni-plaintext"><pre>2147483647</pre></div></td></tr><tr><td>Length</td><td><div class="dni-plaintext"><pre>209</pre></div></td></tr></tbody></table></div></details></td></tr><tr><td>StructuredDisplayAsArray</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Details</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Transpose</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>InternalValues</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Values</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>OpsData</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>Some(FSharp.Stats.Instances+FloatNumerics@116)</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>Value</td><td>FSharp.Stats.Instances+FloatNumerics@116</td></tr></tbody></table></div></details></td></tr><tr><td>Length</td><td><div class="dni-plaintext"><pre>16</pre></div></td></tr><tr><td>NumCols</td><td><div class="dni-plaintext"><pre>16</pre></div></td></tr><tr><td>ElementOps</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>FSharp.Stats.Instances+FloatNumerics@116</code></span></summary><div><table><thead><tr></tr></thead><tbody></tbody></table></div></details></td></tr><tr><td>DebugDisplay</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>rowvec [5.019201925;-0.7533214741;88.83097648;-931.9524978;5021.556986;-16205.09493;34581.04672;-51920.40174;56337.21571;-44418.89323;25289.04892;-10235.17511;2861.178305;-523.8910412;56.45234065;-2.711273142]</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>Capacity</td><td>209</td></tr><tr><td>MaxCapacity</td><td>2147483647</td></tr><tr><td>Length</td><td>209</td></tr></tbody></table></div></details></td></tr><tr><td>StructuredDisplayAsArray</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Details</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Transpose</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>InternalValues</td><td>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</td></tr><tr><td>Values</td><td>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</td></tr><tr><td>OpsData</td><td>Some(FSharp.Stats.Instances+FloatNumerics@116)</td></tr><tr><td>Length</td><td>16</td></tr><tr><td>NumRows</td><td>16</td></tr><tr><td>ElementOps</td><td>FSharp.Stats.Instances+FloatNumerics@116</td></tr><tr><td>DebugDisplay</td><td>vector [5.019201925;-0.7533214741;88.83097648;-931.9524978;5021.556986;-16205.09493;34581.04672;-51920.40174;56337.21571;-44418.89323;25289.04892;-10235.17511;2861.178305;-523.8910412;56.45234065;-2.711273142]</td></tr><tr><td>StructuredDisplayAsArray</td><td>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</td></tr><tr><td>Details</td><td>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</td></tr><tr><td>Transpose</td><td>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</td></tr><tr><td><i>(values)</i></td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr></tbody></table></div></details></td></tr><tr><td><i>(values)</i></td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr></tbody></table></div></details></td></tr><tr><td><i>(values)</i></td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr></tbody></table></div></details></td></tr><tr><td>Predict</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>FSharp.Stats.InterpolationModule+Polynomial+get_Predict@51</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>this</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>{ C0_CX =\n   vector [|5.019201925; -0.7533214741; 88.83097648; -931.9524978; 5021.556986;\n            -16205.09493; 34581.04672; -51920.40174; 56337.21571; -44418.89323;\n            25289.04892; -10235.17511; 2861.178305; -523.8910412; 56.45234065;\n            -2.711273142|] }</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>C0_CX</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>InternalValues</td><td>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</td></tr><tr><td>Values</td><td>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</td></tr><tr><td>OpsData</td><td>Some(FSharp.Stats.Instances+FloatNumerics@116)</td></tr><tr><td>Length</td><td>16</td></tr><tr><td>NumRows</td><td>16</td></tr><tr><td>ElementOps</td><td>FSharp.Stats.Instances+FloatNumerics@116</td></tr><tr><td>DebugDisplay</td><td>vector [5.019201925;-0.7533214741;88.83097648;-931.9524978;5021.556986;-16205.09493;34581.04672;-51920.40174;56337.21571;-44418.89323;25289.04892;-10235.17511;2861.178305;-523.8910412;56.45234065;-2.711273142]</td></tr><tr><td>StructuredDisplayAsArray</td><td>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</td></tr><tr><td>Details</td><td>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</td></tr><tr><td>Transpose</td><td>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</td></tr><tr><td><i>(values)</i></td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr></tbody></table></div></details></td></tr><tr><td>Predict</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>FSharp.Stats.InterpolationModule+Polynomial+get_Predict@51</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>this</td><td>{ C0_CX =
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<details class="dni-treeview" open="open"><summary><span class="dni-code-hint"><code>{ C0_CX =\n   vector [|5.019201925; -0.7533214741; 88.83097648; -931.9524978; 5021.556986;\n            -16205.09493; 34581.04672; -51920.40174; 56337.21571; -44418.89323;\n            25289.04892; -10235.17511; 2861.178305; -523.8910412; 56.45234065;\n            -2.711273142|] }</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>C0_CX</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>InternalValues</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Values</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>OpsData</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>Some(FSharp.Stats.Instances+FloatNumerics@116)</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>Value</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>FSharp.Stats.Instances+FloatNumerics@116</code></span></summary><div><table><thead><tr></tr></thead><tbody></tbody></table></div></details></td></tr></tbody></table></div></details></td></tr><tr><td>Length</td><td><div class="dni-plaintext"><pre>16</pre></div></td></tr><tr><td>NumRows</td><td><div class="dni-plaintext"><pre>16</pre></div></td></tr><tr><td>ElementOps</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>FSharp.Stats.Instances+FloatNumerics@116</code></span></summary><div><table><thead><tr></tr></thead><tbody></tbody></table></div></details></td></tr><tr><td>DebugDisplay</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>vector [5.019201925;-0.7533214741;88.83097648;-931.9524978;5021.556986;-16205.09493;34581.04672;-51920.40174;56337.21571;-44418.89323;25289.04892;-10235.17511;2861.178305;-523.8910412;56.45234065;-2.711273142]</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>Capacity</td><td><div class="dni-plaintext"><pre>209</pre></div></td></tr><tr><td>MaxCapacity</td><td><div class="dni-plaintext"><pre>2147483647</pre></div></td></tr><tr><td>Length</td><td><div class="dni-plaintext"><pre>209</pre></div></td></tr></tbody></table></div></details></td></tr><tr><td>StructuredDisplayAsArray</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Details</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Transpose</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>InternalValues</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Values</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>OpsData</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>Some(FSharp.Stats.Instances+FloatNumerics@116)</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>Value</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>FSharp.Stats.Instances+FloatNumerics@116</code></span></summary><div><table><thead><tr></tr></thead><tbody></tbody></table></div></details></td></tr></tbody></table></div></details></td></tr><tr><td>Length</td><td><div class="dni-plaintext"><pre>16</pre></div></td></tr><tr><td>NumCols</td><td><div class="dni-plaintext"><pre>16</pre></div></td></tr><tr><td>ElementOps</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>FSharp.Stats.Instances+FloatNumerics@116</code></span></summary><div><table><thead><tr></tr></thead><tbody></tbody></table></div></details></td></tr><tr><td>DebugDisplay</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>rowvec [5.019201925;-0.7533214741;88.83097648;-931.9524978;5021.556986;-16205.09493;34581.04672;-51920.40174;56337.21571;-44418.89323;25289.04892;-10235.17511;2861.178305;-523.8910412;56.45234065;-2.711273142]</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>Capacity</td><td><div class="dni-plaintext"><pre>209</pre></div></td></tr><tr><td>MaxCapacity</td><td><div class="dni-plaintext"><pre>2147483647</pre></div></td></tr><tr><td>Length</td><td><div class="dni-plaintext"><pre>209</pre></div></td></tr></tbody></table></div></details></td></tr><tr><td>StructuredDisplayAsArray</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Details</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Transpose</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>InternalValues</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Values</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>OpsData</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>Some(FSharp.Stats.Instances+FloatNumerics@116)</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>Value</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>FSharp.Stats.Instances+FloatNumerics@116</code></span></summary><div><table><thead><tr></tr></thead><tbody></tbody></table></div></details></td></tr></tbody></table></div></details></td></tr><tr><td>Length</td><td><div class="dni-plaintext"><pre>16</pre></div></td></tr><tr><td>NumRows</td><td><div class="dni-plaintext"><pre>16</pre></div></td></tr><tr><td>ElementOps</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>FSharp.Stats.Instances+FloatNumerics@116</code></span></summary><div><table><thead><tr></tr></thead><tbody></tbody></table></div></details></td></tr><tr><td>DebugDisplay</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>vector [5.019201925;-0.7533214741;88.83097648;-931.9524978;5021.556986;-16205.09493;34581.04672;-51920.40174;56337.21571;-44418.89323;25289.04892;-10235.17511;2861.178305;-523.8910412;56.45234065;-2.711273142]</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>Capacity</td><td><div class="dni-plaintext"><pre>209</pre></div></td></tr><tr><td>MaxCapacity</td><td><div class="dni-plaintext"><pre>2147483647</pre></div></td></tr><tr><td>Length</td><td><div class="dni-plaintext"><pre>209</pre></div></td></tr></tbody></table></div></details></td></tr><tr><td>StructuredDisplayAsArray</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Details</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Transpose</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>InternalValues</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Values</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>OpsData</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>Some(FSharp.Stats.Instances+FloatNumerics@116)</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>Value</td><td>FSharp.Stats.Instances+FloatNumerics@116</td></tr></tbody></table></div></details></td></tr><tr><td>Length</td><td><div class="dni-plaintext"><pre>16</pre></div></td></tr><tr><td>NumCols</td><td><div class="dni-plaintext"><pre>16</pre></div></td></tr><tr><td>ElementOps</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>FSharp.Stats.Instances+FloatNumerics@116</code></span></summary><div><table><thead><tr></tr></thead><tbody></tbody></table></div></details></td></tr><tr><td>DebugDisplay</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>rowvec [5.019201925;-0.7533214741;88.83097648;-931.9524978;5021.556986;-16205.09493;34581.04672;-51920.40174;56337.21571;-44418.89323;25289.04892;-10235.17511;2861.178305;-523.8910412;56.45234065;-2.711273142]</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>Capacity</td><td>209</td></tr><tr><td>MaxCapacity</td><td>2147483647</td></tr><tr><td>Length</td><td>209</td></tr></tbody></table></div></details></td></tr><tr><td>StructuredDisplayAsArray</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Details</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Transpose</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>InternalValues</td><td>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</td></tr><tr><td>Values</td><td>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</td></tr><tr><td>OpsData</td><td>Some(FSharp.Stats.Instances+FloatNumerics@116)</td></tr><tr><td>Length</td><td>16</td></tr><tr><td>NumRows</td><td>16</td></tr><tr><td>ElementOps</td><td>FSharp.Stats.Instances+FloatNumerics@116</td></tr><tr><td>DebugDisplay</td><td>vector [5.019201925;-0.7533214741;88.83097648;-931.9524978;5021.556986;-16205.09493;34581.04672;-51920.40174;56337.21571;-44418.89323;25289.04892;-10235.17511;2861.178305;-523.8910412;56.45234065;-2.711273142]</td></tr><tr><td>StructuredDisplayAsArray</td><td>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</td></tr><tr><td>Details</td><td>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</td></tr><tr><td>Transpose</td><td>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</td></tr><tr><td><i>(values)</i></td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr></tbody></table></div></details></td></tr><tr><td><i>(values)</i></td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr></tbody></table></div></details></td></tr><tr><td><i>(values)</i></td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr></tbody></table></div></details></td></tr><tr><td><i>(values)</i></td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr></tbody></table></div></details></td></tr><tr><td><i>(values)</i></td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr></tbody></table></div></details></td></tr><tr><td>Predict</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>FSharp.Stats.InterpolationModule+Polynomial+get_Predict@51</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>this</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>{ C0_CX =\n   vector [|5.019201925; -0.7533214741; 88.83097648; -931.9524978; 5021.556986;\n            -16205.09493; 34581.04672; -51920.40174; 56337.21571; -44418.89323;\n            25289.04892; -10235.17511; 2861.178305; -523.8910412; 56.45234065;\n            -2.711273142|] }</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>C0_CX</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>InternalValues</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Values</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>OpsData</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>Some(FSharp.Stats.Instances+FloatNumerics@116)</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>Value</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>FSharp.Stats.Instances+FloatNumerics@116</code></span></summary><div><table><thead><tr></tr></thead><tbody></tbody></table></div></details></td></tr></tbody></table></div></details></td></tr><tr><td>Length</td><td><div class="dni-plaintext"><pre>16</pre></div></td></tr><tr><td>NumRows</td><td><div class="dni-plaintext"><pre>16</pre></div></td></tr><tr><td>ElementOps</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>FSharp.Stats.Instances+FloatNumerics@116</code></span></summary><div><table><thead><tr></tr></thead><tbody></tbody></table></div></details></td></tr><tr><td>DebugDisplay</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>vector [5.019201925;-0.7533214741;88.83097648;-931.9524978;5021.556986;-16205.09493;34581.04672;-51920.40174;56337.21571;-44418.89323;25289.04892;-10235.17511;2861.178305;-523.8910412;56.45234065;-2.711273142]</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>Capacity</td><td><div class="dni-plaintext"><pre>209</pre></div></td></tr><tr><td>MaxCapacity</td><td><div class="dni-plaintext"><pre>2147483647</pre></div></td></tr><tr><td>Length</td><td><div class="dni-plaintext"><pre>209</pre></div></td></tr></tbody></table></div></details></td></tr><tr><td>StructuredDisplayAsArray</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Details</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Transpose</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>InternalValues</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Values</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>OpsData</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>Some(FSharp.Stats.Instances+FloatNumerics@116)</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>Value</td><td>FSharp.Stats.Instances+FloatNumerics@116</td></tr></tbody></table></div></details></td></tr><tr><td>Length</td><td><div class="dni-plaintext"><pre>16</pre></div></td></tr><tr><td>NumCols</td><td><div class="dni-plaintext"><pre>16</pre></div></td></tr><tr><td>ElementOps</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>FSharp.Stats.Instances+FloatNumerics@116</code></span></summary><div><table><thead><tr></tr></thead><tbody></tbody></table></div></details></td></tr><tr><td>DebugDisplay</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>rowvec [5.019201925;-0.7533214741;88.83097648;-931.9524978;5021.556986;-16205.09493;34581.04672;-51920.40174;56337.21571;-44418.89323;25289.04892;-10235.17511;2861.178305;-523.8910412;56.45234065;-2.711273142]</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>Capacity</td><td>209</td></tr><tr><td>MaxCapacity</td><td>2147483647</td></tr><tr><td>Length</td><td>209</td></tr></tbody></table></div></details></td></tr><tr><td>StructuredDisplayAsArray</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Details</td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr><tr><td>Transpose</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>InternalValues</td><td>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</td></tr><tr><td>Values</td><td>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</td></tr><tr><td>OpsData</td><td>Some(FSharp.Stats.Instances+FloatNumerics@116)</td></tr><tr><td>Length</td><td>16</td></tr><tr><td>NumRows</td><td>16</td></tr><tr><td>ElementOps</td><td>FSharp.Stats.Instances+FloatNumerics@116</td></tr><tr><td>DebugDisplay</td><td>vector [5.019201925;-0.7533214741;88.83097648;-931.9524978;5021.556986;-16205.09493;34581.04672;-51920.40174;56337.21571;-44418.89323;25289.04892;-10235.17511;2861.178305;-523.8910412;56.45234065;-2.711273142]</td></tr><tr><td>StructuredDisplayAsArray</td><td>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</td></tr><tr><td>Details</td><td>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</td></tr><tr><td>Transpose</td><td>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</td></tr><tr><td><i>(values)</i></td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr></tbody></table></div></details></td></tr><tr><td><i>(values)</i></td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr></tbody></table></div></details></td></tr><tr><td><i>(values)</i></td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr></tbody></table></div></details></td></tr><tr><td>Predict</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>FSharp.Stats.InterpolationModule+Polynomial+get_Predict@51</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>this</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>{ C0_CX =\n   vector [|5.019201925; -0.7533214741; 88.83097648; -931.9524978; 5021.556986;\n            -16205.09493; 34581.04672; -51920.40174; 56337.21571; -44418.89323;\n            25289.04892; -10235.17511; 2861.178305; -523.8910412; 56.45234065;\n            -2.711273142|] }</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>C0_CX</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>InternalValues</td><td>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</td></tr><tr><td>Values</td><td>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</td></tr><tr><td>OpsData</td><td>Some(FSharp.Stats.Instances+FloatNumerics@116)</td></tr><tr><td>Length</td><td>16</td></tr><tr><td>NumRows</td><td>16</td></tr><tr><td>ElementOps</td><td>FSharp.Stats.Instances+FloatNumerics@116</td></tr><tr><td>DebugDisplay</td><td>vector [5.019201925;-0.7533214741;88.83097648;-931.9524978;5021.556986;-16205.09493;34581.04672;-51920.40174;56337.21571;-44418.89323;25289.04892;-10235.17511;2861.178305;-523.8910412;56.45234065;-2.711273142]</td></tr><tr><td>StructuredDisplayAsArray</td><td>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</td></tr><tr><td>Details</td><td>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</td></tr><tr><td>Transpose</td><td>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</td></tr><tr><td><i>(values)</i></td><td><div class="dni-plaintext"><pre>[ 5.019201924823986, -0.7533214741322293, 88.83097647738644, -931.9524977725528, 5021.556985929983, -16205.094934904337, 34581.04671553936, -51920.40174004338, 56337.215710140226, -44418.8932327272, 25289.048919873298, -10235.175112455037, 2861.17830460304, -523.8910411644107, 56.452340646091066, -2.7112731416610663 ]</pre></div></td></tr></tbody></table></div></details></td></tr><tr><td>Predict</td><td><details class="dni-treeview"><summary><span class="dni-code-hint"><code>FSharp.Stats.InterpolationModule+Polynomial+get_Predict@51</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>this</td><td>{ C0_CX =
    vector [|5.019201925; -0.7533214741; 88.83097648; -931.9524978; 5021.556986;
             -16205.09493; 34581.04672; -51920.40174; 56337.21571; -44418.89323;
             25289.04892; -10235.17511; 2861.178305; -523.8910412; 56.45234065;
@@ -881,34 +763,29 @@ table th {
 }
 </style>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Using the determined polynomial coefficients, the standard approach for fitting can be used to plot the signal together with the function approximation. The chebyshev spacing of the x-nodes drastically reduces the overfitting in the outer areas of the signal.</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[10]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="c1">// function using the cheby_coefficients to get y values of given x value</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="c1">// function using the cheby_coefficients to get y values of given x value</span>
 <span class="k">let</span><span class="w"> </span><span class="nv">interpolating_cheby</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Interpolation</span><span class="p">.</span><span class="nn">Polynomial</span><span class="p">.</span><span class="n">predict</span><span class="w"> </span><span class="n">coeffs_cheby</span><span class="w"> </span><span class="n">x</span>
 
 <span class="k">let</span><span class="w"> </span><span class="nv">interpolChart_cheby</span><span class="w"> </span><span class="o">=</span>
@@ -935,27 +812,17 @@ table th {
 <span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="w"> </span><span class="s">"ys"</span>
 <span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTemplate</span><span class="w"> </span><span class="nn">ChartTemplates</span><span class="p">.</span><span class="n">lightMirrored</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div><div id="54faa316-376c-4268-9ff4-e89d30d6f0d5"><!-- Plotly chart will be drawn inside this DIV --></div><script type="text/javascript">
 var renderPlotly_54faa316376c42689ff4e89d30d6f0d5 = function() {
     var fsharpPlotlyRequire = requirejs.config({context:'fsharp-plotly',paths:{plotly:'https://cdn.plot.ly/plotly-2.21.0.min'}}) || require;
@@ -980,56 +847,41 @@ else {
 }
 </script></div>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Now we can again approximate the integral of the function between [0,0.2]. The result now should be much closer at the expected value of 1.05.</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[11]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="n">coeffs_cheby</span><span class="o">.</span><span class="n">GetIntegralBetween</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">2</span><span class="w"> </span><span class="c1">// available from version 0.5.1</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="n">coeffs_cheby</span><span class="o">.</span><span class="n">GetIntegralBetween</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">2</span><span class="w"> </span><span class="c1">// available from version 0.5.1</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div class="dni-plaintext"><pre>1.0508141233095727</pre></div><style>
 .dni-code-hint {
     font-style: italic;
@@ -1063,35 +915,30 @@ table th {
 }
 </style>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Approximating-a-polynomial-from-a-function">Approximating a polynomial from a function<a class="anchor-link" href="#Approximating-a-polynomial-from-a-function">&#182;</a></h2><p>Instead of starting from data points you can also transform any function you like to easy-to-use polynomials. This comes handy when investigating function properties with complex functions that cannot be differentiated easily. As seen below, a function with y 
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Approximating-a-polynomial-from-a-function">Approximating a polynomial from a function<a class="anchor-link" href="#Approximating-a-polynomial-from-a-function">¶</a></h2><p>Instead of starting from data points you can also transform any function you like to easy-to-use polynomials. This comes handy when investigating function properties with complex functions that cannot be differentiated easily. As seen below, a function with y 
 axial symmetry is approximated. While an even number of knots very well approximates the tails, an uneven number precisely predicts the center point. The simple interpolation with equally spaced points nicely depicts a drastic overshoot (Runge's phenomenon).</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[13]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="c1">// this example is the Runge function and is inspired by the wonderful blog post of Matthew Scroggs (https://www.mscroggs.co.uk/blog/57)</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="c1">// this example is the Runge function and is inspired by the wonderful blog post of Matthew Scroggs (https://www.mscroggs.co.uk/blog/57)</span>
 <span class="k">let</span><span class="w"> </span><span class="nv">myFunctionToSimplify</span><span class="w"> </span><span class="o">(</span><span class="n">x</span><span class="o">:</span><span class="w"> </span><span class="kt">float</span><span class="o">)</span><span class="w"> </span><span class="o">=</span>
 <span class="w">    </span><span class="mi">1</span><span class="o">.</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="o">(</span><span class="mi">1</span><span class="o">.</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">25</span><span class="o">.</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="o">)</span>
 
@@ -1113,27 +960,17 @@ axial symmetry is approximated. While an even number of knots very well approxim
 <span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTitle</span><span class="o">(</span><span class="nn">Title</span><span class="p">.</span><span class="n">init</span><span class="o">(</span><span class="s">"Approximated Runges function"</span><span class="o">,</span><span class="n">X</span><span class="o">=</span><span class="mi">0</span><span class="o">.</span><span class="mi">5</span><span class="o">))</span>
 <span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withSize</span><span class="o">(</span><span class="mi">800</span><span class="o">.,</span><span class="mi">500</span><span class="o">.)</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div><div id="e0b782a3-90fa-4262-a9be-4718d0ab676e"><!-- Plotly chart will be drawn inside this DIV --></div><script type="text/javascript">
 var renderPlotly_e0b782a390fa4262a9be4718d0ab676e = function() {
     var fsharpPlotlyRequire = requirejs.config({context:'fsharp-plotly',paths:{plotly:'https://cdn.plot.ly/plotly-2.21.0.min'}}) || require;
@@ -1158,43 +995,39 @@ else {
 }
 </script></div>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Use-cases">Use cases<a class="anchor-link" href="#Use-cases">&#182;</a></h2><ul>
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Use-cases">Use cases<a class="anchor-link" href="#Use-cases">¶</a></h2><ul>
 <li>function approximaion of nonlinear relations (e.g. Schrödingers function) with only a few terms</li>
 <li>optimization techniques</li>
 <li>numerical solution of integral equations</li>
 <li>improving wavelet transforms by enhancing the accuracy in outer areas</li>
 </ul>
-<h2 id="Drawbacks">Drawbacks<a class="anchor-link" href="#Drawbacks">&#182;</a></h2><ul>
+<h2 id="Drawbacks">Drawbacks<a class="anchor-link" href="#Drawbacks">¶</a></h2><ul>
 <li>The Chebychev knots are interpolated linearly. The points that are interpolated don't exist in the original data. As alternative one may use cubic splines to get a better approximation of the transformed knots, but since the presented strategy aims to minimize computing ressources, it wouldn't make much sense to use cubic splines and then go back to polynomials.</li>
 </ul>
-<h2 id="Other-techniques-to-mitigate-Runge's-phenomenon">Other techniques to mitigate Runge's phenomenon<a class="anchor-link" href="#Other-techniques-to-mitigate-Runge's-phenomenon">&#182;</a></h2><ul>
+<h2 id="Other-techniques-to-mitigate-Runge's-phenomenon">Other techniques to mitigate Runge's phenomenon<a class="anchor-link" href="#Other-techniques-to-mitigate-Runge's-phenomenon">¶</a></h2><ul>
 <li>using lower degree polynomials: Thereby you automatically move to linear regression instead of interpolation</li>
 <li>switching to splines: Splines are perfect to reduce high oscillating behaviour of regression curves</li>
 </ul>
-<h2 id="References">References<a class="anchor-link" href="#References">&#182;</a></h2><ul>
+<h2 id="References">References<a class="anchor-link" href="#References">¶</a></h2><ul>
 <li><a href="https://www.mscroggs.co.uk/blog/57">M. Scroggs blog post</a> with its <a href="https://github.com/mscroggs/RungeBot">Github repo</a></li>
 <li><a href="https://www.youtube.com/watch?v=F_43oTnTXiw">Youtube - Beware the Runge Spikes! from Matt Parker</a></li>
 <li><a href="https://fslab.org/FSharp.Stats/Interpolation.html#Chebyshev-function-approximation">FSharp.Stats documentation</a></li>
 </ul>
-
 </div>
 </div>
 </div>
 </div>
+</main>
 
         </div>
         <footer class="footer has-bg-darkmagenta">

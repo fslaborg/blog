@@ -144,109 +144,85 @@
         </section>
         <div class="content jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
           
-
+<main>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">&#182;</a></h1><p>This is the first in a series of posts exploring how Bayesian Techniques can be implemented in F#. It will also provide simple examples of how to started using <a href="https://plotly.net/">Plotly.NET</a> and <a href="https://fslab.org/FSharp.Stats/">FSharp.stats</a>. The posts will closely follow Allen Downey's excellent book <a href="http://allendowney.github.io/ThinkBayes2/">Think Bayes</a>. Each post will cover one or two chapters from his book summarising the key ideas and porting the examples to F#. The first few posts will hopefully be quite accessible and the complexity will increase as we progress though the book.</p>
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h1 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">¶</a></h1><p>This is the first in a series of posts exploring how Bayesian Techniques can be implemented in F#. It will also provide simple examples of how to started using <a href="https://plotly.net/">Plotly.NET</a> and <a href="https://fslab.org/FSharp.Stats/">FSharp.stats</a>. The posts will closely follow Allen Downey's excellent book <a href="http://allendowney.github.io/ThinkBayes2/">Think Bayes</a>. Each post will cover one or two chapters from his book summarising the key ideas and porting the examples to F#. The first few posts will hopefully be quite accessible and the complexity will increase as we progress though the book.</p>
 <p>The goal is that any one with some knowledge of F# will be able to implement the Bayesian techniques covered in the real world.</p>
-<h1 id="Why-F%23">Why F#<a class="anchor-link" href="#Why-F%23">&#182;</a></h1><p>F# is an excellent language for Data Science. The rich static type system guides your thinking while you structure solutions to problems. It avoids the 'guess/refresh' approach sometimes found with loosely typed languages. Moreover, the extra precision of types that won't let you multiply strings, concatenate a boolean, or add an int to a float ensures your code is correct.</p>
+<h1 id="Why-F%23">Why F#<a class="anchor-link" href="#Why-F%23">¶</a></h1><p>F# is an excellent language for Data Science. The rich static type system guides your thinking while you structure solutions to problems. It avoids the 'guess/refresh' approach sometimes found with loosely typed languages. Moreover, the extra precision of types that won't let you multiply strings, concatenate a boolean, or add an int to a float ensures your code is correct.</p>
 <p>Lastly, functional immutable programming is simply a better conceptual fit for most data science work. Object oriented languages are primarily about managing state, not transforming data. F#’s functional first approach encourages us to write simple deterministic functions which are easy to understand and compose into larger and larger operations with no loss of readability.</p>
-<h1 id="Data-Science-at-Hack-and-Craft">Data Science at Hack and Craft<a class="anchor-link" href="#Data-Science-at-Hack-and-Craft">&#182;</a></h1><p>At Hack and Craft we build simulations for logistics and manufacturing companies. 
+<h1 id="Data-Science-at-Hack-and-Craft">Data Science at Hack and Craft<a class="anchor-link" href="#Data-Science-at-Hack-and-Craft">¶</a></h1><p>At Hack and Craft we build simulations for logistics and manufacturing companies. 
 Typically they are interested in measuring the effects of proposed chances to their processes. We model these initiatives and run simulations to produce synthetic data. This data is then analysed to measure impact of the proposed changes.</p>
 <p>We find Bayesian approaches very applicable to this work and have gradually moved away from a more traditional 'frequentist' approach.</p>
-<h1 id="Bayesian-thinking">Bayesian thinking<a class="anchor-link" href="#Bayesian-thinking">&#182;</a></h1><p>Frequentist techniques use ratios between the frequencies of possible cases of an observed sequence of data to derive their probability.</p>
+<h1 id="Bayesian-thinking">Bayesian thinking<a class="anchor-link" href="#Bayesian-thinking">¶</a></h1><p>Frequentist techniques use ratios between the frequencies of possible cases of an observed sequence of data to derive their probability.</p>
 <p>So the probability of a coin landing on heads is established by looking at a sequence of flips. Such as T, H, T, T, T, T, H, T, T, H, H, T. In this sequence there are 4 Heads and 8 Tails. SO the probability of Heads is 4/12 or 0.33. This conclusion feels wrong as we know that coins are normally evenly weighted and our conclusion that this is an uneven coin is based on a short sequence of data.</p>
 <p>In the real world H&amp;C's clients often have partial and noisy data. And they nearly alway have some preexisting beliefs which should guide our analysis.</p>
 <p>This is where Bayesian techniques can help. Instead of trying to calculate the probability of heads from the data, the Bayesian asks, given this data what the probability that this is a 50/50 coin. They can also ask what the probability that this is 33$ coin or a 66% coin.</p>
 <p>These three coins represent three different hypotheses which are equally likely before we see the sequence of flips but not equally likely afterwards. Given that only 4/12 flips return heads we can infer that its now more likely that we have 33% coins than a 66% coin.</p>
 <p>In this way our probability of having each coin can be updated using the observed data.</p>
 <p>The formula for calculating this is known as Bayes Theorem. Its a complex theorem but the core idea is quite intuitive. Data allows us to update the probabilities of our competing beliefs. These beliefs are held with varying levels of certainty before we make observations and afterwards we change those convictions. This series of article will explore a variety of increasingly and sometimes complex but always practical applications of this approach.</p>
-
 </div>
 </div>
 </div>
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="A-Bayesian-approach-to-the-Monty-Hall-paradox">A Bayesian approach to the Monty Hall paradox<a class="anchor-link" href="#A-Bayesian-approach-to-the-Monty-Hall-paradox">&#182;</a></h1><p>The Monty Hall Paradox is a well known probability puzzle which many people find intuitively challenging. It has divided opinion even among experts.  Bayesian thinking makes this puzzle much more tractable than traditional frequentist so its a an excellent place to start.</p>
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h1 id="A-Bayesian-approach-to-the-Monty-Hall-paradox">A Bayesian approach to the Monty Hall paradox<a class="anchor-link" href="#A-Bayesian-approach-to-the-Monty-Hall-paradox">¶</a></h1><p>The Monty Hall Paradox is a well known probability puzzle which many people find intuitively challenging. It has divided opinion even among experts.  Bayesian thinking makes this puzzle much more tractable than traditional frequentist so its a an excellent place to start.</p>
 <p>The puzzle is as follows: Imagine a game show. The host is called Monty. There are three doors. Behind one of the doors is a car which the contestant is trying to win. A contestant is asked to to choose a door. Then Monty opens one of the other two doors which doesn't have the car behind it. This leaves two doors left and the car is behind one of them.  Monty then asks the contestant if they would like to stick with their original choice or switch to the other door. Most people will assume there is a 50/50 chance for both doors so there is nothing to be gain from switching. However, switching doors is a the better choice and raises the odds of winning to 2/3</p>
 <p>Its hard to explain this with frequentist theory but a Bayesisn phrasing of the puzzle makes it intuitively clear that the contestant should switch.</p>
 <p>But first for anyone skeptical about why the contestant should switch, which I was, heres empirical proof.  The code below simulates the game 10k times. 5k with a switch strategy and 5k with a non switching strategy. THe graph shows the switcher wins almost exactly 66.6% of the time, while the non-switcher's odds remain on 33.3%. Later we will show how we can derive the same results analytically using Bayes rule.</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Plotly.NET.Interactive, 4.0.0"</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Plotly.NET.Interactive, 4.0.0"</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div><div></div><div></div><div><strong>Installed Packages</strong><ul><li><span>Plotly.NET.Interactive, 4.0.0</span></li></ul></div></div>
 </div>
-
 </div>
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-
-<div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Loading extensions from `C:\Users\harry\.nuget\packages\plotly.net.interactive\4.0.0\interactive-extensions\dotnet\Plotly.NET.Interactive.dll`</pre>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">System</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">System</span>
 <span class="k">open</span><span class="w"> </span><span class="nn">Plotly.NET</span>
 
 <span class="c1">//Helpers</span>
@@ -351,27 +327,17 @@ Typically they are interested in measuring the effects of proposed chances to th
 <span class="w">    </span><span class="n">Keys</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s">"Switchers"</span><span class="o">;</span><span class="w"> </span><span class="s">"Non Switchers"</span><span class="w"> </span><span class="o">]</span>
 <span class="o">)</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div><div id="cb52aca2-b2bf-4d9d-86ea-8a76f749ba94"><!-- Plotly chart will be drawn inside this DIV --></div><script type="text/javascript">
 var renderPlotly_cb52aca2b2bf4d9d86ea8a76f749ba94 = function() {
     var fsharpPlotlyRequire = requirejs.config({context:'fsharp-plotly',paths:{plotly:'https://cdn.plot.ly/plotly-2.18.1.min'}}) || require;
@@ -395,24 +361,21 @@ else {
 }
 </script></div>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>So how can we explain this using a Bayesian approach. As we saw with the coin example, we think of the car being behind each door as distinct  hypotheses. Hypothesis 1 is 'car is behind door 1', Hypothesis 2 is the 'car is behind door 2', Hypothesis 3 the 'car is behind door 3'. The probability of the car being behind each door at the start of the game is 0.33. And lets say we chose door 1 as our first choice.</p>
 <p>To summarise</p>
 <table>
-<thead><tr>
+<thead>
+<tr>
 <th>Hypothesis</th>
 <th>Probability</th>
 <th>First Choice</th>
@@ -427,29 +390,31 @@ else {
 <tr>
 <td>H2</td>
 <td>0.33</td>
+<td></td>
 </tr>
 <tr>
 <td>H3</td>
 <td>0.33</td>
+<td></td>
 </tr>
 </tbody>
 </table>
-
 </div>
 </div>
 </div>
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Monty has to open a door and he selects door 3. Now comes the key step in all applications of Bayes rule, we update the probabilities of the  competing Hypotheses based on the data. In this case the data is that Monty selected door 3. The likelihood that he would have selected door 3 is actually different for each hypothesis.</p>
 <p>For Hypothesis one, Monty wont open the door that we have chosen so he is left with a choice of doors 2 and 3. So, for H1, there is a 50/50 chance of him opening door 3. However, for H2 there is a 100% chance that Monty opens door 3. He wont open the door you have chosen, door 1, or the door that the car is behind, door 2 in this hypothesis, so he has to open door 3.  Lastly there is 0% chance of the car being behind door 3 as he opened this one and he wont open the door that the car is behind it.</p>
 <p>So, after Monty opens door three we have the following updated table.</p>
 <table>
-<thead><tr>
+<thead>
+<tr>
 <th>Hypothesis</th>
 <th>Probability</th>
 <th>First Choice</th>
@@ -477,33 +442,31 @@ else {
 </tr>
 </tbody>
 </table>
-
 </div>
 </div>
 </div>
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="First-application-of-Bayes-rule-in-F%23">First application of Bayes rule in F#<a class="anchor-link" href="#First-application-of-Bayes-rule-in-F%23">&#182;</a></h1><p>Bayes rule tells us to simply multiply the initial probability known as the 'Prior' by the likelihood of the hypothesis given the new data. This gives a new probability known as the 'unormalised Posterior'. 
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h1 id="First-application-of-Bayes-rule-in-F%23">First application of Bayes rule in F#<a class="anchor-link" href="#First-application-of-Bayes-rule-in-F%23">¶</a></h1><p>Bayes rule tells us to simply multiply the initial probability known as the 'Prior' by the likelihood of the hypothesis given the new data. This gives a new probability known as the 'unormalised Posterior'. 
 We then normalise the Posteriors to give their relative chance.
 A rough F# implementation would be look as follows.</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">System</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">System</span>
 
 <span class="k">type</span><span class="w"> </span><span class="nc">Prior</span><span class="w"> </span><span class="o">=</span>
 <span class="w">    </span><span class="o">{</span><span class="w"> </span><span class="n">Hypothesis</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span>
@@ -550,27 +513,17 @@ A rough F# implementation would be look as follows.</p>
 <span class="w">      </span><span class="n">cellsValues</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="n">montyPosteriors</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">List</span><span class="p">.</span><span class="n">map</span><span class="o">(</span><span class="w"> </span><span class="k">fun</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">[</span><span class="n">p</span><span class="o">.</span><span class="n">Hypothesis</span><span class="o">;</span><span class="w"> </span><span class="n">rds</span><span class="w"> </span><span class="n">p</span><span class="o">.</span><span class="n">Prior</span><span class="o">;</span><span class="w"> </span><span class="n">rds</span><span class="w"> </span><span class="n">p</span><span class="o">.</span><span class="n">Likelihood</span><span class="o">;</span><span class="w"> </span><span class="n">rds</span><span class="w"> </span><span class="n">p</span><span class="o">.</span><span class="n">Posterior</span><span class="o">]))</span>
 <span class="w">  </span><span class="o">)</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div><div id="d470cf77-be93-4800-ac4d-2fa4661039bc"><!-- Plotly chart will be drawn inside this DIV --></div><script type="text/javascript">
 var renderPlotly_d470cf77be934800ac4d2fa4661039bc = function() {
     var fsharpPlotlyRequire = requirejs.config({context:'fsharp-plotly',paths:{plotly:'https://cdn.plot.ly/plotly-2.18.1.min'}}) || require;
@@ -594,28 +547,24 @@ else {
 }
 </script></div>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>As you can see the posterior result matches the results from empirical simulation.</p>
-<h1 id="Wrap-up">Wrap up<a class="anchor-link" href="#Wrap-up">&#182;</a></h1><p>Bayesian thinking gives us intuitive and powerful ways to approach probability problems. This article has followed the first couple of chapters of the <a href="http://allendowney.github.io/ThinkBayes2/">Think Bayes</a> book which is an excellent resource well worth reading in full.</p>
+<h1 id="Wrap-up">Wrap up<a class="anchor-link" href="#Wrap-up">¶</a></h1><p>Bayesian thinking gives us intuitive and powerful ways to approach probability problems. This article has followed the first couple of chapters of the <a href="http://allendowney.github.io/ThinkBayes2/">Think Bayes</a> book which is an excellent resource well worth reading in full.</p>
 <p>The next post in this series will look at how Bayes rule can be applied to more complex examples. We will also show how the <a href="https://github.com/fslaborg/FSharp.Stats/">fsharp.stats</a> library can help compose and solve these problems with remarkable efficiency.</p>
-
 </div>
 </div>
 </div>
 </div>
+</main>
 
         </div>
         <footer class="footer has-bg-darkmagenta">

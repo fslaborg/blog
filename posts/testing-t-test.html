@@ -134,14 +134,14 @@
         </section>
         <div class="content jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
           
-
+<main>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="Testing-with-FSharp.Stats-I:-t-test">Testing with FSharp.Stats I: t-test<a class="anchor-link" href="#Testing-with-FSharp.Stats-I:-t-test">&#182;</a></h1><h2 id="Getting-started:-The-t-test">Getting started: The t-test<a class="anchor-link" href="#Getting-started:-The-t-test">&#182;</a></h2><p><em>I love statistical testing</em> - A sentence math teachers don't hear often during their time at school. In this tutorial we aim to give you a short introduction of the theory and how to 
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h1 id="Testing-with-FSharp.Stats-I:-t-test">Testing with FSharp.Stats I: t-test<a class="anchor-link" href="#Testing-with-FSharp.Stats-I:-t-test">¶</a></h1><h2 id="Getting-started:-The-t-test">Getting started: The t-test<a class="anchor-link" href="#Getting-started:-The-t-test">¶</a></h2><p><em>I love statistical testing</em> - A sentence math teachers don't hear often during their time at school. In this tutorial we aim to give you a short introduction of the theory and how to 
 perform the most used statistical test: the t-test</p>
 <p>Suppose you have measured the length of some leaves of two trees and you want to find out if the average length of the leaves is the same or if they differ from each other. 
 If you knew the population distributions of all leaves hanging on both trees the task would be easy, but since we only have samples from both populations, we have to apply a statistical test.
@@ -156,21 +156,20 @@ Student's t-test can be applied to test whether two samples have the same mean (
 <em>There are some tests out there to check if the variances are equal or if the sample follows a normal distribution, but their effectiveness is discussed.</em>
 <em>You always should consider the shape of the theoretical background distribution, instead of relying on preliminary tests rashly.</em></p>
 <p>The t-test is one of the most used statistical tests in datascience. It is used to compare two samples in terms of statistical significance. 
-Often a significance threshold (or &alpha; level) of 0.05 is chosen to define if a p value is defined as statistically significant. A p value describes how likely it is to observe an effect
+Often a significance threshold (or α level) of 0.05 is chosen to define if a p value is defined as statistically significant. A p value describes how likely it is to observe an effect
 at least as extreme as you observed (in the comparison) by chance. Low p values indicate a high confidence to state that there is a real difference and the observed difference is not caused by chance.</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Deedle.Interactive, 3.0.0"</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Deedle.Interactive, 3.0.0"</span>
 <span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: FSharp.Stats, 0.4.3"</span>
 <span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Plotly.NET.Interactive, 4.0.0"</span>
 <span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: FSharp.Data, 4.2.7"</span>
@@ -179,58 +178,43 @@ at least as extreme as you observed (in the comparison) by chance. Low p values 
 <span class="k">open</span><span class="w"> </span><span class="nn">Deedle</span>
 <span class="k">open</span><span class="w"> </span><span class="nn">Plotly.NET</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div><div></div><div></div><div><strong>Installed Packages</strong><ul><li><span>Deedle.Interactive, 3.0.0</span></li><li><span>FSharp.Data, 4.2.7</span></li><li><span>FSharp.Stats, 0.4.3</span></li><li><span>Plotly.NET.Interactive, 4.0.0</span></li></ul></div></div>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>For our purposes, we will use the housefly wing length dataset (from <em>Sokal et al., 1955, A morphometric analysis of DDT-resistant and non-resistant housefly strains</em>).
 Head over to the <a href="001_getting-started.html#Data-access">Getting started</a> tutorial where it is shown how to import datasets in a simple way.</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="c1">// We retrieve the dataset via FSharp.Data:</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="c1">// We retrieve the dataset via FSharp.Data:</span>
 <span class="k">let</span><span class="w"> </span><span class="nv">rawDataHousefly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Http</span><span class="p">.</span><span class="n">RequestString</span><span class="w"> </span><span class="s">@"https://raw.githubusercontent.com/fslaborg/datasets/main/data/HouseflyWingLength.txt"</span>
 
 <span class="k">let</span><span class="w"> </span><span class="nv">dataHousefly</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">seq</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
@@ -240,33 +224,30 @@ Head over to the <a href="001_getting-started.html#Data-access">Getting started<
 <span class="w">    </span><span class="c1">// We convert the values to mm</span>
 <span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">10</span><span class="o">.)</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Let us first have a look at the sample data with help of a boxplot. As shown below, the average wingspan is around 4.5 with variability ranges between 3.5 and 5.5.</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="nn">Chart</span><span class="p">.</span><span class="n">BoxPlot</span><span class="o">(</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="nn">Chart</span><span class="p">.</span><span class="n">BoxPlot</span><span class="o">(</span>
 <span class="w">    </span><span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dataHousefly</span><span class="o">,</span><span class="w"> </span>
 <span class="w">    </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"housefly"</span><span class="o">,</span><span class="w"> </span>
 <span class="w">    </span><span class="n">BoxPoints</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">BoxPoints</span><span class="p">.</span><span class="n">All</span><span class="o">,</span><span class="w"> </span>
@@ -274,27 +255,17 @@ Head over to the <a href="001_getting-started.html#Data-access">Getting started<
 <span class="o">)</span>
 <span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="w"> </span><span class="s">"wing length [mm]"</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div><div id="d27634fa-057c-46fc-9342-02c5672a8083"><!-- Plotly chart will be drawn inside this DIV --></div><script type="text/javascript">
 var renderPlotly_d27634fa057c46fc934202c5672a8083 = function() {
     var fsharpPlotlyRequire = requirejs.config({context:'fsharp-plotly',paths:{plotly:'https://cdn.plot.ly/plotly-2.18.1.min'}}) || require;
@@ -318,36 +289,31 @@ else {
 }
 </script></div>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="One-sample-t-test">One-sample t-test<a class="anchor-link" href="#One-sample-t-test">&#182;</a></h2><p>We want to analyze if an estimated expected value differs from the sample above. Therefore, we perform a one-sample t-test which covers exactly this situation.</p>
-<p><img style="max-width:75%" src="https://fslab.org/blog/images/OneSampleTTest.png"></img></p>
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="One-sample-t-test">One-sample t-test<a class="anchor-link" href="#One-sample-t-test">¶</a></h2><p>We want to analyze if an estimated expected value differs from the sample above. Therefore, we perform a one-sample t-test which covers exactly this situation.</p>
+<p><img alt="No description has been provided for this image" src="https://fslab.org/blog/images/OneSampleTTest.png" style="max-width:75%"/></p>
 <p>Fig. 1: <strong>The one-sample t-test</strong> The dashed orange line depicts the distribution of our sample, the green bar the expected value to test against.</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats</span>
 <span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats.Testing</span>
 
 <span class="c1">// The testing module in FSharp.Stats require vectors as input types, thus we transform our array into a vector:</span>
@@ -361,28 +327,18 @@ else {
 
 <span class="n">oneSampleResult</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
-<details open="open" class="dni-treeview"><summary><span class="dni-code-hint"><code>{ Statistic = 1.275624919\n  DegreesOfFreedom = 99.0\n  PValueLeft = 0.8974634108\n  PValueRight = 0.1025365892\n  PValue = 0.2050731784 }</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>Statistic</td><td><div class="dni-plaintext"><pre>1.2756249193674383</pre></div></td></tr><tr><td>DegreesOfFreedom</td><td><div class="dni-plaintext"><pre>99</pre></div></td></tr><tr><td>PValueLeft</td><td><div class="dni-plaintext"><pre>0.8974634107766597</pre></div></td></tr><tr><td>PValueRight</td><td><div class="dni-plaintext"><pre>0.1025365892233403</pre></div></td></tr><tr><td>PValue</td><td><div class="dni-plaintext"><pre>0.2050731784466806</pre></div></td></tr></tbody></table></div></details><style>
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<details class="dni-treeview" open="open"><summary><span class="dni-code-hint"><code>{ Statistic = 1.275624919\n  DegreesOfFreedom = 99.0\n  PValueLeft = 0.8974634108\n  PValueRight = 0.1025365892\n  PValue = 0.2050731784 }</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>Statistic</td><td><div class="dni-plaintext"><pre>1.2756249193674383</pre></div></td></tr><tr><td>DegreesOfFreedom</td><td><div class="dni-plaintext"><pre>99</pre></div></td></tr><tr><td>PValueLeft</td><td><div class="dni-plaintext"><pre>0.8974634107766597</pre></div></td></tr><tr><td>PValueRight</td><td><div class="dni-plaintext"><pre>0.1025365892233403</pre></div></td></tr><tr><td>PValue</td><td><div class="dni-plaintext"><pre>0.2050731784466806</pre></div></td></tr></tbody></table></div></details><style>
 .dni-code-hint {
     font-style: italic;
     overflow: hidden;
@@ -415,20 +371,16 @@ table th {
 }
 </style>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>The function returns a <code>TTestStatistics</code> type. If contains the fields</p>
 <ul>
 <li><p><code>Statistic</code>: defines the exact teststatistic</p>
@@ -444,23 +396,22 @@ table th {
 </ul>
 <p>As we can see, when looking at the two-tailed p-value, our sample does <em>not</em> differ significantly from our expected value. This matches our visual impression of the boxplot, where the sample distribution 
 is centered around 4.5.</p>
-<h2 id="Two-sample-t-test-(unpaired-data)">Two-sample t-test (unpaired data)<a class="anchor-link" href="#Two-sample-t-test-(unpaired-data)">&#182;</a></h2><p>The t-test is most often used in its two-sample variant. Here, two samples, independent from each other, are compared. It is required that both samples are normally distributed.
+<h2 id="Two-sample-t-test-(unpaired-data)">Two-sample t-test (unpaired data)<a class="anchor-link" href="#Two-sample-t-test-(unpaired-data)">¶</a></h2><p>The t-test is most often used in its two-sample variant. Here, two samples, independent from each other, are compared. It is required that both samples are normally distributed.
 In this next example, we are going to see if the gender of college athletes determines the number of concussions suffered over 3 years (from: <em>Covassin et al., 2003, Sex Differences and the Incidence of Concussions Among Collegiate Athletes, Journal of Athletic Training</em>).</p>
-<p><img style="max-width:75%" src="https://fslab.org/blog/images/TwoSampleTTest.png"></img></p>
+<p><img alt="No description has been provided for this image" src="https://fslab.org/blog/images/TwoSampleTTest.png" style="max-width:75%"/></p>
 <p>Fig. 2: <strong>The two-sample t-test</strong> The dashed orange and green lines depict the distribution of both samples that are compared with each other.</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">System.Text</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">System.Text</span>
 
 <span class="k">let</span><span class="w"> </span><span class="nv">rawDataAthletes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Http</span><span class="p">.</span><span class="n">RequestString</span><span class="w"> </span><span class="s">@"https://raw.githubusercontent.com/fslaborg/datasets/main/data/ConcussionsInMaleAndFemaleCollegeAthletes_adapted.tsv"</span>
 
@@ -471,29 +422,19 @@ In this next example, we are going to see if the gender of college athletes dete
 
 <span class="n">dataAthletesAsFrame</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div>
-<style scoped>,
+<style scoped="">,
   .dataframe tbody tr th:only-of-type {
     vertical-align: middle;
   }
@@ -507,30 +448,25 @@ In this next example, we are going to see if the gender of college athletes dete
     white-space: nowrap;
   }
 </style>
-<table border='1' class='dataframe'>
+<table border="1" class="dataframe">
 <thead><th></th><th></th><th>Gender</th><th>Sports</th><th>Year</th><th>Concussion</th><th>Count</th></thead><thead><th></th><th></th><th>(string)</th><th>(string)</th><th>(int)</th><th>(Boolean)</th><th>(int)</th></thead>
-<tr><td><b>0</b></td><td class="no-wrap">-></td><td>Female</td><td>Soccer</td><td>1997</td><td>False</td><td>24930</td></tr><tr><td><b>1</b></td><td class="no-wrap">-></td><td>Female</td><td>Soccer</td><td>1997</td><td>True</td><td>51</td></tr><tr><td><b>2</b></td><td class="no-wrap">-></td><td>Female</td><td>Soccer</td><td>1998</td><td>False</td><td>22887</td></tr><tr><td><b>3</b></td><td class="no-wrap">-></td><td>Female</td><td>Soccer</td><td>1998</td><td>True</td><td>47</td></tr><tr><td><b>4</b></td><td class="no-wrap">-></td><td>Female</td><td>Soccer</td><td>1999</td><td>False</td><td>27107</td></tr><tr><td><b>:</b></td><td class="no-wrap"></td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr><tr><td><b>55</b></td><td class="no-wrap">-></td><td>Male</td><td>Gymnastics</td><td>1997</td><td>True</td><td>0</td></tr><tr><td><b>56</b></td><td class="no-wrap">-></td><td>Male</td><td>Gymnastics</td><td>1998</td><td>False</td><td>221</td></tr><tr><td><b>57</b></td><td class="no-wrap">-></td><td>Male</td><td>Gymnastics</td><td>1998</td><td>True</td><td>0</td></tr><tr><td><b>58</b></td><td class="no-wrap">-></td><td>Male</td><td>Gymnastics</td><td>1999</td><td>False</td><td>1179</td></tr><tr><td><b>59</b></td><td class="no-wrap">-></td><td>Male</td><td>Gymnastics</td><td>1999</td><td>True</td><td>0</td></tr>
+<tr><td><b>0</b></td><td class="no-wrap">-&gt;</td><td>Female</td><td>Soccer</td><td>1997</td><td>False</td><td>24930</td></tr><tr><td><b>1</b></td><td class="no-wrap">-&gt;</td><td>Female</td><td>Soccer</td><td>1997</td><td>True</td><td>51</td></tr><tr><td><b>2</b></td><td class="no-wrap">-&gt;</td><td>Female</td><td>Soccer</td><td>1998</td><td>False</td><td>22887</td></tr><tr><td><b>3</b></td><td class="no-wrap">-&gt;</td><td>Female</td><td>Soccer</td><td>1998</td><td>True</td><td>47</td></tr><tr><td><b>4</b></td><td class="no-wrap">-&gt;</td><td>Female</td><td>Soccer</td><td>1999</td><td>False</td><td>27107</td></tr><tr><td><b>:</b></td><td class="no-wrap"></td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr><tr><td><b>55</b></td><td class="no-wrap">-&gt;</td><td>Male</td><td>Gymnastics</td><td>1997</td><td>True</td><td>0</td></tr><tr><td><b>56</b></td><td class="no-wrap">-&gt;</td><td>Male</td><td>Gymnastics</td><td>1998</td><td>False</td><td>221</td></tr><tr><td><b>57</b></td><td class="no-wrap">-&gt;</td><td>Male</td><td>Gymnastics</td><td>1998</td><td>True</td><td>0</td></tr><tr><td><b>58</b></td><td class="no-wrap">-&gt;</td><td>Male</td><td>Gymnastics</td><td>1999</td><td>False</td><td>1179</td></tr><tr><td><b>59</b></td><td class="no-wrap">-&gt;</td><td>Male</td><td>Gymnastics</td><td>1999</td><td>True</td><td>0</td></tr>
 </table>
 <p><b>60</b> rows x <b>5</b> columns</p><p><b>0</b> missing values</p>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[10]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="c1">// We need to filter out the columns and rows we don't need. Thus, we filter out the rows where the athletes suffered no concussions  </span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="c1">// We need to filter out the columns and rows we don't need. Thus, we filter out the rows where the athletes suffered no concussions  </span>
 <span class="c1">// as well as filter out the columns without the number of concussions.</span>
 <span class="k">let</span><span class="w"> </span><span class="nv">dataAthletesFemale</span><span class="o">,</span><span class="w"> </span><span class="n">dataAthletesMale</span><span class="w"> </span><span class="o">=</span>
 <span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">getAthleteGenderData</span><span class="w"> </span><span class="n">gender</span><span class="w"> </span><span class="o">=</span>
@@ -546,60 +482,47 @@ In this next example, we are going to see if the gender of college athletes dete
 <span class="w">        </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">vector</span>
 <span class="w">    </span><span class="n">getAthleteGenderData</span><span class="w"> </span><span class="s">"Female"</span><span class="o">,</span><span class="w"> </span><span class="n">getAthleteGenderData</span><span class="w"> </span><span class="s">"Male"</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Again, let's check our data via boxplots before we proceed on comparing them.</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[12]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="o">[</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="o">[</span>
 <span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">BoxPlot</span><span class="o">(</span><span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dataAthletesFemale</span><span class="o">,</span><span class="w"> </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"female college athletes"</span><span class="o">,</span><span class="w"> </span><span class="n">BoxPoints</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">BoxPoints</span><span class="p">.</span><span class="n">All</span><span class="o">,</span><span class="w"> </span><span class="n">Jitter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">2</span><span class="o">)</span>
 <span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">BoxPlot</span><span class="o">(</span><span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dataAthletesMale</span><span class="o">,</span><span class="w"> </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"male college athletes"</span><span class="o">,</span><span class="w"> </span><span class="n">BoxPoints</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">StyleParam</span><span class="p">.</span><span class="nn">BoxPoints</span><span class="p">.</span><span class="n">All</span><span class="o">,</span><span class="w"> </span><span class="n">Jitter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="o">.</span><span class="mi">2</span><span class="o">)</span>
 <span class="o">]</span>
 <span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">combine</span>
 <span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="w"> </span><span class="s">"number of concussions over 3 years"</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div><div id="9ecaa9ec-9aeb-485e-8ce7-0e1e67741b69"><!-- Plotly chart will be drawn inside this DIV --></div><script type="text/javascript">
 var renderPlotly_9ecaa9ec9aeb485e8ce70e1e67741b69 = function() {
     var fsharpPlotlyRequire = requirejs.config({context:'fsharp-plotly',paths:{plotly:'https://cdn.plot.ly/plotly-2.18.1.min'}}) || require;
@@ -623,60 +546,45 @@ else {
 }
 </script></div>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Both samples are tested against using <code>FSharp.Stats.Testing.TTest.twoSample</code> and assuming equal variances.</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[13]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="c1">// We test both samples against each other, assuming equal variances.</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="c1">// We test both samples against each other, assuming equal variances.</span>
 <span class="k">let</span><span class="w"> </span><span class="nv">twoSampleResult</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">TTest</span><span class="p">.</span><span class="n">twoSample</span><span class="w"> </span><span class="k">true</span><span class="w"> </span><span class="n">dataAthletesFemale</span><span class="w"> </span><span class="n">dataAthletesMale</span>
 
 <span class="n">twoSampleResult</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
-<details open="open" class="dni-treeview"><summary><span class="dni-code-hint"><code>{ Statistic = 0.5616104016\n  DegreesOfFreedom = 28.0\n  PValueLeft = 0.7105752703\n  PValueRight = 0.2894247297\n  PValue = 0.5788494593 }</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>Statistic</td><td><div class="dni-plaintext"><pre>0.56161040164984</pre></div></td></tr><tr><td>DegreesOfFreedom</td><td><div class="dni-plaintext"><pre>28</pre></div></td></tr><tr><td>PValueLeft</td><td><div class="dni-plaintext"><pre>0.7105752703384163</pre></div></td></tr><tr><td>PValueRight</td><td><div class="dni-plaintext"><pre>0.2894247296615837</pre></div></td></tr><tr><td>PValue</td><td><div class="dni-plaintext"><pre>0.5788494593231674</pre></div></td></tr></tbody></table></div></details><style>
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<details class="dni-treeview" open="open"><summary><span class="dni-code-hint"><code>{ Statistic = 0.5616104016\n  DegreesOfFreedom = 28.0\n  PValueLeft = 0.7105752703\n  PValueRight = 0.2894247297\n  PValue = 0.5788494593 }</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>Statistic</td><td><div class="dni-plaintext"><pre>0.56161040164984</pre></div></td></tr><tr><td>DegreesOfFreedom</td><td><div class="dni-plaintext"><pre>28</pre></div></td></tr><tr><td>PValueLeft</td><td><div class="dni-plaintext"><pre>0.7105752703384163</pre></div></td></tr><tr><td>PValueRight</td><td><div class="dni-plaintext"><pre>0.2894247296615837</pre></div></td></tr><tr><td>PValue</td><td><div class="dni-plaintext"><pre>0.5788494593231674</pre></div></td></tr></tbody></table></div></details><style>
 .dni-code-hint {
     font-style: italic;
     overflow: hidden;
@@ -709,41 +617,36 @@ table th {
 }
 </style>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>With a p value of 0.58 the t-test indicate that there's no significant difference between the number of concussions over 3 years between male and female college athletes.</p>
-<h2 id="Two-sample-t-test-(paired-data)">Two-sample t-test (paired data)<a class="anchor-link" href="#Two-sample-t-test-(paired-data)">&#182;</a></h2><p>Paired data describes data where each value from the one sample is connected with its respective value from the other sample.<br>
+<h2 id="Two-sample-t-test-(paired-data)">Two-sample t-test (paired data)<a class="anchor-link" href="#Two-sample-t-test-(paired-data)">¶</a></h2><p>Paired data describes data where each value from the one sample is connected with its respective value from the other sample.<br/>
 In the next case, the endurance performance of several persons in a normal situation (control situation) is compared to their performance after ingesting a specific amount of caffeine*. 
-It is the same person that performs the exercise but under different conditions. Thus, the resulting values of the persons under each condition are compared.<br>
+It is the same person that performs the exercise but under different conditions. Thus, the resulting values of the persons under each condition are compared.<br/>
 Another example are time-dependent experiments: One measures, e.g., the condition of cells stressed with a high surrounding temperature in the beginning and after 30 minutes. 
 The measured cells are always the same, yet their conditions might differ.
 Due to the connectivity of the sample pairs the samples must be of equal length.</p>
 <p>*Source: W.J. Pasman, M.A. van Baak, A.E. Jeukendrup, A. de Haan (1995). <em>The Effect of Different Dosages of Caffeine on Endurance Performance Time</em>, International Journal of Sports Medicine, Vol. 16, pp225-230.</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[14]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">rawDataCaffeine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Http</span><span class="p">.</span><span class="n">RequestString</span><span class="w"> </span><span class="s">@"https://raw.githubusercontent.com/fslaborg/datasets/main/data/CaffeineAndEndurance(wide)_adapted.tsv"</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">rawDataCaffeine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Http</span><span class="p">.</span><span class="n">RequestString</span><span class="w"> </span><span class="s">@"https://raw.githubusercontent.com/fslaborg/datasets/main/data/CaffeineAndEndurance(wide)_adapted.tsv"</span>
 
 <span class="k">let</span><span class="w"> </span><span class="nv">dataCaffeineAsStream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nn">System</span><span class="p">.</span><span class="nn">IO</span><span class="p">.</span><span class="n">MemoryStream</span><span class="o">(</span><span class="n">rawDataCaffeine</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Encoding</span><span class="p">.</span><span class="nn">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="o">)</span>
 <span class="k">let</span><span class="w"> </span><span class="nv">dataCaffeineAsFrame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">ReadCsv</span><span class="o">(</span><span class="n">dataCaffeineAsStream</span><span class="o">,</span><span class="w"> </span><span class="n">hasHeaders</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="o">,</span><span class="w"> </span><span class="n">separators</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"</span><span class="se">\t</span><span class="s">"</span><span class="o">,</span><span class="w"> </span><span class="n">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Subject ID, no Dose, 5 mg, 9 mg, 13 mg"</span><span class="o">)</span>
@@ -768,27 +671,17 @@ Due to the connectivity of the sample pairs the samples must be of equal length.
 <span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withXAxisStyle</span><span class="w"> </span><span class="s">""</span>
 <span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withYAxisStyle</span><span class="o">(</span><span class="s">"endurance performance"</span><span class="o">,</span><span class="w"> </span><span class="n">MinMax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="mi">0</span><span class="o">.,</span><span class="mi">100</span><span class="o">.))</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div><div id="1c95d56f-e79e-416c-8689-1003bd412761"><!-- Plotly chart will be drawn inside this DIV --></div><script type="text/javascript">
 var renderPlotly_1c95d56fe79e416c86891003bd412761 = function() {
     var fsharpPlotlyRequire = requirejs.config({context:'fsharp-plotly',paths:{plotly:'https://cdn.plot.ly/plotly-2.18.1.min'}}) || require;
@@ -812,58 +705,43 @@ else {
 }
 </script></div>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>The function for pairwise t-tests can be found at <code>FSharp.Stats.Testing.TTest.twoSamplePaired</code>. Note, that the order of the elements in each vector must be the same, so that a pairwise comparison can be performed.</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[15]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">twoSamplePairedResult</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">TTest</span><span class="p">.</span><span class="n">twoSamplePaired</span><span class="w"> </span><span class="n">dataCaffeineNoDose</span><span class="w"> </span><span class="n">dataCaffeine13mg</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">twoSamplePairedResult</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">TTest</span><span class="p">.</span><span class="n">twoSamplePaired</span><span class="w"> </span><span class="n">dataCaffeineNoDose</span><span class="w"> </span><span class="n">dataCaffeine13mg</span>
 <span class="n">twoSamplePairedResult</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
-<details open="open" class="dni-treeview"><summary><span class="dni-code-hint"><code>{ Statistic = 3.252507672\n  DegreesOfFreedom = 8.0\n  PValueLeft = 0.9941713794\n  PValueRight = 0.005828620625\n  PValue = 0.01165724125 }</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>Statistic</td><td><div class="dni-plaintext"><pre>3.2525076715666534</pre></div></td></tr><tr><td>DegreesOfFreedom</td><td><div class="dni-plaintext"><pre>8</pre></div></td></tr><tr><td>PValueLeft</td><td><div class="dni-plaintext"><pre>0.9941713793753144</pre></div></td></tr><tr><td>PValueRight</td><td><div class="dni-plaintext"><pre>0.005828620624685588</pre></div></td></tr><tr><td>PValue</td><td><div class="dni-plaintext"><pre>0.011657241249371175</pre></div></td></tr></tbody></table></div></details><style>
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<details class="dni-treeview" open="open"><summary><span class="dni-code-hint"><code>{ Statistic = 3.252507672\n  DegreesOfFreedom = 8.0\n  PValueLeft = 0.9941713794\n  PValueRight = 0.005828620625\n  PValue = 0.01165724125 }</code></span></summary><div><table><thead><tr></tr></thead><tbody><tr><td>Statistic</td><td><div class="dni-plaintext"><pre>3.2525076715666534</pre></div></td></tr><tr><td>DegreesOfFreedom</td><td><div class="dni-plaintext"><pre>8</pre></div></td></tr><tr><td>PValueLeft</td><td><div class="dni-plaintext"><pre>0.9941713793753144</pre></div></td></tr><tr><td>PValueRight</td><td><div class="dni-plaintext"><pre>0.005828620624685588</pre></div></td></tr><tr><td>PValue</td><td><div class="dni-plaintext"><pre>0.011657241249371175</pre></div></td></tr></tbody></table></div></details><style>
 .dni-code-hint {
     font-style: italic;
     overflow: hidden;
@@ -896,26 +774,22 @@ table th {
 }
 </style>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>The two-sample paired t-test suggests a significant difference beween caffeine and non-caffeine treatment groups with a p-value of 0.012.</p>
-
 </div>
 </div>
 </div>
 </div>
+</main>
 
         </div>
         <footer class="footer has-bg-darkmagenta">

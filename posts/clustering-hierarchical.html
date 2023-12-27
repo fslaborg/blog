@@ -169,22 +169,22 @@
         </section>
         <div class="content jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
           
-
+<main>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="Clustering-with-FSharp.Stats-II:-hierarchical-clustering">Clustering with FSharp.Stats II: hierarchical clustering<a class="anchor-link" href="#Clustering-with-FSharp.Stats-II:-hierarchical-clustering">&#182;</a></h1><p><em>Summary:</em> This tutorial demonstrates hierarchical clustering with FSharp.Stats and how to visualize the results with Plotly.NET.</p>
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h1 id="Clustering-with-FSharp.Stats-II:-hierarchical-clustering">Clustering with FSharp.Stats II: hierarchical clustering<a class="anchor-link" href="#Clustering-with-FSharp.Stats-II:-hierarchical-clustering">¶</a></h1><p><em>Summary:</em> This tutorial demonstrates hierarchical clustering with FSharp.Stats and how to visualize the results with Plotly.NET.</p>
 <p>In the previous article of this series <a href="002_clustering_kMeans.html">k-means clustering using FSharp.Stats</a> was introduced.</p>
-<h2 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">&#182;</a></h2><p>Clustering methods can be used to group elements of a huge data set based on their similarity. Elements sharing similar properties cluster together and can be reported as coherent group.
+<h2 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">¶</a></h2><p>Clustering methods can be used to group elements of a huge data set based on their similarity. Elements sharing similar properties cluster together and can be reported as coherent group.
 Many clustering algorithms require a predefined cluster number, that has to be provided by the experimenter.
 Hierarchical clustering (hClust) does not require such cluster number definition. Instead, hierarchical clustering results in a tree structure, that has a single cluster (node) on its root and recursively splits up into clusters of 
 elements that are more similar to each other than to elements of other clusters. For generating multiple clustering results with different number of clusters, 
 the clustering has to performed only once. Subsequently a cluster number can be defined to split up the clustering tree in the desired number of clusters.
 The clustering tree is often represented as dendrogram.</p>
-<h3 id="There-are-two-types-of-hClust:">There are two types of hClust:<a class="anchor-link" href="#There-are-two-types-of-hClust:">&#182;</a></h3><ul>
+<h3 id="There-are-two-types-of-hClust:">There are two types of hClust:<a class="anchor-link" href="#There-are-two-types-of-hClust:">¶</a></h3><ul>
 <li><p>Agglomerative (bottom-up): Each data point is in its own cluster and the nearest ones are merged recursively. It is referred as agglomerative hierarchical clustering.</p>
 </li>
 <li><p>Divisive (top-down): All data points are in the same cluster and you divide the cluster into two that are far away from each other.</p>
@@ -192,8 +192,8 @@ The clustering tree is often represented as dendrogram.</p>
 <li><p>The presented implementation is an agglomerative type.</p>
 </li>
 </ul>
-<h3 id="Distance-measures">Distance measures<a class="anchor-link" href="#Distance-measures">&#182;</a></h3><p>There are several distance metrics, that can be used as distance function. The commonly used one probably is Euclidean distance.</p>
-<h3 id="Linker">Linker<a class="anchor-link" href="#Linker">&#182;</a></h3><p>When the distance between two clusters is calculated, there are several linkage types to choose from:</p>
+<h3 id="Distance-measures">Distance measures<a class="anchor-link" href="#Distance-measures">¶</a></h3><p>There are several distance metrics, that can be used as distance function. The commonly used one probably is Euclidean distance.</p>
+<h3 id="Linker">Linker<a class="anchor-link" href="#Linker">¶</a></h3><p>When the distance between two clusters is calculated, there are several linkage types to choose from:</p>
 <ul>
 <li><p><strong>complete linkage</strong>: maximal pairwise distance between the clusters (prone to break large clusters)</p>
 </li>
@@ -206,104 +206,74 @@ The clustering tree is often represented as dendrogram.</p>
 <li><p><strong>median linkage</strong>: median pairwise distance between the clusters</p>
 </li>
 </ul>
-<p><img style="max-width:100%" src="https://fslab.org/blog/images/hClust.png"></img></p>
-<p><br></p>
+<p><img alt="No description has been provided for this image" src="https://fslab.org/blog/images/hClust.png" style="max-width:100%"/></p>
+<br/>
 <p>For demonstration of hierarchical clustering, the classic iris data set is used, which consists of 150 records, each of which contains four measurements and a species identifier.</p>
-<h2 id="Referencing-packages">Referencing packages<a class="anchor-link" href="#Referencing-packages">&#182;</a></h2>
+<h2 id="Referencing-packages">Referencing packages<a class="anchor-link" href="#Referencing-packages">¶</a></h2>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Deedle.Interactive, 3.0.0"</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Deedle.Interactive, 3.0.0"</span>
 <span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: FSharp.Stats, 0.4.3"</span>
 <span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Plotly.NET.Interactive, 4.0.0"</span>
 <span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: FSharp.Data, 4.2.7"</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div><div></div><div></div><div><strong>Installed Packages</strong><ul><li><span>Deedle.Interactive, 3.0.0</span></li><li><span>FSharp.Data, 4.2.7</span></li><li><span>FSharp.Stats, 0.4.3</span></li><li><span>Plotly.NET.Interactive, 4.0.0</span></li></ul></div></div>
 </div>
-
 </div>
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-
-<div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Loading extensions from `C:\Users\schne\.nuget\packages\plotly.net.interactive\4.0.0\interactive-extensions\dotnet\Plotly.NET.Interactive.dll`</pre>
 </div>
-
 </div>
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-
-<div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Loading extensions from `C:\Users\schne\.nuget\packages\deedle.interactive\3.0.0\interactive-extensions\dotnet\Deedle.Interactive.dll`</pre>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Loading-data">Loading data<a class="anchor-link" href="#Loading-data">&#182;</a></h2>
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Loading-data">Loading data<a class="anchor-link" href="#Loading-data">¶</a></h2>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Data</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Data</span>
 <span class="k">open</span><span class="w"> </span><span class="nn">Deedle</span>
 
 <span class="c1">// Retrieve data using the FSharp.Data package and read it as dataframe using the Deedle package</span>
@@ -312,29 +282,19 @@ The clustering tree is often represented as dendrogram.</p>
 
 <span class="n">df</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div>
-<style scoped>,
+<style scoped="">,
   .dataframe tbody tr th:only-of-type {
     vertical-align: middle;
   }
@@ -348,43 +308,37 @@ The clustering tree is often represented as dendrogram.</p>
     white-space: nowrap;
   }
 </style>
-<table border='1' class='dataframe'>
+<table border="1" class="dataframe">
 <thead><th></th><th></th><th>sepal_length</th><th>sepal_width</th><th>petal_length</th><th>petal_width</th><th>species</th></thead><thead><th></th><th></th><th>(Decimal)</th><th>(Decimal)</th><th>(Decimal)</th><th>(Decimal)</th><th>(string)</th></thead>
-<tr><td><b>0</b></td><td class="no-wrap">-></td><td>5.5</td><td>2.4</td><td>3.8</td><td>1.1</td><td>versicolor</td></tr><tr><td><b>1</b></td><td class="no-wrap">-></td><td>4.9</td><td>3.1</td><td>1.5</td><td>0.1</td><td>setosa</td></tr><tr><td><b>2</b></td><td class="no-wrap">-></td><td>7.6</td><td>3</td><td>6.6</td><td>2.1</td><td>virginica</td></tr><tr><td><b>3</b></td><td class="no-wrap">-></td><td>5.6</td><td>2.8</td><td>4.9</td><td>2</td><td>virginica</td></tr><tr><td><b>4</b></td><td class="no-wrap">-></td><td>6.1</td><td>3</td><td>4.9</td><td>1.8</td><td>virginica</td></tr><tr><td><b>:</b></td><td class="no-wrap"></td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr><tr><td><b>145</b></td><td class="no-wrap">-></td><td>7.7</td><td>2.6</td><td>6.9</td><td>2.3</td><td>virginica</td></tr><tr><td><b>146</b></td><td class="no-wrap">-></td><td>5.7</td><td>2.6</td><td>3.5</td><td>1</td><td>versicolor</td></tr><tr><td><b>147</b></td><td class="no-wrap">-></td><td>5.9</td><td>3</td><td>5.1</td><td>1.8</td><td>virginica</td></tr><tr><td><b>148</b></td><td class="no-wrap">-></td><td>6.8</td><td>3.2</td><td>5.9</td><td>2.3</td><td>virginica</td></tr><tr><td><b>149</b></td><td class="no-wrap">-></td><td>5</td><td>3.6</td><td>1.4</td><td>0.2</td><td>setosa</td></tr>
+<tr><td><b>0</b></td><td class="no-wrap">-&gt;</td><td>5.5</td><td>2.4</td><td>3.8</td><td>1.1</td><td>versicolor</td></tr><tr><td><b>1</b></td><td class="no-wrap">-&gt;</td><td>4.9</td><td>3.1</td><td>1.5</td><td>0.1</td><td>setosa</td></tr><tr><td><b>2</b></td><td class="no-wrap">-&gt;</td><td>7.6</td><td>3</td><td>6.6</td><td>2.1</td><td>virginica</td></tr><tr><td><b>3</b></td><td class="no-wrap">-&gt;</td><td>5.6</td><td>2.8</td><td>4.9</td><td>2</td><td>virginica</td></tr><tr><td><b>4</b></td><td class="no-wrap">-&gt;</td><td>6.1</td><td>3</td><td>4.9</td><td>1.8</td><td>virginica</td></tr><tr><td><b>:</b></td><td class="no-wrap"></td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr><tr><td><b>145</b></td><td class="no-wrap">-&gt;</td><td>7.7</td><td>2.6</td><td>6.9</td><td>2.3</td><td>virginica</td></tr><tr><td><b>146</b></td><td class="no-wrap">-&gt;</td><td>5.7</td><td>2.6</td><td>3.5</td><td>1</td><td>versicolor</td></tr><tr><td><b>147</b></td><td class="no-wrap">-&gt;</td><td>5.9</td><td>3</td><td>5.1</td><td>1.8</td><td>virginica</td></tr><tr><td><b>148</b></td><td class="no-wrap">-&gt;</td><td>6.8</td><td>3.2</td><td>5.9</td><td>2.3</td><td>virginica</td></tr><tr><td><b>149</b></td><td class="no-wrap">-&gt;</td><td>5</td><td>3.6</td><td>1.4</td><td>0.2</td><td>setosa</td></tr>
 </table>
 <p><b>150</b> rows x <b>5</b> columns</p><p><b>0</b> missing values</p>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Let's take a first look at the data with heatmaps using Plotly.NET. Each of the 150 records consists of four measurements and a species identifier. 
 Since the species identifier occur several times (Iris-virginica, Iris-versicolor, and Iris-setosa), we create unique labels by adding the rows index to the species identifier.</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">Plotly.NET</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">Plotly.NET</span>
 
 <span class="k">let</span><span class="w"> </span><span class="nv">colNames</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s">"sepal_length"</span><span class="o">;</span><span class="s">"sepal_width"</span><span class="o">;</span><span class="s">"petal_length"</span><span class="o">;</span><span class="s">"petal_width"</span><span class="o">]</span>
 
@@ -407,27 +361,17 @@ Since the species identifier occur several times (Iris-virginica, Iris-versicolo
 <span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withMarginSize</span><span class="o">(</span><span class="n">Left</span><span class="o">=</span><span class="mi">100</span><span class="o">.)</span>
 <span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTitle</span><span class="w"> </span><span class="s">"raw iris data"</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div><div id="6a166de9-84c9-4fc9-8739-3090f0a2bfee"><!-- Plotly chart will be drawn inside this DIV --></div><script type="text/javascript">
 var renderPlotly_6a166de984c94fc987393090f0a2bfee = function() {
     var fsharpPlotlyRequire = requirejs.config({context:'fsharp-plotly',paths:{plotly:'https://cdn.plot.ly/plotly-2.18.1.min'}}) || require;
@@ -451,39 +395,34 @@ else {
 }
 </script></div>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Clustering">Clustering<a class="anchor-link" href="#Clustering">&#182;</a></h2><p>The function that performs hierarchical clustering can be found at <code>FSharp.Stats.ML.Unsupervised.HierarchicalClustering.generate</code>. It requires three input parameters:</p>
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Clustering">Clustering<a class="anchor-link" href="#Clustering">¶</a></h2><p>The function that performs hierarchical clustering can be found at <code>FSharp.Stats.ML.Unsupervised.HierarchicalClustering.generate</code>. It requires three input parameters:</p>
 <ol>
 <li>Distance measure working on <code>'T</code> (from <code>FSharp.Stats.ML.DistanceMetrics</code>)</li>
 <li>Linkage type</li>
 <li>Data to cluster as <code>'T</code></li>
 </ol>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[5]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats.ML</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats.ML</span>
 <span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats.ML.Unsupervised</span>
 
 <span class="k">let</span><span class="w"> </span><span class="nv">distanceMeasure</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">DistanceMetrics</span><span class="p">.</span><span class="n">euclideanNaNSquared</span>
@@ -499,34 +438,31 @@ else {
 <span class="c1">// to the depth, that results in the respective number of clusters (here 3). Only leaves are reported.</span>
 <span class="k">let</span><span class="w"> </span><span class="nv">threeClusters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">HierarchicalClustering</span><span class="p">.</span><span class="n">cutHClust</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="n">clusterResultH</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Every cluster leaf contains its raw values and an index that indicates the position of the respective data 
 point in the raw data. The index can be retrieved from leaves using HierarchicalClustering.getClusterId.</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="c1">// Detailed information for 3 clusters are given</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="c1">// Detailed information for 3 clusters are given</span>
 <span class="k">let</span><span class="w"> </span><span class="nv">inspectThreeClusters</span><span class="w"> </span><span class="o">=</span>
 <span class="w">    </span><span class="n">threeClusters</span>
 <span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">List</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">cluster</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span>
@@ -536,81 +472,63 @@ point in the raw data. The index can be retrieved from leaves using Hierarchical
 <span class="w">            </span><span class="o">)</span>
 <span class="w">        </span><span class="o">)</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="n">inspectThreeClusters</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="n">inspectThreeClusters</span>
 <span class="o">|&gt;</span><span class="w"> </span><span class="nn">List</span><span class="p">.</span><span class="n">mapi</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span>
 <span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="nv">truncCluster</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="o">.[</span><span class="mi">0</span><span class="o">..</span><span class="mi">4</span><span class="o">]</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">String</span><span class="p">.</span><span class="n">concat</span><span class="w"> </span><span class="s">"; "</span><span class="w"> </span>
 <span class="w">    </span><span class="n">sprintf</span><span class="w"> </span><span class="s">"Cluster%i: [%s ...]"</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="n">truncCluster</span><span class="w"> </span>
 <span class="w">    </span><span class="o">)</span>
 <span class="o">|&gt;</span><span class="w"> </span><span class="nn">String</span><span class="p">.</span><span class="n">concat</span><span class="w"> </span><span class="s">"</span><span class="se">\n</span><span class="s">"</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-
-<div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Cluster0: [versicolor_44; versicolor_76; versicolor_89; versicolor_12; versicolor_93 ...]
 Cluster1: [setosa_16; setosa_36; setosa_74; setosa_42; setosa_122 ...]
 Cluster2: [virginica_72; virginica_135; virginica_14; virginica_7; virginica_73 ...]</pre>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>To break up the tree structure but maintain the clustering order, the cluster tree has to be flattened.</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="c1">// To recursevely flatten the cluster tree into leaves only, use flattenHClust.</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="c1">// To recursevely flatten the cluster tree into leaves only, use flattenHClust.</span>
 <span class="c1">// A leaf list is reported, that does not contain any cluster membership, </span>
 <span class="c1">// but is sorted by the clustering result.</span>
 <span class="k">let</span><span class="w"> </span><span class="nv">hLeaves</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
@@ -628,33 +546,30 @@ Cluster2: [virginica_72; virginica_135; virginica_14; virginica_7; virginica_73 
 <span class="w">        </span><span class="o">|</span><span class="w"> </span><span class="n">Some</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Some</span><span class="w"> </span><span class="o">(</span><span class="n">label</span><span class="o">,</span><span class="n">x</span><span class="o">)</span>
 <span class="w">        </span><span class="o">)</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>The visualization again is performed using a Plotly.NET heatmap.</p>
-
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">FSharpAux</span>
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">FSharpAux</span>
 
 <span class="k">let</span><span class="w"> </span><span class="o">(</span><span class="n">hlable</span><span class="o">,</span><span class="n">hdata</span><span class="o">)</span><span class="w"> </span><span class="o">=</span>
 <span class="w">    </span><span class="n">dataSortedByClustering</span>
@@ -664,27 +579,17 @@ Cluster2: [virginica_72; virginica_135; virginica_14; virginica_7; virginica_73 
 <span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withMarginSize</span><span class="o">(</span><span class="n">Left</span><span class="o">=</span><span class="mi">100</span><span class="o">.)</span>
 <span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTitle</span><span class="w"> </span><span class="s">"Clustered iris data (hierarchical clustering)"</span>
 </pre></div>
-
-     </div>
 </div>
 </div>
 </div>
-
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div><div id="450421ca-724d-48a2-8693-18b276efcd81"><!-- Plotly chart will be drawn inside this DIV --></div><script type="text/javascript">
 var renderPlotly_450421ca724d48a2869318b276efcd81 = function() {
     var fsharpPlotlyRequire = requirejs.config({context:'fsharp-plotly',paths:{plotly:'https://cdn.plot.ly/plotly-2.18.1.min'}}) || require;
@@ -708,40 +613,36 @@ else {
 }
 </script></div>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
+<div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Limitations">Limitations<a class="anchor-link" href="#Limitations">&#182;</a></h2><ol>
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Limitations">Limitations<a class="anchor-link" href="#Limitations">¶</a></h2><ol>
 <li>There is no strong guidance on which distance function and linkage type should be used. It often is chosen arbitrarily according to the user's experience.</li>
 <li>The visual interpretation of the dendrogram is difficult, since swapping the direction of some bifurcations may totally disturbe the visual impression.</li>
 </ol>
-<h2 id="Notes">Notes<a class="anchor-link" href="#Notes">&#182;</a></h2><ul>
-<li>Please note that depending on what data you want to cluster, a column wise z-score normalization may be required. In the presented example differences in sepal width have a reduced influence because
-the absolute variation is low.</li>
+<h2 id="Notes">Notes<a class="anchor-link" href="#Notes">¶</a></h2><ul>
+<li>Please note that depending on what data you want to cluster, a column wise z-score normalization may be required. In the presented example differences in sepal width have a reduced influence because</li>
 </ul>
-<h2 id="References">References<a class="anchor-link" href="#References">&#182;</a></h2><ul>
+<p>the absolute variation is low.</p>
+<h2 id="References">References<a class="anchor-link" href="#References">¶</a></h2><ul>
 <li>Vijaya et al., A Review on Hierarchical Clustering Algorithms, Journal of Engineering and Applied Sciences, 2017</li>
 <li>Rani and Rohil, A Study of Hierarchical Clustering Algorithm, International Journal of Information and Computation Technology, 2013</li>
 <li>FSharp.Stats documentation, fslaborg, <a href="https://fslab.org/FSharp.Stats/Clustering.html">https://fslab.org/FSharp.Stats/Clustering.html</a></li>
 </ul>
-<h2 id="Further-reading">Further reading<a class="anchor-link" href="#Further-reading">&#182;</a></h2><p>Examples are taken from <a href="https://fslab.org/FSharp.Stats/Clustering.html">FSharp.Stats documentation</a> that covers various techniques for an optimal cluster number determination.</p>
+<h2 id="Further-reading">Further reading<a class="anchor-link" href="#Further-reading">¶</a></h2><p>Examples are taken from <a href="https://fslab.org/FSharp.Stats/Clustering.html">FSharp.Stats documentation</a> that covers various techniques for an optimal cluster number determination.</p>
 <p>The next article in this series covers <a href="004_clustering_DBSCAN.html">DBSCAN using FSharp.Stats</a>.</p>
-
 </div>
 </div>
 </div>
 </div>
+</main>
 
         </div>
         <footer class="footer has-bg-darkmagenta">
