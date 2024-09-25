@@ -1,0 +1,1087 @@
+<html>
+  <head>
+    <meta charSet="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>
+      Pearson correlation coefficient, Correlation Matrices and Heatmap 
+    </title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans"/>
+    <script defer="true" src="https://kit.fontawesome.com/0d3e0ea7a6.js" crossOrigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fslab/fslab-styles"/>
+    <meta name="description" content="Calculating Pearson correlation coefficient and creating a heatmap"/>
+    <meta name="tags" content="fslab, FsLab, data science, datascience, data visualization, dataviz, F#, C#, .NET, dotnet"/>
+    <meta name="og:title" content="Pearson correlation coefficient, Correlation Matrices and Heatmap "/>
+    <meta name="og:description" content="Calculating Pearson correlation coefficient and creating a heatmap"/>
+    <meta name="og:image" content="https://fslab.org/blog/images/correlationHeatmap.png"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:site" content="@fslaborg"/>
+    <meta name="twitter:title" content="Pearson correlation coefficient, Correlation Matrices and Heatmap "/>
+    <meta name="twitter:description" content="Calculating Pearson correlation coefficient and creating a heatmap"/>
+    <meta name="twitter:image" content="https://fslab.org/blog/images/correlationHeatmap.png"/>
+    <script src="https://fslab.org/blog/js/navbar.js"></script>
+    <script src="https://fslab.org/blog/js/prism.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-timeline@3.0.5/dist/css/bulma-timeline.min.css"/>
+    <script>
+      MathJax = {tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}}
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-svg.js"></script>
+    <link rel="stylesheet" href="https://fslab.org/blog/style/notebook.css"/>
+    <link rel="stylesheet" href="https://fslab.org/blog/style/custom.css"/>
+  </head>
+  <body>
+    <div class="columns is-fullheight m-0">
+      <div class="column is-2 is-paddingless box m-0">
+        <aside class="menu p-4" id="graph-menu">
+          <div class="content">
+            <h3 class="title is-capitalized is-inline-block is-emphasized-darkmagenta mb-4">
+              Table of contents
+            </h3>
+            <ul>
+              <li>
+                <a href="#Pearson-correlation-coefficient,-Correlation-Matrices-and-Heatmap" class="is-aquamarine">
+                  Pearson correlation coefficient, Correlation Matrices and Heatmap
+                </a>
+              </li>
+              <li>
+                <a href="#Introduction:" class="is-aquamarine">
+                  Introduction:
+                </a>
+              </li>
+              <li>
+                <a href="#What-is--a-RNA-Seq?" class="is-aquamarine">
+                  What is  a RNA Seq?
+                </a>
+              </li>
+              <li>
+                <a href="#The-Experiment" class="is-aquamarine">
+                  The Experiment
+                </a>
+              </li>
+              <li>
+                <a href="#What-we-expect" class="is-aquamarine">
+                  What we expect
+                </a>
+              </li>
+              <li>
+                <a href="#Lets-get-ready-to-rumble:" class="is-aquamarine">
+                  Lets get ready to rumble:
+                </a>
+              </li>
+              <li>
+                <a href="#Start-of-the-Journey" class="is-aquamarine">
+                  Start of the Journey
+                </a>
+              </li>
+              <li>
+                <a href="#Dataframe-2.0" class="is-aquamarine">
+                  Dataframe 2.0
+                </a>
+              </li>
+              <li>
+                <a href="#Do-we-have-a-Problem?" class="is-aquamarine">
+                  Do we have a Problem?
+                </a>
+              </li>
+              <li>
+                <a href="#Pearson-correlation-coefficient" class="is-aquamarine">
+                  Pearson correlation coefficient
+                </a>
+              </li>
+              <li>
+                <a href="#Definition" class="is-aquamarine">
+                  Definition
+                </a>
+              </li>
+              <li>
+                <a href="#Example-of-Pearson-correlation-coeficient" class="is-aquamarine">
+                  Example of Pearson correlation coeficient
+                </a>
+              </li>
+              <li>
+                <a href="#Interpretation-of-the-example" class="is-aquamarine">
+                  Interpretation of the example
+                </a>
+              </li>
+              <li>
+                <a href="#Using-the-Pearson--correlation-coefficent" class="is-aquamarine">
+                  Using the Pearson  correlation coefficent
+                </a>
+              </li>
+              <li>
+                <a href="#Digression---matrices" class="is-aquamarine">
+                  Digression   matrices
+                </a>
+              </li>
+              <li>
+                <a href="#Visualizing-the-Data" class="is-aquamarine">
+                  Visualizing the Data
+                </a>
+              </li>
+              <li>
+                <a href="#First-conclusion" class="is-aquamarine">
+                  First conclusion
+                </a>
+              </li>
+              <li>
+                <a href="#Interpreting-the-visualisation" class="is-aquamarine">
+                  Interpreting the visualisation
+                </a>
+              </li>
+              <li>
+                <a href="#Conclusion" class="is-aquamarine">
+                  Conclusion
+                </a>
+              </li>
+              <li>
+                <a href="#Results" class="is-aquamarine">
+                  Results
+                </a>
+              </li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+      <div class="column is-10 is-paddingless pl-1 pr-6">
+        <nav class="navbar">
+          <div class="navbar-brand">
+            <a class="navbar-item" href="https://fslab.org">
+              <img src="https://fslab.org/blog/images/favicon.png" alt="Logo"/>
+            </a>
+            <a class="navbar-burger" data-target="navMenu" aria-label="menu" role="button" aria-expanded="false">
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+            </a>
+          </div>
+          <div id="navMenu" class="navbar-menu">
+            <div class="navbar-start">
+              <a class="navbar-item" href="https://fslab.org">
+                Home
+              </a>
+              <a class="navbar-item" href="https://fslab.org/packages.html">
+                Data science packages
+              </a>
+              <a class="navbar-item is-active-link-darkmagenta smooth-hover" href="https://fslab.org/blog/">
+                Blog
+              </a>
+              <a class="navbar-item" href="https://fslab.org/blog/graph-gallery.html">
+                Graph Gallery
+              </a>
+            </div>
+            <div class="navbar-end">
+              <a class="navbar-item is-magenta" href="https://twitter.com/fslaborg">
+                <span class="icon">
+                  <i class="fab fa-twitter"></i>
+                </span>
+              </a>
+              <a class="navbar-item is-magenta" href="https://github.com/fslaborg">
+                <span class="icon">
+                  <i class="fab fa-github"></i>
+                </span>
+              </a>
+            </div>
+          </div>
+        </nav>
+        <section class="hero is-small has-bg-darkmagenta">
+          <div class="hero-body">
+            <div class="container has-text-justified">
+              <div class="main-TextField">
+                <h1 class="title is-capitalized is-white is-inline-block is-emphasized-magenta mb-4">
+                  Pearson correlation coefficient, Correlation Matrices and Heatmap 
+                </h1>
+                <div class="block">
+                  <h3 class="subtitle is-white is-block">
+                    Posted on 2024-5-17 by
+                    <a href="https://github.com/paulineHans" class="is-aquamarine">
+                      Pauline Hans
+                    </a>
+                     in 
+                    <a href="https://fslab.org/blog/posts/categories/Datascience.html" class="is-aquamarine">
+                      Data Science
+                    </a>
+                  </h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <div class="content jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
+          
+<main>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h1 id="Pearson-correlation-coefficient,-Correlation-Matrices-and-Heatmap">Pearson correlation coefficient, Correlation Matrices and Heatmap<a class="anchor-link" href="#Pearson-correlation-coefficient,-Correlation-Matrices-and-Heatmap">¶</a></h1><h2 id="Introduction:">Introduction:<a class="anchor-link" href="#Introduction:">¶</a></h2><p>In this Blogpost we want to explain what a correlation matrix is, how they work, how  we create them, and how to interpret them. We will explain this procedure using a real RNA-Seq dataset. So lets get started.</p>
+<h2 id="What-is--a-RNA-Seq?">What is  a RNA-Seq?<a class="anchor-link" href="#What-is--a-RNA-Seq?">¶</a></h2><p>RNA-Seq, an abbreviation for RNA sequencing, is a method that utilizes next-generation sequencing to identify and quantify RNA molecules in a biological sample. 
+This technique offers a comprehensive view of gene expression within the sample, referred to as the transcriptome. 
+RNA-Seq specifically allows for the analysis of alternative transcripts, post-transcriptional modifications, gene fusions, mutations and single nucleotide polymorphisms (SNPs), as well as variations in gene expression over time or differences in gene expression between distinct groups or treatments.</p>
+<p>In addition to mRNA transcripts, the method can look at different populations of RNA, including:</p>
+<ol>
+<li>total RNA</li>
+<li>small RNA such as miRNA</li>
+<li>tRNA</li>
+<li>ribosomal profiling.</li>
+</ol>
+<div>
+<img alt="No description has been provided for this image" src="RNA_seq_schematic.png" width="50%"/>
+</div>
+<h2 id="The-Experiment">The Experiment<a class="anchor-link" href="#The-Experiment">¶</a></h2><p>Our dataframe is based on an experiment that focused on cold acclimation in the model organism <em>A. thaliana</em>. The experiment was conducted to see if there are gene expression changes that are related to the influence of cold.</p>
+<p>All the samples were grown for 4 days under the influence of the named coining condition (acclimation phase). After 4 days, all plants were shifted to the "control condition" (deacclimation phase). Three measurements were taken at each time point. This means that we are working with replicates here.</p>
+<ul>
+<li>1 minute</li>
+<li>15 minutes</li>
+<li>180 minutes</li>
+<li>1,5 Days</li>
+<li>4 Days.</li>
+</ul>
+<h2 id="What-we-expect">What we expect<a class="anchor-link" href="#What-we-expect">¶</a></h2><p>What we generally expect is, that when the plant first comes into contact with the cold, the expression level of some genes changes, and then decreases over time. Other genes are always expressed at a constant level.</p>
+<p>Here we compare replica groups at two different points in time, then calculate the Pearson correlation coefficient and create a heat map based on it. Here it is important to remember that we are not comparing individual genes, but two replica groups at a specific point in time. We expect our replica groups to differ in the various time intervals. The statistics we use here also serve as a quality measure for our experiment. So we cannot make any real biological statements here in relation to a different gene expression rate, only express how similar or dissimilar the replica groups are to each other.</p>
+<h1 id="Lets-get-ready-to-rumble:">Lets get ready to rumble:<a class="anchor-link" href="#Lets-get-ready-to-rumble:">¶</a></h1><p>At first intall the packages you need and open them:</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Deedle.Interactive, 3.0.0"</span>
+<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Plotly.NET, 4.2.0"</span>
+<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Plotly.NET.Interactive, 4.2.1"</span>
+<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: FSharp.Stats.Interactive, 0.5.1-preview.2"</span>
+<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: BioFSharp, 2.0.0-preview.3"</span>
+<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: BioFSharp.IO, 2.0.0-preview.3"</span>
+<span class="o">#</span><span class="n">r</span><span class="w"> </span><span class="s">"nuget: Deedle, 3.0.0"</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="k">open</span><span class="w"> </span><span class="nn">Deedle.Interactive</span>
+<span class="k">open</span><span class="w"> </span><span class="nn">Plotly.NET.Interactive</span>
+<span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats.Interactive</span>
+<span class="k">open</span><span class="w"> </span><span class="nn">BioFSharp</span>
+<span class="k">open</span><span class="w"> </span><span class="nn">BioFSharp.IO</span>
+<span class="k">open</span><span class="w"> </span><span class="nn">Deedle</span>
+<span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats</span>
+<span class="k">open</span><span class="w"> </span><span class="nn">FSharp.Stats.Signal.Outliers</span>
+<span class="k">open</span><span class="w"> </span><span class="nn">Plotly.NET</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h1 id="Start-of-the-Journey">Start of the Journey<a class="anchor-link" href="#Start-of-the-Journey">¶</a></h1><p>For the data we worked with a CSV file. For that we give the complete path. Additionally, we give the input how the CSV file is structured, consisting of  headers and comma separators. For to make it easier to work with our dataframe, we induce an index using the respective genes</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">basePath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">__</span><span class="n">SOURCE_DIRECTORY__</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">filePath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="s">"../notebooks/1/data/Cold.csv"</span><span class="o">)</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">ReadCsv</span><span class="w"> </span><span class="o">(</span><span class="n">filePath</span><span class="o">,</span><span class="w"> </span><span class="n">hasHeaders</span><span class="w"> </span><span class="o">=</span><span class="k">true</span><span class="o">,</span><span class="w"> </span><span class="n">separators</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">","</span><span class="o">)</span>
+
+<span class="k">let</span><span class="w"> </span><span class="nv">indexedFrame</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Frame</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">,</span><span class="w"> </span><span class="kt">string</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
+<span class="w">    </span><span class="nn">Frame</span><span class="p">.</span><span class="n">indexRows</span><span class="w"> </span><span class="s">"Transcript"</span><span class="w"> </span><span class="n">data</span><span class="w"> </span>
+<span class="n">indexedFrame</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">,
+  .dataframe tbody tr th:only-of-type {
+    vertical-align: middle;
+  }
+  .dataframe tbody tr th {,
+    vertical-align: top
+  }
+  .dataframe thead th {
+    text-align: right;
+  }
+  .no-wrap {
+    white-space: nowrap;
+  }
+</style>
+<table border="1" class="dataframe">
+<thead><th></th><th></th><th>Cold_t_1_r_1_d_FALSE</th><th>Cold_t_1_r_1_d_TRUE</th><th>Cold_t_1_r_2_d_FALSE</th><th>Cold_t_1_r_2_d_TRUE</th><th>Cold_t_15_r_1_d_FALSE</th><th>Cold_t_15_r_1_d_TRUE</th><th>Cold_t_15_r_2_d_FALSE</th><th>Cold_t_15_r_2_d_TRUE</th><th>Cold_t_15_r_3_d_FALSE</th><th>Cold_t_15_r_3_d_TRUE</th><th>...</th><th>Cold_t_2880_r_2_d_FALSE</th><th>Cold_t_2880_r_2_d_TRUE</th><th>Cold_t_2880_r_3_d_FALSE</th><th>Cold_t_2880_r_3_d_TRUE</th><th>Cold_t_5760_r_1_d_FALSE</th><th>Cold_t_5760_r_1_d_TRUE</th><th>Cold_t_5760_r_2_d_FALSE</th><th>Cold_t_5760_r_2_d_TRUE</th><th>Cold_t_5760_r_3_d_FALSE</th><th>Cold_t_5760_r_3_d_TRUE</th></thead><thead><th></th><th></th><th>(int)</th><th>(int)</th><th>(int)</th><th>(int)</th><th>(int)</th><th>(int)</th><th>(int)</th><th>(int)</th><th>(int)</th><th>(int)</th><th>...</th><th>(int)</th><th>(int)</th><th>(int)</th><th>(int)</th><th>(int)</th><th>(int)</th><th>(int)</th><th>(int)</th><th>(int)</th><th>(int)</th></thead>
+<tr><td><b>AT1G01010</b></td><td class="no-wrap">-&gt;</td><td>13</td><td>18</td><td>15</td><td>45</td><td>21</td><td>18</td><td>13</td><td>43</td><td>12</td><td>40</td><td>...</td><td>32</td><td>8</td><td>51</td><td>18</td><td>41</td><td>15</td><td>43</td><td>20</td><td>36</td><td>9</td></tr><tr><td><b>AT1G01020</b></td><td class="no-wrap">-&gt;</td><td>50</td><td>78</td><td>54</td><td>83</td><td>74</td><td>77</td><td>74</td><td>92</td><td>90</td><td>75</td><td>...</td><td>76</td><td>67</td><td>63</td><td>44</td><td>70</td><td>64</td><td>57</td><td>72</td><td>85</td><td>38</td></tr><tr><td><b>AT1G01030</b></td><td class="no-wrap">-&gt;</td><td>30</td><td>34</td><td>26</td><td>34</td><td>23</td><td>26</td><td>23</td><td>32</td><td>42</td><td>26</td><td>...</td><td>21</td><td>21</td><td>37</td><td>33</td><td>26</td><td>26</td><td>22</td><td>24</td><td>29</td><td>17</td></tr><tr><td><b>AT1G01040</b></td><td class="no-wrap">-&gt;</td><td>187</td><td>153</td><td>207</td><td>190</td><td>214</td><td>145</td><td>139</td><td>172</td><td>158</td><td>178</td><td>...</td><td>294</td><td>224</td><td>250</td><td>198</td><td>173</td><td>228</td><td>112</td><td>233</td><td>244</td><td>155</td></tr><tr><td><b>AT1G01050</b></td><td class="no-wrap">-&gt;</td><td>242</td><td>275</td><td>224</td><td>332</td><td>242</td><td>278</td><td>268</td><td>437</td><td>215</td><td>386</td><td>...</td><td>394</td><td>197</td><td>358</td><td>174</td><td>332</td><td>221</td><td>262</td><td>208</td><td>313</td><td>128</td></tr><tr><td><b>:</b></td><td class="no-wrap"></td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr><tr><td><b>ATMG09980</b></td><td class="no-wrap">-&gt;</td><td>17</td><td>12</td><td>12</td><td>17</td><td>18</td><td>11</td><td>5</td><td>20</td><td>6</td><td>10</td><td>...</td><td>29</td><td>11</td><td>30</td><td>3</td><td>15</td><td>5</td><td>13</td><td>12</td><td>6</td><td>2</td></tr><tr><td><b>ATMG01370</b></td><td class="no-wrap">-&gt;</td><td>9</td><td>28</td><td>11</td><td>27</td><td>4</td><td>41</td><td>19</td><td>35</td><td>22</td><td>35</td><td>...</td><td>43</td><td>11</td><td>26</td><td>5</td><td>64</td><td>27</td><td>40</td><td>16</td><td>30</td><td>15</td></tr><tr><td><b>ATMG01390</b></td><td class="no-wrap">-&gt;</td><td>248</td><td>676</td><td>331</td><td>374</td><td>362</td><td>314</td><td>391</td><td>480</td><td>1019</td><td>356</td><td>...</td><td>705</td><td>1054</td><td>406</td><td>223</td><td>1017</td><td>1158</td><td>776</td><td>484</td><td>455</td><td>555</td></tr><tr><td><b>ATMG01400</b></td><td class="no-wrap">-&gt;</td><td>6</td><td>0</td><td>1</td><td>0</td><td>0</td><td>4</td><td>1</td><td>2</td><td>0</td><td>1</td><td>...</td><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td><td>2</td><td>0</td><td>1</td><td>0</td><td>0</td></tr><tr><td><b>ATMG01410</b></td><td class="no-wrap">-&gt;</td><td>7</td><td>14</td><td>20</td><td>29</td><td>18</td><td>36</td><td>11</td><td>28</td><td>26</td><td>19</td><td>...</td><td>23</td><td>6</td><td>29</td><td>8</td><td>29</td><td>24</td><td>33</td><td>22</td><td>23</td><td>5</td></tr>
+</table>
+<p><b>18873</b> rows x <b>28</b> columns</p><p><b>0</b> missing values</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Dataframe-2.0">Dataframe 2.0<a class="anchor-link" href="#Dataframe-2.0">¶</a></h2><p>You see we now have a cleaner dataframe but it is still massive. In this example we will only use six columns, the replicates for minute 15 and the replicates for 4 days. 
+We use those time intervals because they are a good starting and end point for the experiment. The first genes for cold stress can be expected to be expressed from time point 15 minutes. After 4 days, the effects can also be measured over a long period of time.</p>
+<p>To extract the relevant columns we use the function Frame.SliceCols</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">relevantColumns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">seq</span><span class="w"> </span><span class="o">{</span><span class="s">"Cold_t_15_r_1_d_FALSE"</span><span class="o">;</span><span class="w"> </span><span class="s">"Cold_t_15_r_2_d_FALSE"</span><span class="o">;</span><span class="w"> </span><span class="s">"Cold_t_15_r_3_d_FALSE"</span><span class="o">;</span><span class="w"> </span><span class="s">"Cold_t_5760_r_1_d_FALSE"</span><span class="o">;</span><span class="w"> </span><span class="s">"Cold_t_5760_r_2_d_FALSE"</span><span class="o">;</span><span class="w"> </span><span class="s">"Cold_t_5760_r_3_d_FALSE"</span><span class="o">}</span>
+
+<span class="k">let</span><span class="w"> </span><span class="nv">slicedData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">sliceCols</span><span class="w"> </span><span class="n">relevantColumns</span><span class="w"> </span><span class="n">indexedFrame</span><span class="w"> </span>
+<span class="n">slicedData</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">,
+  .dataframe tbody tr th:only-of-type {
+    vertical-align: middle;
+  }
+  .dataframe tbody tr th {,
+    vertical-align: top
+  }
+  .dataframe thead th {
+    text-align: right;
+  }
+  .no-wrap {
+    white-space: nowrap;
+  }
+</style>
+<table border="1" class="dataframe">
+<thead><th></th><th></th><th>Cold_t_15_r_1_d_FALSE</th><th>Cold_t_15_r_2_d_FALSE</th><th>Cold_t_15_r_3_d_FALSE</th><th>Cold_t_5760_r_1_d_FALSE</th><th>Cold_t_5760_r_2_d_FALSE</th><th>Cold_t_5760_r_3_d_FALSE</th></thead><thead><th></th><th></th><th>(int)</th><th>(int)</th><th>(int)</th><th>(int)</th><th>(int)</th><th>(int)</th></thead>
+<tr><td><b>AT1G01010</b></td><td class="no-wrap">-&gt;</td><td>21</td><td>13</td><td>12</td><td>41</td><td>43</td><td>36</td></tr><tr><td><b>AT1G01020</b></td><td class="no-wrap">-&gt;</td><td>74</td><td>74</td><td>90</td><td>70</td><td>57</td><td>85</td></tr><tr><td><b>AT1G01030</b></td><td class="no-wrap">-&gt;</td><td>23</td><td>23</td><td>42</td><td>26</td><td>22</td><td>29</td></tr><tr><td><b>AT1G01040</b></td><td class="no-wrap">-&gt;</td><td>214</td><td>139</td><td>158</td><td>173</td><td>112</td><td>244</td></tr><tr><td><b>AT1G01050</b></td><td class="no-wrap">-&gt;</td><td>242</td><td>268</td><td>215</td><td>332</td><td>262</td><td>313</td></tr><tr><td><b>:</b></td><td class="no-wrap"></td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr><tr><td><b>ATMG09980</b></td><td class="no-wrap">-&gt;</td><td>18</td><td>5</td><td>6</td><td>15</td><td>13</td><td>6</td></tr><tr><td><b>ATMG01370</b></td><td class="no-wrap">-&gt;</td><td>4</td><td>19</td><td>22</td><td>64</td><td>40</td><td>30</td></tr><tr><td><b>ATMG01390</b></td><td class="no-wrap">-&gt;</td><td>362</td><td>391</td><td>1019</td><td>1017</td><td>776</td><td>455</td></tr><tr><td><b>ATMG01400</b></td><td class="no-wrap">-&gt;</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td></tr><tr><td><b>ATMG01410</b></td><td class="no-wrap">-&gt;</td><td>18</td><td>11</td><td>26</td><td>29</td><td>33</td><td>23</td></tr>
+</table>
+<p><b>18873</b> rows x <b>6</b> columns</p><p><b>0</b> missing values</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Do-we-have-a-Problem?">Do we have a Problem?<a class="anchor-link" href="#Do-we-have-a-Problem?">¶</a></h2><p>We will perform a transformation because we have a large data set and a log2 transformation allows to make the data more symmetric, reduces the variance and the linear relationship between the variables becomes easier to analyse.</p>
+<ul>
+<li>Reminder: a log2 transformation, as we do here, makes it possible to reduce the bandwidth of a large group of data. That leads to a clearer analysis of our data.</li>
+</ul>
+<p>You may think we can easily start here now, but you may have seen, that there are some zeros. Do we like the number zero? Not in our case, since we want to peform a log2 transformation!</p>
+<ul>
+<li>But applying a log2 transformation of zero is not defined because the logarithm of zero is not defined and tends to -infinity</li>
+</ul>
+<p>In our case, we cannot work with figures that approach -infinity.</p>
+<p>So before the transformation we must add +1 to every value. So that every zero becomes +1, so that we avoid the problem of -infinity. That is because
+we want to calculate the Pearson correlation coefficient, which in turn calculates the arithmetic mean and standard deviation, the results also tend towards -infinity, which makes the results unusable</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">slicedDataLog2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
+<span class="w">    </span><span class="n">slicedData</span><span class="w">  </span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">mapValues</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">log2</span><span class="w"> </span><span class="o">(</span><span class="n">value</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="o">.</span><span class="mi">0</span><span class="o">))</span>
+<span class="n">slicedDataLog2</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">,
+  .dataframe tbody tr th:only-of-type {
+    vertical-align: middle;
+  }
+  .dataframe tbody tr th {,
+    vertical-align: top
+  }
+  .dataframe thead th {
+    text-align: right;
+  }
+  .no-wrap {
+    white-space: nowrap;
+  }
+</style>
+<table border="1" class="dataframe">
+<thead><th></th><th></th><th>Cold_t_15_r_1_d_FALSE</th><th>Cold_t_15_r_2_d_FALSE</th><th>Cold_t_15_r_3_d_FALSE</th><th>Cold_t_5760_r_1_d_FALSE</th><th>Cold_t_5760_r_2_d_FALSE</th><th>Cold_t_5760_r_3_d_FALSE</th></thead><thead><th></th><th></th><th>(float)</th><th>(float)</th><th>(float)</th><th>(float)</th><th>(float)</th><th>(float)</th></thead>
+<tr><td><b>AT1G01010</b></td><td class="no-wrap">-&gt;</td><td>4.459431618637297</td><td>3.8073549220576037</td><td>3.700439718141092</td><td>5.392317422778761</td><td>5.459431618637297</td><td>5.20945336562895</td></tr><tr><td><b>AT1G01020</b></td><td class="no-wrap">-&gt;</td><td>6.22881869049588</td><td>6.22881869049588</td><td>6.507794640198696</td><td>6.149747119504682</td><td>5.857980995127572</td><td>6.426264754702098</td></tr><tr><td><b>AT1G01030</b></td><td class="no-wrap">-&gt;</td><td>4.584962500721157</td><td>4.584962500721157</td><td>5.426264754702098</td><td>4.754887502163469</td><td>4.523561956057013</td><td>4.906890595608519</td></tr><tr><td><b>AT1G01040</b></td><td class="no-wrap">-&gt;</td><td>7.74819284958946</td><td>7.129283016944966</td><td>7.312882955284356</td><td>7.442943495848729</td><td>6.820178962415189</td><td>7.936637939002572</td></tr><tr><td><b>AT1G01050</b></td><td class="no-wrap">-&gt;</td><td>7.924812503605781</td><td>8.071462362556625</td><td>7.754887502163469</td><td>8.379378367071263</td><td>8.038918989292302</td><td>8.294620748891626</td></tr><tr><td><b>:</b></td><td class="no-wrap"></td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr><tr><td><b>ATMG09980</b></td><td class="no-wrap">-&gt;</td><td>4.247927513443585</td><td>2.584962500721156</td><td>2.807354922057604</td><td>4</td><td>3.8073549220576037</td><td>2.807354922057604</td></tr><tr><td><b>ATMG01370</b></td><td class="no-wrap">-&gt;</td><td>2.321928094887362</td><td>4.321928094887363</td><td>4.523561956057013</td><td>6.022367813028454</td><td>5.357552004618084</td><td>4.954196310386876</td></tr><tr><td><b>ATMG01390</b></td><td class="no-wrap">-&gt;</td><td>8.50382573799575</td><td>8.614709844115207</td><td>9.994353436858859</td><td>9.991521846075695</td><td>9.60177078840771</td><td>8.832890014164743</td></tr><tr><td><b>ATMG01400</b></td><td class="no-wrap">-&gt;</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td></tr><tr><td><b>ATMG01410</b></td><td class="no-wrap">-&gt;</td><td>4.247927513443585</td><td>3.5849625007211565</td><td>4.754887502163469</td><td>4.906890595608519</td><td>5.08746284125034</td><td>4.584962500721157</td></tr>
+</table>
+<p><b>18873</b> rows x <b>6</b> columns</p><p><b>0</b> missing values</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h1 id="Pearson-correlation-coefficient">Pearson correlation coefficient<a class="anchor-link" href="#Pearson-correlation-coefficient">¶</a></h1><h2 id="Definition">Definition<a class="anchor-link" href="#Definition">¶</a></h2><p>It calculates the correlation and thereby the strength and direction of the linear relationship between two variables in a dataset. It can assume values between -1 and 1. The formula for calculating the Pearson correlation coefficient is as follows.</p>
+$$
+r = \frac{\sum(x_i - \bar{x})(y_i - \bar{y})}{(N-1) s_x s_y} = \frac{s_xy}{s_x s_y}
+$$<p>Let me explain the formula:</p>
+<ol>
+<li>$x_i$ stands for the observed values for x.</li>
+</ol>
+<ul>
+<li>In our case, the x-Values are the values in Column 0</li>
+</ul>
+<ol start="2">
+<li>$y_i$ stands for the individual observed values for our y-values.</li>
+</ol>
+<ul>
+<li>In our data, the y-Values are the values in Columns 1</li>
+</ul>
+<p>So x-values and y-values are the individual mearsured values of RNA concentration at a spefic point in time, which are compared with each other.</p>
+<ol start="3">
+<li>$\bar{x}$ and $\bar{y}$  stands for the arithmetic mean of x and y .</li>
+</ol>
+<ul>
+<li>$\bar{x}$  and $\bar{y}$  therefore represent the average value of our data</li>
+</ul>
+<ol start="4">
+<li>$S_xy$ is the covariance.</li>
+</ol>
+<ul>
+<li>The covariance primarily provides information about the direction of the correlation between x and y. It gives us an indication of how two variables change.</li>
+</ul>
+<ol start="5">
+<li><p>$S_x$ is the standard deviation of x.</p>
+</li>
+<li><p>$S_y$ is the standard deviation of y.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Example-of-Pearson-correlation-coeficient">Example of Pearson correlation coeficient<a class="anchor-link" href="#Example-of-Pearson-correlation-coeficient">¶</a></h2><p>Before we return to our data, i would like to explain how the Pearson correlation coefficient works using a simple example. Imagine we are examining two factors:</p>
+<ol>
+<li>the hours devoted to studying and</li>
+<li>the resulting scores on a test.</li>
+</ol>
+<p>Our interest lies in uncovering any potential relationship between these variables.</p>
+<table>
+<thead>
+<tr>
+<th>Student</th>
+<th>Hours studied</th>
+<th>Test Score</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Paul</td>
+<td>2</td>
+<td>60</td>
+</tr>
+<tr>
+<td>Anna</td>
+<td>3</td>
+<td>70</td>
+</tr>
+<tr>
+<td>Chris</td>
+<td>5</td>
+<td>75</td>
+</tr>
+<tr>
+<td>Sophie</td>
+<td>7</td>
+<td>85</td>
+</tr>
+<tr>
+<td>Mark</td>
+<td>4</td>
+<td>65</td>
+</tr>
+</tbody>
+</table>
+<p>The result for our example is r = 0.93 is this a good result?</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">xValues</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="mi">2</span><span class="o">.;</span><span class="w"> </span><span class="mi">3</span><span class="o">.;</span><span class="w"> </span><span class="mi">5</span><span class="o">.;</span><span class="w"> </span><span class="mi">7</span><span class="o">.;</span><span class="w"> </span><span class="mi">4</span><span class="o">.]</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">yValues</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="mi">60</span><span class="o">.;</span><span class="w"> </span><span class="mi">70</span><span class="o">.;</span><span class="w"> </span><span class="mi">75</span><span class="o">.;</span><span class="w"> </span><span class="mi">85</span><span class="o">.;</span><span class="w"> </span><span class="mi">65</span><span class="o">.]</span><span class="w"> </span>
+
+<span class="k">let</span><span class="w"> </span><span class="nv">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="o">.</span><span class="w"> </span><span class="c1">// total numbers in both lists </span>
+<span class="k">let</span><span class="w"> </span><span class="nv">sumX</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">List</span><span class="p">.</span><span class="n">sum</span><span class="w"> </span><span class="n">xValues</span><span class="w"> </span><span class="c1">// addition of the numbers in xValues </span>
+<span class="k">let</span><span class="w"> </span><span class="nv">sumY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">List</span><span class="p">.</span><span class="n">sum</span><span class="w"> </span><span class="n">yValues</span><span class="w"> </span><span class="c1">// addition of the numbers in yValues </span>
+
+<span class="k">let</span><span class="w"> </span><span class="nv">sumXY</span><span class="w"> </span><span class="o">=</span><span class="w">  </span>
+<span class="w">    </span><span class="nn">List</span><span class="p">.</span><span class="n">map2</span><span class="w"> </span><span class="o">(</span><span class="w"> </span><span class="k">fun</span><span class="w"> </span><span class="n">v1</span><span class="w"> </span><span class="n">v2</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">v1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">v2</span><span class="w"> </span><span class="o">)</span><span class="w"> </span><span class="n">xValues</span><span class="w"> </span><span class="n">yValues</span><span class="w"> </span><span class="c1">// multiplication of variables of both lists </span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">List</span><span class="p">.</span><span class="n">sum</span><span class="w">  </span><span class="c1">// addition </span>
+
+<span class="k">let</span><span class="w"> </span><span class="nv">sumXX</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xValues</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">List</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">**</span><span class="w"> </span><span class="mi">2</span><span class="o">.)</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">List</span><span class="p">.</span><span class="n">sum</span><span class="w"> </span><span class="c1">// square every xValues</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">sumYY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">yValues</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">List</span><span class="p">.</span><span class="n">map</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">**</span><span class="w"> </span><span class="mi">2</span><span class="o">.)</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">List</span><span class="p">.</span><span class="n">sum</span><span class="w"> </span><span class="c1">// square every yValues</span>
+
+<span class="k">let</span><span class="w"> </span><span class="nv">cov</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sumXY</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">sumX</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sumY</span><span class="w"> </span><span class="c1">// calculating the covariance </span>
+
+<span class="k">let</span><span class="w"> </span><span class="nv">deviationForX</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sqrt</span><span class="w"> </span><span class="o">(</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sumXX</span><span class="w">  </span><span class="o">-</span><span class="w">  </span><span class="n">sumX</span><span class="w"> </span><span class="o">**</span><span class="mi">2</span><span class="o">.)</span><span class="w"> </span><span class="c1">// calculating the deviation for all the x</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">deviationForY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sqrt</span><span class="w"> </span><span class="o">(</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sumYY</span><span class="w">  </span><span class="o">-</span><span class="w">  </span><span class="n">sumY</span><span class="w"> </span><span class="o">**</span><span class="mi">2</span><span class="o">.)</span><span class="w"> </span><span class="c1">// calculating the deviation for all the y </span>
+
+
+<span class="k">let</span><span class="w"> </span><span class="nv">pearson</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="c1">// calculating the Pearson correlation coefficient </span>
+<span class="w">    </span><span class="n">cov</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="o">(</span><span class="n">deviationForX</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">deviationForY</span><span class="o">)</span>
+<span class="n">pearson</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div class="dni-plaintext"><pre>0.9324324324324325</pre></div><style>
+.dni-code-hint {
+    font-style: italic;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.dni-treeview {
+    white-space: nowrap;
+}
+.dni-treeview td {
+    vertical-align: top;
+    text-align: start;
+}
+details.dni-treeview {
+    padding-left: 1em;
+}
+table td {
+    text-align: start;
+}
+table tr { 
+    vertical-align: top; 
+    margin: 0em 0px;
+}
+table tr td pre 
+{ 
+    vertical-align: top !important; 
+    margin: 0em 0px !important;
+} 
+table th {
+    text-align: start;
+}
+</style>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">pearsonCorrelationExample</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Correlation</span><span class="p">.</span><span class="nn">Seq</span><span class="p">.</span><span class="n">pearson</span><span class="w"> </span><span class="n">xValues</span><span class="w"> </span><span class="n">yValues</span>
+<span class="n">pearsonCorrelationExample</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div class="dni-plaintext"><pre>0.9324324324324325</pre></div><style>
+.dni-code-hint {
+    font-style: italic;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.dni-treeview {
+    white-space: nowrap;
+}
+.dni-treeview td {
+    vertical-align: top;
+    text-align: start;
+}
+details.dni-treeview {
+    padding-left: 1em;
+}
+table td {
+    text-align: start;
+}
+table tr { 
+    vertical-align: top; 
+    margin: 0em 0px;
+}
+table tr td pre 
+{ 
+    vertical-align: top !important; 
+    margin: 0em 0px !important;
+} 
+table th {
+    text-align: start;
+}
+</style>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>So as we see here our handwritten code and the function leads to the same result.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Interpretation-of-the-example">Interpretation of the example<a class="anchor-link" href="#Interpretation-of-the-example">¶</a></h2><p>What does the value 1 tell us now? It indicates that the correlation between two variables has a perfect linear relationship. In simpler terms, a value of +1 means that if we invest many hours in learning, we will also achieve a good grade</p>
+<p>A value of -1 indicates that there is a perfect negative linear relationship between two variables. With a value of -1, less studying would lead to better grades.</p>
+<p>A value of 0 defines that there is no linear relationship between variables. A value of 0 means that there is no relationship between the number of hours learned and the result. An example of this would be that a small young student's favourite colour is pink. Body size and favourite colour have</p>
+<ol>
+<li>nothing to do with each other and</li>
+<li>certainly nothing to do with the example of learning and the resulting grade.</li>
+</ol>
+<p>So do we have a good example in the example above? This result indicates that there is a strong linear relationship between hours studied and the resulting grade.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Using-the-Pearson--correlation-coefficent">Using the Pearson  correlation coefficent<a class="anchor-link" href="#Using-the-Pearson--correlation-coefficent">¶</a></h2><p>Using our example, the Pearson correlation coefficient is calculated for each column with all other columns.</p>
+<p>For simplicity, let's look at the output of our next code. We get a matrix there we have 6 x 6 columns and take column zero and each value in column zero is compared to all values in column one and so on.</p>
+<p>The matrix shows how similar the individual columns are to each other.</p>
+<h2 id="Digression---matrices">Digression - matrices<a class="anchor-link" href="#Digression---matrices">¶</a></h2><ol>
+<li>A matrix is a mathematical projection of a table that contains only numbers. They are used to describe linear transformation, among other things.</li>
+<li>In our case we have a correlation matrix.<ul>
+<li>represents the Pearson correlation coefficient between two variables. The matrix is symmetrical, i.e. a diagonal of perfect values is created.</li>
+<li>A column always correlates with itself, which in our case, and as we will see later, means that a value of +1 is always assumed there.</li>
+</ul>
+</li>
+</ol>
+<p>We take a step back, because what we have as headers of the columns are the individual replicas at different minutes.</p>
+<p>This means we check how similar the replicates are to each other and how similar the measurement data is between the time intervals.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>After understanding what the Person Coefficient is and how to calculate them lets go back to our data. In the next step we transfrom slicedDataLog2 into a matrix and calculate then the Pearson correlation coefficient. The output is a matrix of our six Columns from sliceDataLog2.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">transformSlicedDataLog2ToJaggedArray</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
+<span class="w">    </span><span class="n">slicedDataLog2</span><span class="w"> </span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">toJaggedArray</span><span class="w"> </span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="n">matrix</span><span class="w"> </span>
+
+<span class="k">let</span><span class="w"> </span><span class="nv">pearsonCorrelationMatrix3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
+<span class="w">    </span><span class="nn">Correlation</span><span class="p">.</span><span class="nn">Matrix</span><span class="p">.</span><span class="n">columnWiseCorrelationMatrix</span><span class="w"> </span><span class="nn">Correlation</span><span class="p">.</span><span class="nn">Seq</span><span class="p">.</span><span class="n">pearson</span><span class="w"> </span><span class="n">transformSlicedDataLog2ToJaggedArray</span>
+<span class="n">pearsonCorrelationMatrix3</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">,
+  .dataframe tbody tr th:only-of-type {
+    vertical-align: middle;
+  }
+  .dataframe tbody tr th {,
+    vertical-align: top
+  }
+  .dataframe thead th {
+    text-align: right;
+  }
+  .no-wrap {
+    white-space: nowrap;
+  }
+</style>
+<table border="1" class="dataframe">
+<thead><thead><th></th><th></th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></thead></thead>
+<tbody><tr><td><b>0</b></td><td class="no-wrap">-&gt;</td><td>1.000</td><td>0.972</td><td>0.966</td><td>0.885</td><td>0.887</td><td>0.890</td></tr><tr><td><b>1</b></td><td class="no-wrap">-&gt;</td><td>0.972</td><td>1.000</td><td>0.950</td><td>0.881</td><td>0.887</td><td>0.884</td></tr><tr><td><b>2</b></td><td class="no-wrap">-&gt;</td><td>0.966</td><td>0.950</td><td>1.000</td><td>0.881</td><td>0.879</td><td>0.886</td></tr><tr><td><b>3</b></td><td class="no-wrap">-&gt;</td><td>0.885</td><td>0.881</td><td>0.881</td><td>1.000</td><td>0.979</td><td>0.969</td></tr><tr><td><b>4</b></td><td class="no-wrap">-&gt;</td><td>0.887</td><td>0.887</td><td>0.879</td><td>0.979</td><td>1.000</td><td>0.968</td></tr><tr><td><b>5</b></td><td class="no-wrap">-&gt;</td><td>0.890</td><td>0.884</td><td>0.886</td><td>0.969</td><td>0.968</td><td>1.000</td></tr></tbody>
+</table>
+<br/>
+Matrix of 6 rows x 6 columns
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h1 id="Visualizing-the-Data">Visualizing the Data<a class="anchor-link" href="#Visualizing-the-Data">¶</a></h1><p>After applying Pearson correlation coefficient to all six of our columns, we can already draw our first conclusion.</p>
+<h2 id="First-conclusion">First conclusion<a class="anchor-link" href="#First-conclusion">¶</a></h2><p>We see here a lot of numbers between 0 and +1. So we can say that there is a positive linearity between the individual columns.</p>
+<p>Since graphics are much nicer and can also better represent the similarity, we create a so-called Heatmap that represents the Pearson correlation coefficient or the correlation between our individual columns.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">matrixToJaggedArray</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
+<span class="w">    </span><span class="n">pearsonCorrelationMatrix3</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Matrix</span><span class="p">.</span><span class="n">toJaggedArray</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">HeatMap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
+<span class="w">    </span><span class="nn">Chart</span><span class="p">.</span><span class="n">Heatmap</span><span class="w"> </span><span class="o">(</span><span class="n">zData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">matrixToJaggedArray</span><span class="o">,</span><span class="w"> </span><span class="n">colNames</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s">"15_minutes_R_1"</span><span class="o">;</span><span class="w"> </span><span class="s">"15_minutes_R_2"</span><span class="o">;</span><span class="w"> </span><span class="s">"15_minutes_R_3"</span><span class="o">;</span><span class="w"> </span><span class="s">"4_days_R_1"</span><span class="o">;</span><span class="w"> </span><span class="s">"4_days_R_2"</span><span class="o">;</span><span class="w"> </span><span class="s">"4_days_R_3"</span><span class="o">],</span><span class="w"> </span><span class="n">rowNames</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s">"15_minutes_R_1"</span><span class="o">;</span><span class="w"> </span><span class="s">"15_minutes_R_2"</span><span class="o">;</span><span class="w"> </span><span class="s">"15_minutes_R_3"</span><span class="o">;</span><span class="w"> </span><span class="s">"4_days_R_1"</span><span class="o">;</span><span class="w"> </span><span class="s">"4_days_R_2"</span><span class="o">;</span><span class="w"> </span><span class="s">"4_days_R_3"</span><span class="o">]</span><span class="w"> </span><span class="o">)</span>
+
+<span class="k">let</span><span class="w"> </span><span class="nv">StylingHeatMap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
+<span class="w">    </span><span class="n">HeatMap</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withTitle</span><span class="w"> </span><span class="o">(</span><span class="s">"Heatmap - Coldstress Experiment - 15 Minutes &amp; 4 Days"</span><span class="o">)</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withSize</span><span class="o">(</span><span class="mi">1000</span><span class="o">,</span><span class="mi">900</span><span class="o">)</span>
+<span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Chart</span><span class="p">.</span><span class="n">withMarginSize</span><span class="o">(</span><span class="n">Bottom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">200</span><span class="o">,</span><span class="w"> </span><span class="n">Right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">200</span><span class="o">,</span><span class="w"> </span><span class="n">Left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">200</span><span class="o">)</span>
+<span class="n">StylingHeatMap</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div><div id="0ba738e4-4375-49cd-90df-04c9a1ca439f"><!-- Plotly chart will be drawn inside this DIV --></div><script type="text/javascript">
+var renderPlotly_0ba738e4437549cd90df04c9a1ca439f = function() {
+    var fsharpPlotlyRequire = requirejs.config({context:'fsharp-plotly',paths:{plotly:'https://cdn.plot.ly/plotly-2.21.0.min'}}) || require;
+    fsharpPlotlyRequire(['plotly'], function(Plotly) {
+        var data = [{"type":"heatmap","x":["15_minutes_R_1","15_minutes_R_2","15_minutes_R_3","4_days_R_1","4_days_R_2","4_days_R_3"],"y":["15_minutes_R_1","15_minutes_R_2","15_minutes_R_3","4_days_R_1","4_days_R_2","4_days_R_3"],"z":[[1.0,0.9721111258565652,0.9663429772825015,0.8850260033190644,0.8872729578970391,0.890442570212815],[0.9721111258565652,1.0,0.950433067579279,0.8813797644222056,0.8866932758818864,0.8840442433277313],[0.9663429772825015,0.950433067579279,1.0,0.8812263415302459,0.8785560262143081,0.8856198956292592],[0.8850260033190644,0.8813797644222056,0.8812263415302459,1.0,0.9789611406777183,0.9685659771178413],[0.8872729578970391,0.8866932758818864,0.8785560262143081,0.9789611406777183,1.0,0.9683056290620937],[0.890442570212815,0.8840442433277313,0.8856198956292592,0.9685659771178413,0.9683056290620937,1.0]]}];
+        var layout = {"width":1000,"height":900,"template":{"layout":{"title":{"x":0.05},"font":{"color":"rgba(42, 63, 95, 1.0)"},"paper_bgcolor":"rgba(255, 255, 255, 1.0)","plot_bgcolor":"rgba(229, 236, 246, 1.0)","autotypenumbers":"strict","colorscale":{"diverging":[[0.0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1.0,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"hovermode":"closest","hoverlabel":{"align":"left"},"coloraxis":{"colorbar":{"outlinewidth":0.0,"ticks":""}},"geo":{"showland":true,"landcolor":"rgba(229, 236, 246, 1.0)","showlakes":true,"lakecolor":"rgba(255, 255, 255, 1.0)","subunitcolor":"rgba(255, 255, 255, 1.0)","bgcolor":"rgba(255, 255, 255, 1.0)"},"mapbox":{"style":"light"},"polar":{"bgcolor":"rgba(229, 236, 246, 1.0)","radialaxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","ticks":""},"angularaxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","ticks":""}},"scene":{"xaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","gridwidth":2.0,"zerolinecolor":"rgba(255, 255, 255, 1.0)","backgroundcolor":"rgba(229, 236, 246, 1.0)","showbackground":true},"yaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","gridwidth":2.0,"zerolinecolor":"rgba(255, 255, 255, 1.0)","backgroundcolor":"rgba(229, 236, 246, 1.0)","showbackground":true},"zaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","gridwidth":2.0,"zerolinecolor":"rgba(255, 255, 255, 1.0)","backgroundcolor":"rgba(229, 236, 246, 1.0)","showbackground":true}},"ternary":{"aaxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)"},"baxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)"},"caxis":{"ticks":"","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)"},"bgcolor":"rgba(229, 236, 246, 1.0)"},"xaxis":{"title":{"standoff":15},"ticks":"","automargin":"height+width+left+right+top+bottom","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","zerolinecolor":"rgba(255, 255, 255, 1.0)","zerolinewidth":2.0},"yaxis":{"title":{"standoff":15},"ticks":"","automargin":"height+width+left+right+top+bottom","linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","zerolinecolor":"rgba(255, 255, 255, 1.0)","zerolinewidth":2.0},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"shapedefaults":{"line":{"color":"rgba(42, 63, 95, 1.0)"}},"colorway":["rgba(99, 110, 250, 1.0)","rgba(239, 85, 59, 1.0)","rgba(0, 204, 150, 1.0)","rgba(171, 99, 250, 1.0)","rgba(255, 161, 90, 1.0)","rgba(25, 211, 243, 1.0)","rgba(255, 102, 146, 1.0)","rgba(182, 232, 128, 1.0)","rgba(255, 151, 255, 1.0)","rgba(254, 203, 82, 1.0)"]},"data":{"bar":[{"marker":{"line":{"color":"rgba(229, 236, 246, 1.0)","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"error_x":{"color":"rgba(42, 63, 95, 1.0)"},"error_y":{"color":"rgba(42, 63, 95, 1.0)"}}],"barpolar":[{"marker":{"line":{"color":"rgba(229, 236, 246, 1.0)","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}}}],"carpet":[{"aaxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","endlinecolor":"rgba(42, 63, 95, 1.0)","minorgridcolor":"rgba(255, 255, 255, 1.0)","startlinecolor":"rgba(42, 63, 95, 1.0)"},"baxis":{"linecolor":"rgba(255, 255, 255, 1.0)","gridcolor":"rgba(255, 255, 255, 1.0)","endlinecolor":"rgba(42, 63, 95, 1.0)","minorgridcolor":"rgba(255, 255, 255, 1.0)","startlinecolor":"rgba(42, 63, 95, 1.0)"}}],"choropleth":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contour":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"colorbar":{"outlinewidth":0.0,"ticks":""}}],"heatmap":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}}}],"histogram2d":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"colorbar":{"outlinewidth":0.0,"ticks":""}}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"pie":[{"automargin":true}],"scatter":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatter3d":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}},"line":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0.0,"ticks":""}}}],"surface":[{"colorbar":{"outlinewidth":0.0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"table":[{"cells":{"fill":{"color":"rgba(235, 240, 248, 1.0)"},"line":{"color":"rgba(255, 255, 255, 1.0)"}},"header":{"fill":{"color":"rgba(200, 212, 227, 1.0)"},"line":{"color":"rgba(255, 255, 255, 1.0)"}}}]}},"title":{"text":"Heatmap - Coldstress Experiment - 15 Minutes & 4 Days"},"margin":{"l":200,"r":200,"b":200}};
+        var config = {"responsive":true};
+        Plotly.newPlot('0ba738e4-4375-49cd-90df-04c9a1ca439f', data, layout, config);
+    });
+};
+if ((typeof(requirejs) !==  typeof(Function)) || (typeof(requirejs.config) !== typeof(Function))) {
+    var script = document.createElement("script");
+    script.setAttribute("charset", "utf-8");
+    script.setAttribute("src", "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js");
+    script.onload = function(){
+        renderPlotly_0ba738e4437549cd90df04c9a1ca439f();
+    };
+    document.getElementsByTagName("head")[0].appendChild(script);
+}
+else {
+    renderPlotly_0ba738e4437549cd90df04c9a1ca439f();
+}
+</script></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h1 id="Interpreting-the-visualisation">Interpreting the visualisation<a class="anchor-link" href="#Interpreting-the-visualisation">¶</a></h1><p>Looks cool huh? But now let's move on to the interpretation.</p>
+<p>If we take a closer look, we will notice a lot of boxes that correspond either to the yellow-orange tones or the blue tones. 
+What we see here is quiete simple. 
+On X- and Y-Axis we have our six Columns:</p>
+<ol>
+<li>Three replicates for minute 15</li>
+<li>Three replicates for 4 days</li>
+</ol>
+<p>and now we see here coded in colors what the Pearson correlation coefficient does.</p>
+<p>Lets start in the left bottom corner with 15_minutes_R_1. When we look at the legend we see that this field corresponds to the value 1 wich is the best value we can get. This is because here were the values of 15_minutes_R_1 compared with itself, as the values are identical this results in a maximum Pearson correlation coefficient.</p>
+<p>If we move to 15_minutes_R_2, we see from the colour here, this box is assigned a value of 0.97. This result is also a high Pearson correlation coefficient, so that means the results are very similar to each other. But what was compared here? Quite simply 15_minutes_R_1 with 15_minutes_R_2.</p>
+<p>Now let's take a look at 4_days_R_1. What is immediately noticeable here is that it is blue and therefore corresponds to a value of 0.88.</p>
+<p>In our case, this tells us that 4_days_R_1 is less similar to 15_minutes_R_1</p>
+<p>This box is the result of the comparison between 15_minutes_R_1 and 4_days_R_1, but why is there such a difference here? Because we are working with replicates - 15_minutes_R_1 was measured at 15 minutes and 4_days_R_1 at 5760 minutes.</p>
+<h1 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">¶</a></h1><p>We generally assume that <em>A. thaliana</em> changes its behaviour when the plant comes into contact with the cold. For this we used a method called RNA-Seq. We compared two replicate groups at different time points and expected our replicate groups to differ. To do this, we calculated the Pearson correlation coefficient and created a heat map.</p>
+<h2 id="Results">Results<a class="anchor-link" href="#Results">¶</a></h2><p>The Pearson correlation matrix and the associated heat map show that there are some differences between the replicate groups. 
+However, these differences are small. 
+The differences within the individual replicate groups are also small. 
+These small differences between and within the replicate groups indicate a linear relationship both between the replicate groups and between the individual replicates within the groups. 
+This leads to the conclusion that the replicate groups and the individual replicates within these groups have a high consistency and similarity. This suggests that the data are robust and reliable, which is important for further analyses and interpretations.</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+        </div>
+        <footer class="footer has-bg-darkmagenta">
+          <div class="container">
+            <div class="columns">
+              <div class="column is-4 m-4">
+                <div class="block">
+                  <h3 class="subtitle is-white">
+                    FsLab - the project incubation space for data science in F#
+                  </h3>
+                </div>
+                <div class="block">
+                  <p>
+                    FsLab is only possible due to the joined forces of F# open source contributors.
+                  </p>
+                </div>
+                <div class="block">
+                  <p>
+                    This website is created and maintained by individual FsLab open source contributors.
+                  </p>
+                </div>
+                <div class="block">
+                  <div class="icon-text is-white">
+                    <span class="icon">
+                      <i class="fas fa-code-branch"></i>
+                    </span>
+                    <span>
+                      <a class="footer-link" href="https://github.com/fslaborg/fslaborg.github.io">
+                        website source code
+                      </a>
+                    </span>
+                  </div>
+                  <div class="icon-text is-white">
+                    <span class="icon">
+                      <i class="far fa-handshake"></i>
+                    </span>
+                    <span>
+                      <a class="footer-link" href="https://github.com/orgs/fslaborg/people">
+                        fslab contributors
+                      </a>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="column is-4 m-4">
+                <div class="block">
+                  <h3 class="subtitle is-white">
+                    More
+                  </h3>
+                </div>
+                <div class="block">
+                  <div class="block">
+                    <div class="icon-text is-white">
+                      <span class="icon">
+                        <i class="fab fa-github"></i>
+                      </span>
+                      <span>
+                        <a class="footer-link" href="https://github.com/fslaborg?type=source">
+                          the fslab organisation on github
+                        </a>
+                      </span>
+                    </div>
+                    <div class="icon-text is-white">
+                      <span class="icon">
+                        <i class="fab fa-twitter"></i>
+                      </span>
+                      <span>
+                        <a class="footer-link" href="https://twitter.com/fslaborg">
+                          fslab on twitter
+                        </a>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="block">
+                    <div class="icon-text is-white">
+                      <span class="icon">
+                        <i class="fas fa-cubes"></i>
+                      </span>
+                      <span>
+                        <a class="footer-link" href="https://fslab.org/packages.html">
+                          endorsed packages
+                        </a>
+                      </span>
+                    </div>
+                    <div class="icon-text is-white">
+                      <span class="icon">
+                        <i class="fas fa-plus"></i>
+                      </span>
+                      <span>
+                        <a class="footer-link" href="https://github.com/fslaborg/fslaborg.github.io#add-a-project-to-the-packages-site">
+                          add a package to the list
+                        </a>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="block">
+                    <div class="icon-text is-white">
+                      <span class="icon">
+                        <i class="fas fa-graduation-cap"></i>
+                      </span>
+                      <span>
+                        <a class="footer-link" href="https://fslab.org/tutorials.html">
+                          tutorials and learning resources
+                        </a>
+                      </span>
+                    </div>
+                    <div class="icon-text is-white">
+                      <span class="icon">
+                        <i class="fas fa-plus"></i>
+                      </span>
+                      <span>
+                        <a class="footer-link" href="https://github.com/fslaborg/fslaborg.github.io#add-a-tutorial-guide-or-blogpost">
+                          add tutorial content
+                        </a>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="column is-4 m-4">
+                <div class="block">
+                  <h3 class="subtitle is-white">
+                    External resources
+                  </h3>
+                </div>
+                <div class="block">
+                  <ul>
+                    <li>
+                      <a href="https://github.com/fsprojects?type=source" class="footer-link">
+                        fsprojects - general F# project incubation space
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://fsharp.org/" class="footer-link">
+                        fsharp.org
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>
