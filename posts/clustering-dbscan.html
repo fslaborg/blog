@@ -310,7 +310,7 @@ In this tutorial we are going to perform DBSCAN on two- and three-dimensional da
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Let's take a first look at the data with 2D and 3D scatter plots using Plotly.NET. Each of the 150 records consists of four measurements and a species identifier. 
+<p>Let's take a first look at the data with 2D and 3D scatter plots using Plotly.NET. Each of the 150 records consists of four measurements and a species identifier.
 Since the species identifier occur several times (Iris-virginica, Iris-versicolor, and Iris-setosa), we create unique labels by adding the rows index to the species identifier.</p>
 </div>
 </div>
@@ -579,7 +579,8 @@ else {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [29]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-F#"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="nv">chartCluster2D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
+<div class="highlight hl-F#"><pre><span></span><span class="w"> </span>
+<span class="k">let</span><span class="w"> </span><span class="nv">chartCluster2D</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
 <span class="w">    </span><span class="n">result2D</span><span class="o">.</span><span class="n">Clusterlist</span>
 <span class="w">    </span><span class="o">|&gt;</span><span class="w"> </span><span class="nn">Seq</span><span class="p">.</span><span class="n">mapi</span><span class="w"> </span><span class="o">(</span><span class="k">fun</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">-&gt;</span>
 <span class="w">        </span><span class="n">l</span>
@@ -731,7 +732,7 @@ else {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-F#"><pre><span></span><span class="c1">//for faster computation you can use the squaredEuclidean distance and set your eps to its square</span>
-<span class="k">let</span><span class="w"> </span><span class="nv">clusteredChart3D</span><span class="bp">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">DbScan</span><span class="p">.</span><span class="n">compute</span><span class="w"> </span><span class="nn">DistanceMetrics</span><span class="p">.</span><span class="nn">Array</span><span class="p">.</span><span class="n">euclideanNaNSquared</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="o">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">7</span><span class="o">**</span><span class="mi">2</span><span class="o">.)</span><span class="w"> </span><span class="n">data3D</span>
+<span class="k">let</span><span class="w"> </span><span class="nv">clusteredChart3D</span><span class="bp">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">DbScan</span><span class="p">.</span><span class="n">compute</span><span class="w"> </span><span class="nn">DistanceMetrics</span><span class="p">.</span><span class="nn">Array</span><span class="p">.</span><span class="n">euclideanNaNSquared</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="o">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">7</span><span class="o">**</span><span class="mi">2</span><span class="o">.)</span><span class="w"> </span><span class="n">data3D</span><span class="w"> </span>
 </pre></div>
 </div>
 </div>
@@ -749,9 +750,9 @@ else {
 <li>When data points are of varying density, DBSCAN is not appropriate</li>
 </ol>
 <h2 id="Notes">Notes<a class="anchor-link" href="#Notes">¶</a></h2><ul>
-<li>Please note that depending on what data you want to cluster, a column wise z-score normalization may be required. In the presented example differences in sepal width have a reduced influence because</li>
+<li>Please note that depending on what data you want to cluster, a column wise z-score normalization may be required. In the presented example differences in sepal width have a reduced influence because
+the absolute variation is low.</li>
 </ul>
-<p>the absolute variation is low.</p>
 <h2 id="References">References<a class="anchor-link" href="#References">¶</a></h2><ul>
 <li><a href="https://fslab.org/FSharp.Stats/Clustering.html">FSharp.Stats documentation</a>, fslaborg,</li>
 <li>Shinde and Sankhe, Comparison of Enhanced DBSCAN Algorithms: A Review, International Journal of Engeneering Research &amp; Technology, 2017</li>

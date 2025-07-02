@@ -155,7 +155,7 @@
 <p>The goal is that any one with some knowledge of F# will be able to implement the Bayesian techniques covered in the real world.</p>
 <h1 id="Why-F%23">Why F#<a class="anchor-link" href="#Why-F%23">¶</a></h1><p>F# is an excellent language for Data Science. The rich static type system guides your thinking while you structure solutions to problems. It avoids the 'guess/refresh' approach sometimes found with loosely typed languages. Moreover, the extra precision of types that won't let you multiply strings, concatenate a boolean, or add an int to a float ensures your code is correct.</p>
 <p>Lastly, functional immutable programming is simply a better conceptual fit for most data science work. Object oriented languages are primarily about managing state, not transforming data. F#’s functional first approach encourages us to write simple deterministic functions which are easy to understand and compose into larger and larger operations with no loss of readability.</p>
-<h1 id="Data-Science-at-Hack-and-Craft">Data Science at Hack and Craft<a class="anchor-link" href="#Data-Science-at-Hack-and-Craft">¶</a></h1><p>At Hack and Craft we build simulations for logistics and manufacturing companies. 
+<h1 id="Data-Science-at-Hack-and-Craft">Data Science at Hack and Craft<a class="anchor-link" href="#Data-Science-at-Hack-and-Craft">¶</a></h1><p>At Hack and Craft we build simulations for logistics and manufacturing companies.
 Typically they are interested in measuring the effects of proposed chances to their processes. We model these initiatives and run simulations to produce synthetic data. This data is then analysed to measure impact of the proposed changes.</p>
 <p>We find Bayesian approaches very applicable to this work and have gradually moved away from a more traditional 'frequentist' approach.</p>
 <h1 id="Bayesian-thinking">Bayesian thinking<a class="anchor-link" href="#Bayesian-thinking">¶</a></h1><p>Frequentist techniques use ratios between the frequencies of possible cases of an observed sequence of data to derive their probability.</p>
@@ -382,23 +382,11 @@ else {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>H1</td>
-<td>0.33</td>
-<td>X</td>
-</tr>
-<tr>
-<td>H2</td>
-<td>0.33</td>
-<td></td>
-</tr>
-<tr>
-<td>H3</td>
-<td>0.33</td>
-<td></td>
-</tr>
 </tbody>
 </table>
+<p>| H1        | 0.33        |   X
+| H2        | 0.33        |
+| H3        | 0.33        |</p>
 </div>
 </div>
 </div>
@@ -452,7 +440,7 @@ else {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="First-application-of-Bayes-rule-in-F%23">First application of Bayes rule in F#<a class="anchor-link" href="#First-application-of-Bayes-rule-in-F%23">¶</a></h1><p>Bayes rule tells us to simply multiply the initial probability known as the 'Prior' by the likelihood of the hypothesis given the new data. This gives a new probability known as the 'unormalised Posterior'. 
+<h1 id="First-application-of-Bayes-rule-in-F%23">First application of Bayes rule in F#<a class="anchor-link" href="#First-application-of-Bayes-rule-in-F%23">¶</a></h1><p>Bayes rule tells us to simply multiply the initial probability known as the 'Prior' by the likelihood of the hypothesis given the new data. This gives a new probability known as the 'unormalised Posterior'.
 We then normalise the Posteriors to give their relative chance.
 A rough F# implementation would be look as follows.</p>
 </div>

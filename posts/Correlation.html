@@ -217,8 +217,8 @@
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h1 id="Pearson-correlation-coefficient,-Correlation-Matrices-and-Heatmap">Pearson correlation coefficient, Correlation Matrices and Heatmap<a class="anchor-link" href="#Pearson-correlation-coefficient,-Correlation-Matrices-and-Heatmap">¶</a></h1><h2 id="Introduction:">Introduction:<a class="anchor-link" href="#Introduction:">¶</a></h2><p>In this Blogpost we want to explain what a correlation matrix is, how they work, how  we create them, and how to interpret them. We will explain this procedure using a real RNA-Seq dataset. So lets get started.</p>
-<h2 id="What-is--a-RNA-Seq?">What is  a RNA-Seq?<a class="anchor-link" href="#What-is--a-RNA-Seq?">¶</a></h2><p>RNA-Seq, an abbreviation for RNA sequencing, is a method that utilizes next-generation sequencing to identify and quantify RNA molecules in a biological sample. 
-This technique offers a comprehensive view of gene expression within the sample, referred to as the transcriptome. 
+<h2 id="What-is--a-RNA-Seq?">What is  a RNA-Seq?<a class="anchor-link" href="#What-is--a-RNA-Seq?">¶</a></h2><p>RNA-Seq, an abbreviation for RNA sequencing, is a method that utilizes next-generation sequencing to identify and quantify RNA molecules in a biological sample.
+This technique offers a comprehensive view of gene expression within the sample, referred to as the transcriptome.
 RNA-Seq specifically allows for the analysis of alternative transcripts, post-transcriptional modifications, gene fusions, mutations and single nucleotide polymorphisms (SNPs), as well as variations in gene expression over time or differences in gene expression between distinct groups or treatments.</p>
 <p>In addition to mRNA transcripts, the method can look at different populations of RNA, including:</p>
 <ol>
@@ -228,8 +228,9 @@ RNA-Seq specifically allows for the analysis of alternative transcripts, post-tr
 <li>ribosomal profiling.</li>
 </ol>
 <div>
-<img alt="No description has been provided for this image" src="RNA_seq_schematic.png" width="50%"/>
+<img alt="No description has been provided for this image" src="https://raw.githubusercontent.com/fslaborg/blog/refs/heads/main/src/images/RNA_seq_schematic.png" width="50%"/>
 </div>
+<p>Scource: <a href="https://mbernste.github.io/posts/rna_seq_basics/">https://mbernste.github.io/posts/rna_seq_basics/</a></p>
 <h2 id="The-Experiment">The Experiment<a class="anchor-link" href="#The-Experiment">¶</a></h2><p>Our dataframe is based on an experiment that focused on cold acclimation in the model organism <em>A. thaliana</em>. The experiment was conducted to see if there are gene expression changes that are related to the influence of cold.</p>
 <p>All the samples were grown for 4 days under the influence of the named coining condition (acclimation phase). After 4 days, all plants were shifted to the "control condition" (deacclimation phase). Three measurements were taken at each time point. This means that we are working with replicates here.</p>
 <ul>
@@ -357,7 +358,7 @@ RNA-Seq specifically allows for the analysis of alternative transcripts, post-tr
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Dataframe-2.0">Dataframe 2.0<a class="anchor-link" href="#Dataframe-2.0">¶</a></h2><p>You see we now have a cleaner dataframe but it is still massive. In this example we will only use six columns, the replicates for minute 15 and the replicates for 4 days. 
+<h2 id="Dataframe-2.0">Dataframe 2.0<a class="anchor-link" href="#Dataframe-2.0">¶</a></h2><p>You see we now have a cleaner dataframe but it is still massive. In this example we will only use six columns, the replicates for minute 15 and the replicates for 4 days.
 We use those time intervals because they are a good starting and end point for the experiment. The first genes for cold stress can be expected to be expressed from time point 15 minutes. After 4 days, the effects can also be measured over a long period of time.</p>
 <p>To extract the relevant columns we use the function Frame.SliceCols</p>
 </div>
@@ -490,9 +491,10 @@ we want to calculate the Pearson correlation coefficient, which in turn calculat
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h1 id="Pearson-correlation-coefficient">Pearson correlation coefficient<a class="anchor-link" href="#Pearson-correlation-coefficient">¶</a></h1><h2 id="Definition">Definition<a class="anchor-link" href="#Definition">¶</a></h2><p>It calculates the correlation and thereby the strength and direction of the linear relationship between two variables in a dataset. It can assume values between -1 and 1. The formula for calculating the Pearson correlation coefficient is as follows.</p>
-$$
+<p>$$
 r = \frac{\sum(x_i - \bar{x})(y_i - \bar{y})}{(N-1) s_x s_y} = \frac{s_xy}{s_x s_y}
-$$<p>Let me explain the formula:</p>
+$$</p>
+<p>Let me explain the formula:</p>
 <ol>
 <li>$x_i$ stands for the observed values for x.</li>
 </ol>
@@ -914,8 +916,8 @@ else {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h1 id="Interpreting-the-visualisation">Interpreting the visualisation<a class="anchor-link" href="#Interpreting-the-visualisation">¶</a></h1><p>Looks cool huh? But now let's move on to the interpretation.</p>
-<p>If we take a closer look, we will notice a lot of boxes that correspond either to the yellow-orange tones or the blue tones. 
-What we see here is quiete simple. 
+<p>If we take a closer look, we will notice a lot of boxes that correspond either to the yellow-orange tones or the blue tones.
+What we see here is quiete simple.
 On X- and Y-Axis we have our six Columns:</p>
 <ol>
 <li>Three replicates for minute 15</li>
@@ -928,10 +930,10 @@ On X- and Y-Axis we have our six Columns:</p>
 <p>In our case, this tells us that 4_days_R_1 is less similar to 15_minutes_R_1</p>
 <p>This box is the result of the comparison between 15_minutes_R_1 and 4_days_R_1, but why is there such a difference here? Because we are working with replicates - 15_minutes_R_1 was measured at 15 minutes and 4_days_R_1 at 5760 minutes.</p>
 <h1 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">¶</a></h1><p>We generally assume that <em>A. thaliana</em> changes its behaviour when the plant comes into contact with the cold. For this we used a method called RNA-Seq. We compared two replicate groups at different time points and expected our replicate groups to differ. To do this, we calculated the Pearson correlation coefficient and created a heat map.</p>
-<h2 id="Results">Results<a class="anchor-link" href="#Results">¶</a></h2><p>The Pearson correlation matrix and the associated heat map show that there are some differences between the replicate groups. 
-However, these differences are small. 
-The differences within the individual replicate groups are also small. 
-These small differences between and within the replicate groups indicate a linear relationship both between the replicate groups and between the individual replicates within the groups. 
+<h2 id="Results">Results<a class="anchor-link" href="#Results">¶</a></h2><p>The Pearson correlation matrix and the associated heat map show that there are some differences between the replicate groups.
+However, these differences are small.
+The differences within the individual replicate groups are also small.
+These small differences between and within the replicate groups indicate a linear relationship both between the replicate groups and between the individual replicates within the groups.
 This leads to the conclusion that the replicate groups and the individual replicates within these groups have a high consistency and similarity. This suggests that the data are robust and reliable, which is important for further analyses and interpretations.</p>
 </div>
 </div>

@@ -141,9 +141,9 @@
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Testing-with-FSharp.Stats-I:-t-test">Testing with FSharp.Stats I: t-test<a class="anchor-link" href="#Testing-with-FSharp.Stats-I:-t-test">¶</a></h1><h2 id="Getting-started:-The-t-test">Getting started: The t-test<a class="anchor-link" href="#Getting-started:-The-t-test">¶</a></h2><p><em>I love statistical testing</em> - A sentence math teachers don't hear often during their time at school. In this tutorial we aim to give you a short introduction of the theory and how to 
+<h1 id="Testing-with-FSharp.Stats-I:-t-test">Testing with FSharp.Stats I: t-test<a class="anchor-link" href="#Testing-with-FSharp.Stats-I:-t-test">¶</a></h1><h2 id="Getting-started:-The-t-test">Getting started: The t-test<a class="anchor-link" href="#Getting-started:-The-t-test">¶</a></h2><p><em>I love statistical testing</em> - A sentence math teachers don't hear often during their time at school. In this tutorial we aim to give you a short introduction of the theory and how to
 perform the most used statistical test: the t-test</p>
-<p>Suppose you have measured the length of some leaves of two trees and you want to find out if the average length of the leaves is the same or if they differ from each other. 
+<p>Suppose you have measured the length of some leaves of two trees and you want to find out if the average length of the leaves is the same or if they differ from each other.
 If you knew the population distributions of all leaves hanging on both trees the task would be easy, but since we only have samples from both populations, we have to apply a statistical test.
 Student's t-test can be applied to test whether two samples have the same mean (H0), or if the means are different (H1). There are two requirements to the samples that have to be fulfilled:</p>
 <ol>
@@ -155,7 +155,7 @@ Student's t-test can be applied to test whether two samples have the same mean (
 <p><em>Note: Slight deviations from these requirements can be accepted but strong violations result in an inflated false positive rate. If the variances are not equal a Welch test can be performed.</em>
 <em>There are some tests out there to check if the variances are equal or if the sample follows a normal distribution, but their effectiveness is discussed.</em>
 <em>You always should consider the shape of the theoretical background distribution, instead of relying on preliminary tests rashly.</em></p>
-<p>The t-test is one of the most used statistical tests in datascience. It is used to compare two samples in terms of statistical significance. 
+<p>The t-test is one of the most used statistical tests in datascience. It is used to compare two samples in terms of statistical significance.
 Often a significance threshold (or α level) of 0.05 is chosen to define if a p value is defined as statistically significant. A p value describes how likely it is to observe an effect
 at least as extreme as you observed (in the comparison) by chance. Low p values indicate a high confidence to state that there is a real difference and the observed difference is not caused by chance.</p>
 </div>
@@ -394,7 +394,7 @@ table th {
 <li><p><code>PValue</code>: the two-tailed p-value</p>
 </li>
 </ul>
-<p>As we can see, when looking at the two-tailed p-value, our sample does <em>not</em> differ significantly from our expected value. This matches our visual impression of the boxplot, where the sample distribution 
+<p>As we can see, when looking at the two-tailed p-value, our sample does <em>not</em> differ significantly from our expected value. This matches our visual impression of the boxplot, where the sample distribution
 is centered around 4.5.</p>
 <h2 id="Two-sample-t-test-(unpaired-data)">Two-sample t-test (unpaired data)<a class="anchor-link" href="#Two-sample-t-test-(unpaired-data)">¶</a></h2><p>The t-test is most often used in its two-sample variant. Here, two samples, independent from each other, are compared. It is required that both samples are normally distributed.
 In this next example, we are going to see if the gender of college athletes determines the number of concussions suffered over 3 years (from: <em>Covassin et al., 2003, Sex Differences and the Incidence of Concussions Among Collegiate Athletes, Journal of Athletic Training</em>).</p>
@@ -421,6 +421,7 @@ In this next example, we are going to see if the gender of college athletes dete
 <span class="k">let</span><span class="w"> </span><span class="nv">dataAthletesAsFrame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">Frame</span><span class="p">.</span><span class="n">ReadCsv</span><span class="o">(</span><span class="n">dataAthletesAsStream</span><span class="o">,</span><span class="w"> </span><span class="n">hasHeaders</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="o">,</span><span class="w"> </span><span class="n">separators</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"</span><span class="se">\t</span><span class="s">"</span><span class="o">,</span><span class="w"> </span><span class="n">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Gender, Sports, Year, Concussion, Count"</span><span class="o">)</span>
 
 <span class="n">dataAthletesAsFrame</span>
+<span class="w">    </span>
 </pre></div>
 </div>
 </div>
@@ -629,9 +630,9 @@ table th {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>With a p value of 0.58 the t-test indicate that there's no significant difference between the number of concussions over 3 years between male and female college athletes.</p>
 <h2 id="Two-sample-t-test-(paired-data)">Two-sample t-test (paired data)<a class="anchor-link" href="#Two-sample-t-test-(paired-data)">¶</a></h2><p>Paired data describes data where each value from the one sample is connected with its respective value from the other sample.<br/>
-In the next case, the endurance performance of several persons in a normal situation (control situation) is compared to their performance after ingesting a specific amount of caffeine*. 
+In the next case, the endurance performance of several persons in a normal situation (control situation) is compared to their performance after ingesting a specific amount of caffeine*.
 It is the same person that performs the exercise but under different conditions. Thus, the resulting values of the persons under each condition are compared.<br/>
-Another example are time-dependent experiments: One measures, e.g., the condition of cells stressed with a high surrounding temperature in the beginning and after 30 minutes. 
+Another example are time-dependent experiments: One measures, e.g., the condition of cells stressed with a high surrounding temperature in the beginning and after 30 minutes.
 The measured cells are always the same, yet their conditions might differ.
 Due to the connectivity of the sample pairs the samples must be of equal length.</p>
 <p>*Source: W.J. Pasman, M.A. van Baak, A.E. Jeukendrup, A. de Haan (1995). <em>The Effect of Different Dosages of Caffeine on Endurance Performance Time</em>, International Journal of Sports Medicine, Vol. 16, pp225-230.</p>
